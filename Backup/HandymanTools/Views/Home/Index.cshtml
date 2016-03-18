@@ -1,0 +1,35 @@
+﻿@using System.Data
+@model System.Data.DataTable
+@{
+ 
+}
+<h2>Welcome, @ViewData["UserName"] to ASP.NET MVC @ViewData["Version"] on @ViewData["Runtime"]!</h2>
+
+@if (ViewData["DbErr"] == null) {
+	<h3>Here is a sample of data retrieval:</h3>
+	<table>
+	<tr>
+
+	@foreach (var col in Model.Columns) {
+		<th>@col.ColumnName</th>
+	}
+	</tr>	
+	@foreach (var row in Model.Rows) {
+		<tr>
+		@foreach (var col in Model.Columns) {
+			<td>@row[col]</td>
+		}
+				
+
+		</tr>
+	}
+			
+	</table>
+}
+else
+{
+<h4>We were unable to connect to the database:
+<br>@ViewData["DbErr"]</h4>
+}
+		
+
