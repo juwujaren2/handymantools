@@ -1,0 +1,52 @@
+﻿@using HandymanTools.Models
+@using HandymanTools.Common.Enums
+
+@model LoginViewModel
+@{
+    ViewBag.Title = "Hello There! Please log in";
+}
+
+<div class="jumbotron handyman-jumbotron">    
+    <h2><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> @ViewBag.Title.</h2>
+</div>
+@*<div class="row">*@
+    <div class="col-md-9">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="switch">
+                        @Html.RadioButtonFor(m => m.UserType, UserType.Customer)
+                        <label for="@UserType.Customer">@UserType.Customer</label>
+                        @Html.RadioButtonFor(m => m.UserType, UserType.Clerk)
+                        <label for="@UserType.Clerk">@UserType.Clerk</label> 
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-primary" />
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+@*</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
