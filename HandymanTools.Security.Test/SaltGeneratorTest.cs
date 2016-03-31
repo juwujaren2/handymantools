@@ -17,6 +17,7 @@ namespace HandymanTools.Security.Test
         [TestMethod]
         public void TwoSaltCallsShouldGenerateTwoSaltStrings()
         {
+            Assert.AreNotEqual(m_saltGenerator.Salt, m_saltGenerator.Salt);
         }
     }
 }

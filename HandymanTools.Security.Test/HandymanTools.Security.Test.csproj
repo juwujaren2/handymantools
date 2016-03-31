@@ -55,6 +55,7 @@
     <Compile Include="StringByteConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringCryptographicExtensionsTest.cs" />
+    <Compile Include="SaltGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HandymanTools.Security\HandymanTools.Security.csproj">

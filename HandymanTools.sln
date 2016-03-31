@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandymanTools.Web", "HandymanTools\HandymanTools.Web.csproj", "{9D299109-479F-468F-81D4-540CD40375C0}"
 EndProject
@@ -21,6 +21,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandymanTools.Common", "HandymanTools.Common\HandymanTools.Common.csproj", "{2F0376DA-2D10-4E21-8DA8-C13F91BA8223}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandymanTools.Infrastructure", "HandymanTools.Infrastructure\HandymanTools.Infrastructure.csproj", "{487EEC1B-C938-430C-8873-6E2A8096A7FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandymanTools.Security", "HandymanTools.Security\HandymanTools.Security.csproj", "{789DE125-4AA3-4209-AC1F-42759A4598F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandymanTools.Security.Test", "HandymanTools.Security.Test\HandymanTools.Security.Test.csproj", "{CC558C01-3C59-48C4-A497-2D7FC4562F61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +48,14 @@ Global
 		{487EEC1B-C938-430C-8873-6E2A8096A7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{487EEC1B-C938-430C-8873-6E2A8096A7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{487EEC1B-C938-430C-8873-6E2A8096A7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{789DE125-4AA3-4209-AC1F-42759A4598F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789DE125-4AA3-4209-AC1F-42759A4598F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789DE125-4AA3-4209-AC1F-42759A4598F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789DE125-4AA3-4209-AC1F-42759A4598F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC558C01-3C59-48C4-A497-2D7FC4562F61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC558C01-3C59-48C4-A497-2D7FC4562F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC558C01-3C59-48C4-A497-2D7FC4562F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC558C01-3C59-48C4-A497-2D7FC4562F61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
