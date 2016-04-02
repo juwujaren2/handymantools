@@ -49,10 +49,10 @@ namespace HandymanTools.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel vm)
         {
-            var password = _userRepo.GetPasswordByUserName(vm.Email);
-            // TODO: Need to write stored procedure to get password hash
-            // out of the database.
-            var hashedpassword = vm.Password.ToSHA256("somerandomsalt");
+            string passwdHash = "";
+
+            // grab password that was stored into the database.
+            var password = _userRepo.GetPasswordByUserName(vm.Email, out passwdHash);
 
             if (vm.UserType == UserType.Customer)
             {
@@ -62,6 +62,11 @@ namespace HandymanTools.Controllers
                 }
                 else
                 {
+                    // TODO: need to refactor do passwords match to remove duplicate code in the clerk section
+
+                    // compute the hashed password for the password inserted by the user on the login screen
+                    // using the salt for the given user.
+                    var hashedpassword = vm.Password.ToSHA256(passwdHash);
                     if (hashedpassword == password)
                         return RedirectToAction("ViewProfile", "Customer");
                     else
@@ -76,6 +81,11 @@ namespace HandymanTools.Controllers
             //if customer type selected and user name is in database, return password from database and validate against password from 
             else
             {
+                // TODO: need to refactor do passwords match to remove duplicate code in the clerk section
+
+                // compute the hashed password for the password inserted by the user on the login screen
+                // using the salt for the given user.
+                var hashedpassword = vm.Password.ToSHA256(passwdHash);
                 if (hashedpassword == password)
                     return RedirectToAction("MainMenu", "Clerk");
                 return View();

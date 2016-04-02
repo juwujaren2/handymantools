@@ -8,6 +8,6 @@ namespace HandymanTools.Infrastructure.Repositories
 {
     public interface IUserRepository
     {
-        string GetPasswordByUserName(string userName);
+        string GetPasswordByUserName(string userName, out string passwdHash);
     }
 }

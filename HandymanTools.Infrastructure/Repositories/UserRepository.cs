@@ -17,9 +17,10 @@ namespace HandymanTools.Infrastructure.Repositories
         {
             _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
-        public string GetPasswordByUserName(string userName)
+        public string GetPasswordByUserName(string userName, out string passwdHash)
         {
             string password = string.Empty;
+            passwdHash = string.Empty;
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand();
@@ -38,6 +39,7 @@ namespace HandymanTools.Infrastructure.Repositories
                     {
                         //SELECT u.UserName AS 'Email', u.FirstName + ' ' + u.LastName AS Name, c.HomeAreaCode + c.HomePhone AS 'HomePhone', c.WorkAreaCode + c.WorkPhone AS 'WorkPhone', c.[Address] 
                         password = reader.GetString(0);
+                        passwdHash = reader.GetString(1);
                     }
                     reader.NextResult();
                 }

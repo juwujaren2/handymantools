@@ -15,7 +15,6 @@ namespace HandymanTools.Infrastructure.Repositories
         }
         public int AddCustomer(Customer customer)
         {
-            int customerId = 0;
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand();
@@ -30,15 +29,25 @@ namespace HandymanTools.Infrastructure.Repositories
                 command.Parameters.Add("@HomePhone", SqlDbType.VarChar).Value = customer.HomePhone;
                 command.Parameters.Add("@WorkAreaCode", SqlDbType.VarChar).Value = customer.WorkAreaCode;
                 command.Parameters.Add("@WorkPhone", SqlDbType.VarChar).Value = customer.WorkPhone;
-                command.Parameters.Add("@UserId", SqlDbType.Int).Direction = ParameterDirection.Output;
+                command.Parameters.Add("@Password", SqlDbType.VarChar).Value = customer.Password;
+                command.Parameters.Add("@PasswordHash", SqlDbType.VarChar).Value = customer.PasswordHash;
 
                 //open, execute stored procedure, and close connection
                 conn.Open();
-                command.ExecuteNonQuery();
-                customerId = Convert.ToInt32(command.Parameters["@UserId"].Value);
-                conn.Close();
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch (SqlException e)
+                {
+                    return -1;
+                }
+                finally
+                {
+                    conn.Close();
+                }
             }
-            return customerId;
+            return 0;
         }
 
         public Customer GetCustomer(int customerId)

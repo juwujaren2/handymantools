@@ -10,7 +10,7 @@
     @WorkAreaCode varchar(5),
     @WorkPhone varchar(10)
 AS
-	INSERT INTO [User] (UserName, [Password], [PasswordHash], FirstName, LastName)
+	INSERT INTO [User] (UserName, [Password], PasswordHash, FirstName, LastName)
 		VALUES (@UserName, @Password, @PasswordHash, @FirstName, @LastName)
 
 	INSERT INTO Customer (UserName, [Address], HomeAreaCode, HomePhone, WorkAreaCode, WorkPhone)
