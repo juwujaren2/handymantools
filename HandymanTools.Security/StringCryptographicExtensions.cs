@@ -17,7 +17,7 @@ namespace HandymanTools.Security
 
             byte[] finalStringData = byteConverter.ToBytes(finalString);
             var result = hasher.ComputeHash(finalStringData);
-            return byteConverter.StringFromBytes(result);
+            return byteConverter.BytesToHex(result);
         }
     }
 }

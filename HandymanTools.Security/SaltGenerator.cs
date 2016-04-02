@@ -24,7 +24,7 @@ namespace HandymanTools.Security
                 var converter = new StringByteConverter();
                 byte[] genSalt = new byte[SALT_SIZE];
                 m_cryptoServiceProvider.GetNonZeroBytes(genSalt);
-                return converter.StringFromBytes(genSalt);
+                return converter.BytesToHex(genSalt);
             }
         }
     }
