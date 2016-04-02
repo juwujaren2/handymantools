@@ -10,7 +10,7 @@ namespace HandymanTools.Security
     public class SaltGenerator
     {
         private RNGCryptoServiceProvider m_cryptoServiceProvider;
-        private const int SALT_SIZE = 256;
+        private const int SALT_SIZE = 24;
 
         public SaltGenerator()
         {
