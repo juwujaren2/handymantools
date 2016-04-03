@@ -19,5 +19,9 @@ namespace HandymanTools.Common.Models
                 return string.Format("{0} {1}", FirstName, LastName);
             }
         }
+
+        public string Password { get; set; }
+
+        public string PasswordHash { get; set; }
     }
 }

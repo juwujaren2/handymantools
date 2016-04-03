@@ -169,6 +169,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerCreateProfileViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -294,6 +295,10 @@
     <ProjectReference Include="..\HandymanTools.Infrastructure\HandymanTools.Infrastructure.csproj">
       <Project>{487eec1b-c938-430c-8873-6e2a8096a7fd}</Project>
       <Name>HandymanTools.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HandymanTools.Security\HandymanTools.Security.csproj">
+      <Project>{789de125-4aa3-4209-ac1f-42759a4598f4}</Project>
+      <Name>HandymanTools.Security</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

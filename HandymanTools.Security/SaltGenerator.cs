@@ -10,7 +10,7 @@ namespace HandymanTools.Security
     public class SaltGenerator
     {
         private RNGCryptoServiceProvider m_cryptoServiceProvider;
-        private const int SALT_SIZE = 256;
+        private const int SALT_SIZE = 24;
 
         public SaltGenerator()
         {
@@ -24,7 +24,7 @@ namespace HandymanTools.Security
                 var converter = new StringByteConverter();
                 byte[] genSalt = new byte[SALT_SIZE];
                 m_cryptoServiceProvider.GetNonZeroBytes(genSalt);
-                return converter.StringFromBytes(genSalt);
+                return converter.BytesToHex(genSalt);
             }
         }
     }
