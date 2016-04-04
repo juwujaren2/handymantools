@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[usp_GetReservationsByCustomerId]
-	@CustomerId int
+	@CustomerId varchar(36)
 AS
 	SELECT Reservation.ReservationNumber,
 		STUFF 
