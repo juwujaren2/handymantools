@@ -6,6 +6,6 @@ namespace HandymanTools.Infrastructure.Repositories
     {
         int AddCustomer(Customer dto);
 
-        Customer GetCustomer(int CustomerId); 
+        Customer GetCustomer(string UserName); 
     }
 }

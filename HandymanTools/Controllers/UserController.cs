@@ -11,6 +11,8 @@ using HandymanTools.Common.Enums;
 namespace HandymanTools.Controllers
 {
     using HandymanTools.Security;
+    using System.Web.Security;
+
     public class UserController : Controller
     {
         private UserRepository _userRepo;
@@ -21,17 +23,17 @@ namespace HandymanTools.Controllers
         // GET: User
         public ActionResult Index()
         {
-            User user = (User)Session["LoggedInUser"];
+            User user = User.Identity.GetUser();
             if (user == null)
             {
-                RedirectToAction("Login");
+                return RedirectToAction("Login");
             }
             else
             {
                 Customer customer = user as Customer;
                 if (customer != null)
                 {
-                    //return to Customer Index
+                    return RedirectToAction("ViewProfile", "Customer");
                 }
                 else
                 {
@@ -53,9 +55,10 @@ namespace HandymanTools.Controllers
 
             // grab password that was stored into the database.
             var password = _userRepo.GetPasswordByUserName(vm.Email, out passwdHash);
+            User user = new User();
 
             if (vm.UserType == UserType.Customer)
-            {
+            {               
                 if (String.IsNullOrEmpty(password))
                 {
                     return RedirectToAction("CreateProfile", "Customer");
@@ -68,7 +71,12 @@ namespace HandymanTools.Controllers
                     // using the salt for the given user.
                     var hashedpassword = vm.Password.ToSHA256(passwdHash);
                     if (hashedpassword == password)
-                        return RedirectToAction("ViewProfile", "Customer");
+                    {
+                        user = _userRepo.GetUserByUserName(vm.Email);
+                        user.UserType = UserType.Customer;
+                        FormsAuthentication.SetAuthCookie(user.UserName, false);
+                        return RedirectToAction("ViewProfile", "Customer", user);
+                    }
                     else
                     {
                         // TODO: Need to figure out how to deal with errors here. 
@@ -76,9 +84,6 @@ namespace HandymanTools.Controllers
                     }
                 }
             }
-            //var user = vm.UserType == UserType.Customer ? _userRepo.GetPasswordByUserName(vm.Email) : _userRepo.GetPasswordByUserName(vm.UserName);
-            //if customer type selected and user name not in database, return create new customer profile view
-            //if customer type selected and user name is in database, return password from database and validate against password from 
             else
             {
                 // TODO: need to refactor do passwords match to remove duplicate code in the clerk section
@@ -87,9 +92,20 @@ namespace HandymanTools.Controllers
                 // using the salt for the given user.
                 var hashedpassword = vm.Password.ToSHA256(passwdHash);
                 if (hashedpassword == password)
+                {
+                    user = _userRepo.GetUserByUserName(vm.UserName);
+                    user.UserType = UserType.Clerk;
+                    FormsAuthentication.SetAuthCookie(user.UserName, false);
                     return RedirectToAction("MainMenu", "Clerk");
+                }
                 return View();
             }
+        }
+        public ActionResult Logoff()
+        {
+            FormsAuthentication.SignOut();
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -37,7 +37,6 @@ namespace HandymanTools.Infrastructure.Repositories
                 {
                     while (reader.Read())
                     {
-                        //SELECT u.UserName AS 'Email', u.FirstName + ' ' + u.LastName AS Name, c.HomeAreaCode + c.HomePhone AS 'HomePhone', c.WorkAreaCode + c.WorkPhone AS 'WorkPhone', c.[Address] 
                         password = reader.GetString(0);
                         passwdHash = reader.GetString(1);
                     }
@@ -47,6 +46,71 @@ namespace HandymanTools.Infrastructure.Repositories
                 conn.Close();
             }
             return password;
+        }
+        public User GetUserByUserName(string userName)
+        {
+            User user = null;
+            string firstName = null;
+            string lastName = null;
+            string customerAddress = null;
+            string homeAreaCode = null;
+            string homePhone = null;
+            string workAreaCode = null;
+            string workPhone = null;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "usp_GetUserByUserName";
+                command.Connection = conn;
+                command.Parameters.Add("@UserName", SqlDbType.VarChar).Value = userName;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        firstName = reader.GetString(1);
+                        lastName = reader.GetString(2);
+                        customerAddress = reader.GetString(3);
+                        homeAreaCode = reader.GetString(4);
+                        homePhone = reader.GetString(5);
+                        workAreaCode = reader.GetString(6);
+                        workPhone = reader.GetString(7);
+                    }
+                    break;
+                }
+                reader.Close();
+                conn.Close();
+            }
+            if (String.IsNullOrEmpty(customerAddress))
+            {
+                user = new Clerk
+                {
+                    UserName = userName,
+                    FirstName = firstName,
+                    LastName = lastName
+                };               
+            }
+            else
+            {
+                user = new Customer
+                {
+                    UserName = userName,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Address = customerAddress,
+                    HomeAreaCode = homeAreaCode,
+                    HomePhone = homePhone,
+                    WorkAreaCode = workAreaCode,
+                    WorkPhone = workPhone
+                };
+            }
+            return user;
         }
     }
 }

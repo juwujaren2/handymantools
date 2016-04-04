@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HandymanTools.Common.Enums;
+using System;
 using System.Web;
 
 namespace HandymanTools.Common.Models
@@ -14,5 +15,12 @@ namespace HandymanTools.Common.Models
         public string WorkAreaCode { get; set; }
 
         public string WorkPhone { get; set; }
+        public override UserType UserType
+        {
+            get
+            {
+                return UserType.Customer;
+            }
+        }
     }
 }

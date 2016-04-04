@@ -16,9 +16,7 @@
 }
 .navbar-brand {
 }
-.navbar-right {
-    padding-top: 55px;
-}
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -35,98 +33,77 @@ textarea {
 a {
     color: #025374;
 }
-/* Profile container */
-.profile {
+/* User menu */
+.user {
   margin: 20px 0;
 }
 
-/* Profile sidebar */
-.profile-sidebar {
+.user-menu {
   padding: 20px 0 10px 0;
-  /*background: #dae2e5;*/
 }
 
-.profile-usertitle {
+.user-title {
   text-align: center;
   margin-top: 20px;
+
 }
 
-.profile-usertitle-name {
+.user-name {
   color: #5a7391;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   margin-bottom: 7px;
 }
 
-.profile-usertitle-job {
-  text-transform: uppercase;
+.user-type {
   color: #025374;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 15px;
 }
-
-.profile-userbuttons {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.profile-userbuttons .btn {
-  text-transform: uppercase;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 15px;
-  margin-right: 5px;
-}
-
-.profile-userbuttons .btn:last-child {
-  margin-right: 0px;
-}
-    
-.profile-usermenu {
+   
+.user-options {
   margin-top: 30px;
 }
 
-.profile-usermenu ul li {
+.user-options ul li {
   border-bottom: 1px solid #f0f4f7;
 }
 
-.profile-usermenu ul li:last-child {
+.user-options ul li:last-child {
   border-bottom: none;
 }
 
-.profile-usermenu ul li a {
+.user-options ul li a {
   color: #93a3b5;
   font-size: 14px;
   font-weight: 400;
 }
 
-.profile-usermenu ul li a i {
+.user-options ul li a i {
   margin-right: 8px;
   font-size: 14px;
 }
 
-.profile-usermenu ul li a:hover {
+.user-options ul li a:hover {
   background-color: #fafcfd;
   color: #025374;
 }
 
-.profile-usermenu ul li.active {
+.user-options ul li.active {
   border-bottom: none;
 }
 
-.profile-usermenu ul li.active a {
+.user-options ul li.active a {
   color: #025374;
   background-color: #f6f9fb;
   border-left: 2px solid #025374;
   margin-left: -2px;
 }
 
-/* Profile Content */
-.profile-content {
-  padding: 20px;
-  background: #fff;
-  min-height: 460px;
+.user-profile {
+  text-align: center;
+  margin-top: 20px;
 }
 .handyman-jumbotron {
     margin-bottom: 0;

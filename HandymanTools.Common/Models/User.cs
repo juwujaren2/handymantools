@@ -2,12 +2,8 @@
 
 namespace HandymanTools.Common.Models
 {
-    public class User
+    public class User : UserIdentity
     {
-        public int UserId { get; set; }
-
-        public string UserName { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
