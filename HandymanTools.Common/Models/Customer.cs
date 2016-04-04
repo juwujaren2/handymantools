@@ -22,5 +22,24 @@ namespace HandymanTools.Common.Models
                 return UserType.Customer;
             }
         }
+
+        public string FullHomePhone
+        {
+            get
+            {
+                string fullPhone = string.Format("{0}{1}", HomeAreaCode, HomePhone);
+                return string.Format("{0:(###) ###-####}", fullPhone);
+            }
+        }
+
+        public string FullWorkPHone
+        {
+            get
+            {
+                string fullPhone = string.Format("{0}{1}", WorkAreaCode, WorkPhone);
+                return string.Format("{0:(###) ###-####}", fullPhone);
+            }
+        }
+
     }
 }

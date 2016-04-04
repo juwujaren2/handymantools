@@ -8,7 +8,8 @@
     padding-left: 15px;
     padding-right: 15px;
     border-left: 1pt solid #bcd8e2;
-    color: #93a3b5;
+    /* color: #93a3b5; */
+    color: #025678;
 }
 .navbar-fixed-top {
     text-align: center;
@@ -20,6 +21,14 @@
 */
 .dl-horizontal dt {
     white-space: normal;
+}
+.alert {
+    padding: 5px;
+}
+.alert-info {
+    color: #025678;
+    background-color: #dceff7;
+    border-color: #a1c3d1;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */

@@ -1,35 +1,65 @@
 ﻿@using HandymanTools.Common.Models;
+@using HandymanTools.Models
 
-@model Customer
+@model CustomerProfileViewModel
 
 <div>
     <div class="jumbotron handyman-jumbotron">
         <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> My Profile</h2>
     </div>
     <dl class="dl-horizontal">
-        <dt>
-            Email: 
-        </dt>
+        <dt>Email:</dt>
+        <dd>@Html.DisplayFor(model => model.Email)</dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+        <dt>Name:</dt>
+        <dd>@Html.DisplayFor(model => model.Name)</dd>
 
-        <dt>
-            Name:
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-        <dt>
-            Address:
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
+        <dt>Home Phone:</dt>
+        <dd>@Html.DisplayFor(model => model.HomePhone)</dd>
+        
+        <dt>Work Phone:</dt>
+        <dd>@Html.DisplayFor(model => model.WorkPhone)</dd>
+        
+        <dt>Address:</dt>
+        <dd>@Html.DisplayFor(model => model.Address)</dd>
     </dl>
+
+    <h4>Reservations History</h4>
+    @if (Model.Reservations != null && Model.Reservations.Count() > 0)
+    {
+        <table class="table table-bordered"> 
+            <thead> 
+                <tr> 
+                    <th>Res #</th> 
+                    <th>Tools</th> 
+                    <th>Start</th> 
+                    <th>End</th>
+                    <th>Rental Price</th> 
+                    <th>Deposit</th> 
+                    <th>Pick-Up Clerk</th>
+                    <th>Drop-Off Clerk</th>   
+                </tr> 
+            </thead> 
+            <tbody>  
+            @foreach (var reservation in Model.Reservations)
+            {
+                <tr>
+                    <th scope="row">@reservation.ReservationNumber</th>
+                    <td>@reservation.Tool.AbbrDescription</td>
+                    <td>@reservation.Reservation.StartDate</td>
+                    <td>@reservation.Reservation.EndDate</td>
+                    <td>@reservation.Tool.RentalPrice</td>
+                    <td>@reservation.Tool.DepositAmount</td>
+                    <td>@reservation.Reservation.PickupClerk.FirstName</td>
+                    <td>@reservation.Reservation.DropOffClerk.FirstName</td>
+                </tr>
+            }
+            </tbody> 
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info col-md-4" role="alert"> <strong>Heads up!</strong> There are no reservations for @Model.Name in the system. </div>
+    }
 </div>
 

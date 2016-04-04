@@ -2,21 +2,21 @@
 using HandymanTools.Infrastructure.Repositories;
 using HandymanTools.Models;
 using HandymanTools.Security;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace HandymanTools.Controllers
 {
     public class CustomerController : Controller
     {
         private ICustomerRepository m_customerRepository;
+        private IReservationRepository _reservationRepo;
 
         public CustomerController()
         {
             m_customerRepository = new CustomerRepository();
+            _reservationRepo = new ReservationRepository();
         }
 
         // GET: Customer
@@ -51,7 +51,8 @@ namespace HandymanTools.Controllers
                 customer.Password = model.Password.ToSHA256(customer.PasswordHash);
                 var customerId = m_customerRepository.AddCustomer(customer);
 
-
+                FormsAuthentication.SetAuthCookie(customer.UserName, false);
+                return RedirectToAction("ViewProfile", "Customer");
             }
             // TODO: Need to add an Error View if this fails with the appropriate message.
             
@@ -62,8 +63,16 @@ namespace HandymanTools.Controllers
         public ActionResult ViewProfile()
         {
             Customer customer = User.Identity.GetUser() as Customer;
-
-            return View(customer);
+            CustomerProfileViewModel vm = new CustomerProfileViewModel
+            {
+                Address = customer.Address,
+                Email = customer.UserName,
+                Name = customer.FullName,
+                HomePhone = customer.FullHomePhone,
+                WorkPhone = customer.FullWorkPHone
+            };
+            vm.Reservations = _reservationRepo.GetReservationsByCustomer(customer.UserName);
+            return View(vm);
         }
     }
 }

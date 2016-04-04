@@ -57,9 +57,9 @@ namespace HandymanTools.Infrastructure.Repositories
             {
                 SqlCommand command = new SqlCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "usp_GetReservationsByCustomerId";
+                command.CommandText = "usp_GetCustomerByUserName";
                 command.Connection = conn;
-                command.Parameters.Add("@CustomerId", SqlDbType.VarChar).Value = userName;
+                command.Parameters.Add("@UserName", SqlDbType.VarChar).Value = userName;
 
                 //open, execute stored procedure, and close connection
                 conn.Open();
