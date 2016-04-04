@@ -14,8 +14,6 @@
     text-align: center;
     border-bottom: 1pt solid #025374;
 }
-.navbar-brand {
-}
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -49,16 +47,16 @@ a {
 }
 
 .user-name {
-  color: #5a7391;
+  color: #025678;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: bolder;
   margin-bottom: 7px;
 }
 
 .user-type {
-  color: #025374;
-  font-size: 16px;
-  font-weight: 600;
+  color: #f38226;
+  font-size: 24px;
+  font-weight: 900;
   margin-bottom: 15px;
 }
    
