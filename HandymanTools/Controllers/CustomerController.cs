@@ -48,7 +48,7 @@ namespace HandymanTools.Controllers
             customer.PasswordHash = generator.Salt;
             customer.Password = model.Password.ToSHA256(customer.PasswordHash);
             var customerId = m_customerRepository.AddCustomer(customer);
-
+            
             // TODO: Need to add an Error View if this fails with the appropriate message.
 
             return View();

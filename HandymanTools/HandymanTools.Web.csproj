@@ -169,6 +169,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AvailableToolViewModel.cs" />
     <Compile Include="Models\CustomerCreateProfileViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -271,13 +272,15 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Shared\_SidebarPartial.cshtml" />
     <Content Include="Views\Customer\CreateProfile.cshtml" />
+    <Content Include="Views\Tool\Availability.cshtml" />
+    <Content Include="Views\Tool\AvailabilityDetail.cshtml" />
+    <Content Include="Views\Tool\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Report\" />
     <Folder Include="Views\Reservation\" />
     <Folder Include="Views\ServiceOrder\" />
-    <Folder Include="Views\Tool\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
