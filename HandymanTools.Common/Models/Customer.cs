@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HandymanTools.Common.Enums;
+using System;
 using System.Web;
 
 namespace HandymanTools.Common.Models
@@ -14,5 +15,31 @@ namespace HandymanTools.Common.Models
         public string WorkAreaCode { get; set; }
 
         public string WorkPhone { get; set; }
+        public override UserType UserType
+        {
+            get
+            {
+                return UserType.Customer;
+            }
+        }
+
+        public string FullHomePhone
+        {
+            get
+            {
+                string fullPhone = string.Format("{0}{1}", HomeAreaCode, HomePhone);
+                return string.Format("{0:(###) ###-####}", fullPhone);
+            }
+        }
+
+        public string FullWorkPHone
+        {
+            get
+            {
+                string fullPhone = string.Format("{0}{1}", WorkAreaCode, WorkPhone);
+                return string.Format("{0:(###) ###-####}", fullPhone);
+            }
+        }
+
     }
 }

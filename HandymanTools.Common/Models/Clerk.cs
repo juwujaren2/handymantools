@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using HandymanTools.Common.Enums;
 
 namespace HandymanTools.Common.Models
 {
-    public class Clerk
+    public class Clerk : User
     {
-        public string LoginId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Password { get; set; }
+        public override UserType UserType
+        {
+            get
+            {
+                return UserType.Clerk;
+            }
+        }
     }
 }

@@ -50,16 +50,16 @@ namespace HandymanTools.Infrastructure.Repositories
             return 0;
         }
 
-        public Customer GetCustomer(int customerId)
+        public Customer GetCustomer(string userName)
         {
-            Customer customerProfile = new Customer { UserId = customerId };
+            Customer customerProfile = new Customer { UserName = userName };
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "usp_GetReservationsByCustomerId";
+                command.CommandText = "usp_GetCustomerByUserName";
                 command.Connection = conn;
-                command.Parameters.Add("@CustomerId", SqlDbType.VarChar).Value = customerId;
+                command.Parameters.Add("@UserName", SqlDbType.VarChar).Value = userName;
 
                 //open, execute stored procedure, and close connection
                 conn.Open();
@@ -69,7 +69,6 @@ namespace HandymanTools.Infrastructure.Repositories
                 {
                     while (reader.Read())
                     {
-                        //SELECT u.UserName AS 'Email', u.FirstName + ' ' + u.LastName AS Name, c.HomeAreaCode + c.HomePhone AS 'HomePhone', c.WorkAreaCode + c.WorkPhone AS 'WorkPhone', c.[Address] 
                         customerProfile.UserName = reader.GetString(0);
                         customerProfile.FirstName = reader.GetString(1);
                         customerProfile.LastName = reader.GetString(2);
