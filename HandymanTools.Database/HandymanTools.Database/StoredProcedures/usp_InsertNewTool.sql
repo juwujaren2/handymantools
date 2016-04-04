@@ -17,7 +17,7 @@ AS
 
 	IF @ToolType = 'Power'
 	BEGIN
-		INSERT INTO PowerToolAccessory (ToolID, Accessory)
+		INSERT INTO PowerToolAccessory (ToolId, Accessory)
 		VALUES (@ToolID, @Accessory);
 	END
 

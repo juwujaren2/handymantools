@@ -90,6 +90,7 @@
     <Build Include="StoredProcedures\usp_Report_Inventory.sql" />
     <Build Include="StoredProcedures\usp_Report_CustomerRentals.sql" />
     <Build Include="StoredProcedures\usp_Report_ClerkProgress.sql" />
+    <Build Include="StoredProcedures\usp_GetUserByUserName.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.publish.xml" />
