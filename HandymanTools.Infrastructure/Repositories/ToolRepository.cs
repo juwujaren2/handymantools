@@ -12,22 +12,22 @@ namespace HandymanTools.Infrastructure.Repositories
     {
         public List<Tool> CheckToolAvailability(ToolType toolType, DateTime startDate, DateTime endDate)
         {
-            
+            return null;
         }
 
         public Tool GetToolInfo(int toolId)
         {
-            
+            return null;
         }
 
         public bool SellTool(int toolId)
         {
-            
+            return true;
         }
 
         public int AddTool(Tool tool)
         {
-            
+            return 0;
         }
     }
 }
