@@ -10,24 +10,26 @@
 @Styles.Render("~/Content/themes/base/core.css")
 @Styles.Render("~/Content/themes/base/theme.css")
 @Styles.Render("~/Content/themes/base/datepicker.css")
-<div class="form-horizontal">
-    <div class="jumbotron handyman-jumbotron">
-        <h2><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> @ViewBag.Title</h2>
-    </div>
-    <hr />
-    @using (Html.BeginForm())
-    {
-        <h4>Please select a tool type.</h4>
-        
-        foreach (var toolType in Enum.GetNames(typeof(ToolType)))
-        {
-
-            <div>
-                @Html.RadioButtonFor(t => toolType, Enum.Parse(typeof(ToolType), toolType, true)@*, htmlAttributes: new {@class = "form-control"}*@)
-            @Html.Label(toolType@*, htmlAttributes: new { @class = "control-label col-md-2" }*@)
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="jumbotron handyman-jumbotron">
+            <h2><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> @ViewBag.Title</h2>
         </div>
+        <hr/>
 
-        }
+        <h4>Please select a tool type.</h4>
+        <div class="form-group">
+            @foreach (var toolType in Enum.GetNames(typeof (ToolType)))
+            {
+
+                <div class="col-md-2">
+                    @Html.RadioButtonFor(t => toolType, Enum.Parse(typeof (ToolType), toolType, true) @*, htmlAttributes: new {@class = "form-control"}*@)
+                    @Html.Label(toolType @*, htmlAttributes: new { @class = "control-label col-md-2" }*@)
+                </div>
+
+            }
+        </div>
         <hr/>
         <script>
             $(function() {
@@ -35,10 +37,20 @@
                 $("#endDate").datepicker();
             });
         </script>
-        <div>@Html.Label("Start Date:") @Html.TextBox("startDate", "", htmlAttributes: new { @autocomplete = "off"})</div>
-        <div>@Html.Label("End Date:") @Html.TextBox("endDate", "", htmlAttributes: new { @autocomplete = "off" })</div>
-        <div><input type="submit" value="Submit" class="btn btn-primary" /></div>
+        <div class="form-group">
+            <div>@Html.Label("Start Date:", htmlAttributes: new {@class = "col-md-2"})</div>
+            <div class="col-md-10">@Html.TextBox("startDate", "", htmlAttributes: new {@autocomplete = "off", @class = "form-control"})</div>
+        </div>
+        <div class="form-group">
+            <div>@Html.Label("End Date:", htmlAttributes: new {@class = "control-label col-md-2"})</div>
+            <div class="col-md-10">@Html.TextBox("endDate", "", htmlAttributes: new {@autocomplete = "off", @class = "form-control"})</div>
+        </div>
+
+        <div>
+            <input type="submit" value="Submit" class="btn btn-primary form-control"/>
+        </div>
 
 
-    }
-</div>
+
+    </div>
+}
