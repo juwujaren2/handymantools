@@ -8,7 +8,7 @@ RETURNS TABLE
 AS
 	RETURN
 	(
-		SELECT Accessory = y.i.value('(./text())[1]', 'varchar(50)')
+		SELECT Id = y.i.value('(./text())[1]', 'int')
 		FROM 
 		( 
 			SELECT x = CONVERT(XML, '<i>' 

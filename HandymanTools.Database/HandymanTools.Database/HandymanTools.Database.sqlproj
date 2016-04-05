@@ -92,7 +92,6 @@
     <Build Include="StoredProcedures\usp_Report_ClerkProgress.sql" />
     <Build Include="StoredProcedures\usp_GetUserByUserName.sql" />
     <Build Include="Functions\fn_SplitStrings_String.sql" />
-    <Build Include="usp_AddPowerToolAccessory.sql" />
     <Build Include="StoredProcedures\usp_InsertNewPowerToolAccessory.sql" />
   </ItemGroup>
   <ItemGroup>
