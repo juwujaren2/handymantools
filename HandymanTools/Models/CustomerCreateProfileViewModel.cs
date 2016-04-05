@@ -10,7 +10,7 @@ namespace HandymanTools.Models
     public class CustomerCreateProfileViewModel
     {
         [Required]
-        [Display(Name = "Email Address(Login)")]
+        [Display(Name = "Email Address (Login)")]
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         public string UserName { get; set; }

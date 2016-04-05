@@ -25,11 +25,20 @@ namespace HandymanTools.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Loads the Create customer profile form
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateProfile()
         {
             return View();
         }
 
+        /// <summary>
+        /// Saves customer profile
+        /// </summary>
+        /// <param name="model">Viewmodel to pass data from the view to the controller</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult CreateProfile(CustomerCreateProfileViewModel model)
         {
@@ -54,12 +63,15 @@ namespace HandymanTools.Controllers
                 FormsAuthentication.SetAuthCookie(customer.UserName, false);
                 return RedirectToAction("ViewProfile", "Customer");
             }
-            // TODO: Need to add an Error View if this fails with the appropriate message.
             
             return View();
             
         }
 
+        /// <summary>
+        /// Displays profile of currently logged in user if customer
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ViewProfile()
         {
             Customer customer = User.Identity.GetUser() as Customer;

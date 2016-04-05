@@ -77,7 +77,7 @@
     <Build Include="StoredProcedures\usp_GetCustomerByUserName.sql" />
     <Build Include="StoredProcedures\usp_GetReservationsByCustomerId.sql" />
     <Build Include="StoredProcedures\usp_InsertNewCustomerReservation.sql" />
-    <Build Include="Functions\fn_SplitStrings.sql" />
+    <Build Include="Functions\fn_SplitStrings_Integer.sql" />
     <Build Include="StoredProcedures\usp_GetReservedToolDetails.sql" />
     <Build Include="StoredProcedures\usp_GetToolAvailability.sql" />
     <Build Include="StoredProcedures\usp_ViewToolDetails.sql" />
@@ -91,6 +91,9 @@
     <Build Include="StoredProcedures\usp_Report_CustomerRentals.sql" />
     <Build Include="StoredProcedures\usp_Report_ClerkProgress.sql" />
     <Build Include="StoredProcedures\usp_GetUserByUserName.sql" />
+    <Build Include="Functions\fn_SplitStrings_String.sql" />
+    <Build Include="usp_AddPowerToolAccessory.sql" />
+    <Build Include="StoredProcedures\usp_InsertNewPowerToolAccessory.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.publish.xml" />

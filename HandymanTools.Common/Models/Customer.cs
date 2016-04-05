@@ -27,8 +27,8 @@ namespace HandymanTools.Common.Models
         {
             get
             {
-                string fullPhone = string.Format("{0}{1}", HomeAreaCode, HomePhone);
-                return string.Format("{0:(###) ###-####}", fullPhone);
+                string fullPhone = string.Format("{0}{1}", HomeAreaCode, HomePhone);                
+                return string.Format("{0:(###) ###-####}", Convert.ToInt64(fullPhone));
             }
         }
 
@@ -37,7 +37,7 @@ namespace HandymanTools.Common.Models
             get
             {
                 string fullPhone = string.Format("{0}{1}", WorkAreaCode, WorkPhone);
-                return string.Format("{0:(###) ###-####}", fullPhone);
+                return string.Format("{0:(###) ###-####}", Convert.ToInt64(fullPhone));
             }
         }
 

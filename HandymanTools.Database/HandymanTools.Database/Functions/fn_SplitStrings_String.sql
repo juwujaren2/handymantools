@@ -1,5 +1,4 @@
-﻿--Based on http://sqlperformance.com/2012/07/t-sql-queries/split-strings
-CREATE FUNCTION [dbo].[fn_SplitStrings_Integer]
+﻿CREATE FUNCTION [dbo].[fn_SplitStrings_String]
 (
 	@List varchar(MAX),
 	@Delimiter varchar(255)
