@@ -15,10 +15,10 @@ AS
 
 	SET @ToolId = SCOPE_IDENTITY()
 
-	IF @ToolType = 'Power'
-	BEGIN
-		INSERT INTO PowerToolAccessory (ToolId, Accessory)
-		VALUES (@ToolID, @Accessory);
-	END
+	--IF @ToolType = 'Power'
+	--BEGIN
+	--	INSERT INTO PowerToolAccessory (ToolId, Accessory)
+	--	VALUES (@ToolID, @Accessory);
+	--END
 
 RETURN 0

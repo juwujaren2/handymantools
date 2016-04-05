@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using HandymanTools.Common.Enums;
 using System.Web.Mvc;
-using HandymanTools.Common.Enums;
 
 namespace HandymanTools.Controllers
 {
@@ -12,6 +8,12 @@ namespace HandymanTools.Controllers
         // GET: Tool
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult AddTool()
+        {
+            //ViewBag.ToolTypes = new SelectList(ToolType, ToolType.Construction, )
             return View();
         }
 
