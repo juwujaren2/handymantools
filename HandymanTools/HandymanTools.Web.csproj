@@ -176,6 +176,7 @@
     <Compile Include="Models\CustomerCreateProfileViewModel.cs" />
     <Compile Include="Models\CustomerProfileViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ToolViewModel.cs" />
     <Compile Include="Models\ToolCreateViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -265,7 +266,7 @@
     <Content Include="Views\Tool\AvailabilityDetail.cshtml" />
     <Content Include="Views\Tool\Detail.cshtml" />
     <Content Include="Views\Customer\ViewProfile.cshtml" />
-    <Content Include="Views\Tool\AddTool.cshtml" />
+    <Content Include="Views\Tool\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

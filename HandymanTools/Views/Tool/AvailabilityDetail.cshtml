@@ -1,6 +1,8 @@
-﻿
+﻿@using HandymanTools.Models
+@model HandymanTools.Models.AvailableToolViewModel
 @{
     ViewBag.Title = "Check Tool Availability";
+    AvailableToolsViewModel availableTools = (AvailableToolsViewModel)ViewData["AvailableTools"];
 }
 
 <div class="jumbotron handyman-jumbotron">
@@ -11,4 +13,22 @@
 <p>Start Date: @ViewBag.startDate</p>
 <p>End Date: @ViewBag.endDate</p>
 
-
+@if (availableTools.Count > 0)
+{
+    <table class="table-bordered">
+        <thead>
+        <tr><th>@Html.LabelFor(m => Model.ToolID)</th><th>@Html.LabelFor(m => Model.AbbreviatedDescription)</th><th>@Html.LabelFor(m => Model.Deposit)</th><th>@Html.LabelFor(m => Model.RentalPrice)</th></tr>
+        </thead>
+        @foreach (var tool in availableTools)
+        {
+            <tr><td>
+                @Html.ActionLink(Html.DisplayFor(m => tool.ToolID).ToHtmlString(), "Detail", new {tool.ToolID})
+            </td><td>@Html.DisplayFor(m => tool.AbbreviatedDescription)</td><td>@Html.DisplayFor(m => tool.Deposit)</td><td>@Html.DisplayFor(m => tool.RentalPrice)</td></tr>
+        }
+    </table>
+    <p>Click a tool's ID to view its details.</p>
+}
+else
+{
+    <p>No tools available for the date range and tool type entered.</p>
+}

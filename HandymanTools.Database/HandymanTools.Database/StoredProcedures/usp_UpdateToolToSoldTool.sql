@@ -3,7 +3,7 @@
 AS
 UPDATE Tool
 	SET Tool.SaleDate = GETDATE()
-	WHERE Tool.ToolID = @ToolID
+	WHERE Tool.ToolId = @ToolID
 	AND Tool.SaleDate IS NULL;
 
 RETURN 0

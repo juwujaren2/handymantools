@@ -11,7 +11,7 @@ using HandymanTools.Common.Models;
 
 namespace HandymanTools.Infrastructure.Repositories
 {
-    public class ToolRepository
+    public class ToolRepository : IToolRepository
     {
         private readonly string _connectionString;
         public ToolRepository()
@@ -31,7 +31,7 @@ namespace HandymanTools.Infrastructure.Repositories
                 };
                 command.Parameters.Add("@ToolType", SqlDbType.VarChar).Value = toolType.ToString();
                 command.Parameters.Add("@StartDate", SqlDbType.Date).Value = startDate;
-                command.Parameters.Add("@ToolType", SqlDbType.Date).Value = endDate;
+                command.Parameters.Add("@EndDate", SqlDbType.Date).Value = endDate;
 
                 //open, execute stored procedure, and close connection
                 conn.Open();
@@ -62,7 +62,7 @@ namespace HandymanTools.Infrastructure.Repositories
                     CommandText = "usp_ViewToolDetails",
                     Connection = conn
                 };
-                command.Parameters.Add("@ToolType", SqlDbType.Int).Value = toolId;
+                command.Parameters.Add("@ToolId", SqlDbType.Int).Value = toolId;
 
                 //open, execute stored procedure, and close connection
                 conn.Open();
@@ -84,12 +84,50 @@ namespace HandymanTools.Infrastructure.Repositories
                         
                     }
                     break;
-                } 
+                }
+
+                if (returnTool != null && returnTool.ToolType == ToolType.Power)
+                {
+                    returnTool.Accessories = GetPowerToolAccessories(returnTool);
+                }
                
                 reader.Close();
                 conn.Close();
                 return returnTool;
             }
+        }
+
+        public List<PowerToolAccessory> GetPowerToolAccessories(Tool tool)
+        {
+            var returnList = new List<PowerToolAccessory>();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "usp_GetPowerToolAccessories",
+                    Connection = conn
+                };
+                command.Parameters.Add("@ToolId", SqlDbType.Int).Value = tool.ToolId;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                var reader = command.ExecuteReader();
+                while (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        returnList.Add(new PowerToolAccessory()
+                        {
+                            Tool = tool,
+                            ToolId = tool.ToolId,
+                            Accessory = reader.GetString(0)
+                        });
+                    }
+                    break;
+                }
+            }
+            return returnList;
         }
 
         public int AddTool(Tool tool)

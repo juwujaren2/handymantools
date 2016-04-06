@@ -10,18 +10,18 @@ namespace HandymanTools.Models
     public class AvailableToolViewModel
     {
         [Display(Name = "Tool ID")]
-        public int ToolID;
+        public int ToolID { get; set; }
 
         [Display(Name = "Abbreviated Description")]
-        public string AbbreviatedDescription;
+        public string AbbreviatedDescription { get; set; }
 
         [Display(Name = "Deposit ($)")]
         [DataType(DataType.Currency)]
-        public decimal Deposit;
+        public decimal Deposit { get; set; }
 
         [Display(Name = "Price/Day ($)")]
         [DataType(DataType.Currency)]
-        public decimal RentalPrice;
+        public decimal RentalPrice { get; set; }
 
     }
 }
