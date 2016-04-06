@@ -6,7 +6,7 @@
 @PurchasePrice decimal (13,4),
 @DepositAmount decimal (13,4),
 @ToolType varchar(25),
-@Accessory varchar(50)
+@AccessoryList varchar(MAX)
 AS
 	INSERT INTO Tool (AbbrDescription, FullDescription, RentalPrice, PurchasePrice, 
 			DepositAmt, ToolType)
@@ -15,10 +15,11 @@ AS
 
 	SET @ToolId = SCOPE_IDENTITY()
 
-	--IF @ToolType = 'Power'
-	--BEGIN
-	--	INSERT INTO PowerToolAccessory (ToolId, Accessory)
-	--	VALUES (@ToolID, @Accessory);
-	--END
+	IF @ToolType = 'Power'
+	BEGIN
+		INSERT INTO PowerToolAccessory (ToolId, Accessory)
+		SELECT @ToolId, Accessory
+		FROM fn_SplitStrings_String(@AccessoryList, ',')
+	END
 
 RETURN 0
