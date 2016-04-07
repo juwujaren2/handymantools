@@ -4,6 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using HandymanTools.Common.Enums;
+using HandymanTools.Infrastructure.Repositories;
+using HandymanTools.Models;
 
 namespace HandymanTools.Controllers
 {
@@ -16,9 +19,24 @@ namespace HandymanTools.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public AvailableToolsViewModel Get(int toolType, string startDate, string endDate)
         {
-            return "value";
+            var returnList = new AvailableToolsViewModel();
+            var reqToolType = (ToolType) toolType;
+            var reqStartDate = DateTime.Parse(startDate);
+            var reqEndDate = DateTime.Parse(endDate);
+            foreach (var tool in new ToolRepository().CheckToolAvailability(reqToolType, reqStartDate, reqEndDate))
+            {
+                returnList.Add(new AvailableToolViewModel()
+                {
+                    AbbreviatedDescription = tool.AbbrDescription,
+                    Deposit = tool.DepositAmount,
+                    RentalPrice = tool.RentalPrice,
+                    ToolID = tool.ToolId
+                });
+            }
+
+            return returnList;
         }
 
         // POST api/<controller>

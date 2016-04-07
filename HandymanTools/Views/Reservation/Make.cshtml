@@ -1,9 +1,124 @@
-﻿
+﻿@using HandymanTools.Common.Enums
+
 @{
     ViewBag.Title = "Make Reservation";
 }
+@Scripts.Render("~/Scripts/jquery-ui-1.11.4.min.js")
+@Styles.Render("~/Content/themes/base/core.css")
+@Styles.Render("~/Content/themes/base/theme.css")
+@Styles.Render("~/Content/themes/base/datepicker.css")
+<script>
+    var ToolTypePicker = "<select onchange='javasript:changeToolType(this)'>" +
+        "<option value='-1'>Select Tool Type</option>" +
+        "<option value='@((int)ToolType.Construction)' name=''>@ToolType.Construction.ToString()</option>" +
+        "<option value='@((int)ToolType.Hand)'>@ToolType.Hand.ToString()</option>" +
+        "<option value='@((int)ToolType.Power)'>@ToolType.Power.ToString()</option>" +
+        "</select>";
+    var newRow = "<tr id='#'><td><b>&.</b></td><td id='type#'></td><td id='tool#'></td></tr>";
+    var testData = [];
+    $(function () {
+        $("#startDate").datepicker();
+        $("#endDate").datepicker();
+        $("#startDate").change(function () {
+            if ($("#endDate").val() !== "") {
+                $("#endDate").prop("disabled", true);
+                $("#startDate").prop("disabled", true);
+                $("#changeDate").removeAttr("hidden");
+                $("#toolSelection").removeAttr("hidden");
+                $("#type0").append(ToolTypePicker);
+                //alert("You can start choosing tools now.");
+            }
+        });
+        $("#endDate").change(function () {
+            if ($("#startDate").val() !== "") {
+                $("#endDate").prop("disabled", true);
+                $("#startDate").prop("disabled", true);
+                $("#changeDate").removeAttr("hidden");
+                $("#toolSelection").removeAttr("hidden");
+                $("#type0").append(ToolTypePicker);
+                //alert("You can start choosing tools now.");
+            }
+        });
+    });
 
+    function changeToolType(select) {
+        if (select.value !== -1) {
+            var callingId = select.parentElement.id.replace("type", "");
+        //alert(callingId);
+        //$("#tool" + callingId).text(select.value);
+        var toolList = [];
+        $.get("@Url.Content("~/api/ReservationTools")", { toolType: Number(select.value), startDate: $("#startDate").val(), endDate: $("#endDate").val()}).done(function(data) { toolList = data;});
+        testData = toolList;
+        //alert(select.value);
+        var selectedTools = [];
+        var availableToolList = [];
+        $(".toolSelection").each(function(i) {
+            selectedTools.push(this.value);
+        });
+
+        for (var i = 0; i < toolList.length; i++) {
+            if (selectedTools.indexOf(toolList[i].ToolID) === -1) {
+                availableToolList.push(toolList[i]);
+            }
+        }
+
+
+
+        if (availableToolList.length > 0) {
+
+        } else {
+            $("#tool" + callingId).text("No more available");
+        }
+        }
+
+
+    }
+
+    function addNewRow() {
+        var lastId = $("#toolRows").children().last()[0].id;
+        if (Number(lastId) < 49) {
+            var nextId = Number(lastId) + 1;
+            var nextNum = Number(lastId) + 2;
+            var appendRow = newRow.replace(/#/g, nextId);
+            appendRow = appendRow.replace(/&/g, nextNum);
+            $("#toolRows").append(appendRow);
+            $("#type" + nextId).append(ToolTypePicker);
+        } else {
+            //alert("You may only have up to 50 tools per reservation.")
+        }
+
+
+    }
+
+    function removeLastRow() {
+        var lastId = $("#toolRows").children().last()[0].id;
+        alert(lastId);
+        if (Number(lastId) === 0) {
+            alert('You cannot delete any more tools.');
+        } else {
+            $("#toolRows").children()[Number(lastId)].remove();
+        }
+    }
+</script>
 <div class="jumbotron handyman-jumbotron">
     <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> @ViewBag.Title</h2>
+</div>
+<div>
+    <div><label>Starting Date</label> <input type="text" id="startDate" /></div>
+    <div>
+        <label>Ending Date</label> <input type="text" id="endDate" />
+    </div>
+    <div><button name="Change Date" hidden="hidden" id="changeDate" onclick="javascript:location.reload();">Change Date</button></div>
+    <div hidden="hidden" id="toolSelection">
+        <table>
+            <thead>
+            <tr><th></th><th>Type of Tool</th><th>Tool</th></tr>
+            </thead>
+            <tbody id="toolRows">
+            <tr id="0"><td><b>1.</b></td><td id="type0"></td><td id="tool0"></td></tr>
+            </tbody>
+        </table>
+        <button onclick="javascript: addNewRow();">Add More Tools</button><button onClick="javascript: removeLastRow();">Remove last tool</button>
+    </div>
 </div>
 
