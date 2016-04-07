@@ -39,36 +39,58 @@
                 //alert("You can start choosing tools now.");
             }
         });
+        $("#reserveForm").submit(function() {
+            $("#hiddenStartDate").val($("#startDate").val());
+            $("#hiddenEndDate").val($("#endDate").val());
+        });
     });
 
     function changeToolType(select) {
         if (select.value !== -1) {
             var callingId = select.parentElement.id.replace("type", "");
         //alert(callingId);
-        //$("#tool" + callingId).text(select.value);
+            //$("#tool" + callingId).text(select.value);
+            $("#tool" + callingId).empty();
         var toolList = [];
-        $.get("@Url.Content("~/api/ReservationTools")", { toolType: Number(select.value), startDate: $("#startDate").val(), endDate: $("#endDate").val()}).done(function(data) { toolList = data;});
-        testData = toolList;
-        //alert(select.value);
-        var selectedTools = [];
-        var availableToolList = [];
-        $(".toolSelection").each(function(i) {
-            selectedTools.push(this.value);
-        });
+        $.get("@Url.Content("~/api/ReservationTools")", { toolType: Number(select.value), startDate: $("#startDate").val(), endDate: $("#endDate").val() }).done(function(data) {
+                var selectedTools = [];
+                var availableToolList = [];
+                var i;
+                $(".toolSelection").each(function(i) {
+                    if (this.value !== -1) {
+                        selectedTools.push(Number(this.value));
+                    }
+                });
+                for (i = 0; i < data.length; i++) {
+                    if (selectedTools.indexOf(data[i].ToolID) == -1) {
+                        availableToolList.push(data[i]);
+                    }
+                }
 
-        for (var i = 0; i < toolList.length; i++) {
-            if (selectedTools.indexOf(toolList[i].ToolID) === -1) {
-                availableToolList.push(toolList[i]);
-            }
-        }
 
+                if (availableToolList.length > 0) {
+                    var newSelect = document.createElement("select");
+                    newSelect.setAttribute("class", "toolSelection");
+                    newSelect.setAttribute("name", "toolSelection" + callingId);
+                    newSelect.setAttribute("onchange", "javascript:checkSubmit()")
+                    var defaultOption = document.createElement("option");
+                    defaultOption.setAttribute("value", -1);
+                    defaultOption.innerHTML = "Select tool";
+                    newSelect.appendChild(defaultOption);
+                    for (i = 0; i < availableToolList.length; i++) {
+                        var toolOption = document.createElement("option");
+                        toolOption.setAttribute("value", availableToolList[i].ToolID);
+                        toolOption.innerHTML = availableToolList[i].ToolID + ". " + availableToolList[i].AbbreviatedDescription + " $" + Number(availableToolList[i].RentalPrice).toFixed(2);
+                        newSelect.appendChild(toolOption);
+                    }
+                    $("#tool" + callingId).append(newSelect);
+                } else {
+                    $("#tool" + callingId).text("No more available");
+                }
+            });
+            //testData = toolList;
+            //alert(select.value);
 
-
-        if (availableToolList.length > 0) {
-
-        } else {
-            $("#tool" + callingId).text("No more available");
-        }
         }
 
 
@@ -84,7 +106,7 @@
             $("#toolRows").append(appendRow);
             $("#type" + nextId).append(ToolTypePicker);
         } else {
-            //alert("You may only have up to 50 tools per reservation.")
+            alert("You may only have up to 50 tools per reservation.");
         }
 
 
@@ -92,11 +114,22 @@
 
     function removeLastRow() {
         var lastId = $("#toolRows").children().last()[0].id;
-        alert(lastId);
         if (Number(lastId) === 0) {
             alert('You cannot delete any more tools.');
         } else {
-            $("#toolRows").children()[Number(lastId)].remove();
+            $("#toolRows").children()[Number(lastId)].outerHTML = "";
+        }
+    }
+
+    function checkSubmit() {
+        var selectedTools = []
+        $(".toolSelection").each(function (i) {
+            if (this.value !== -1) {
+                selectedTools.push(Number(this.value));
+            }
+        });
+        if (selectedTools.length > 0) {
+            $("#submit").removeAttr("hidden");
         }
     }
 </script>
@@ -104,21 +137,34 @@
     <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> @ViewBag.Title</h2>
 </div>
 <div>
-    <div><label>Starting Date</label> <input type="text" id="startDate" /></div>
-    <div>
-        <label>Ending Date</label> <input type="text" id="endDate" />
-    </div>
-    <div><button name="Change Date" hidden="hidden" id="changeDate" onclick="javascript:location.reload();">Change Date</button></div>
-    <div hidden="hidden" id="toolSelection">
-        <table>
-            <thead>
-            <tr><th></th><th>Type of Tool</th><th>Tool</th></tr>
-            </thead>
-            <tbody id="toolRows">
-            <tr id="0"><td><b>1.</b></td><td id="type0"></td><td id="tool0"></td></tr>
-            </tbody>
-        </table>
-        <button onclick="javascript: addNewRow();">Add More Tools</button><button onClick="javascript: removeLastRow();">Remove last tool</button>
-    </div>
+    <form action="Summary" method="post" id="reserveForm">
+        <div>
+            <label>Starting Date</label> <input type="text" id="startDate" name="startDate"/>
+            <input type="hidden" id="hiddenStartDate" name="startDate"/>
+        </div>
+        <div>
+            <label>Ending Date</label> <input type="text" id="endDate" name="endDate"/>
+            <input type="hidden" id="hiddenEndDate" name="endDate" />
+        </div>
+        <div>
+            <button name="Change Date" hidden="hidden" id="changeDate" onclick="javascript:location.reload();" type="button">Change Date</button>
+        </div>
+        <div hidden="hidden" id="toolSelection">
+            <table>
+                <thead>
+                    <tr><th></th><th>Type of Tool</th><th>Tool</th></tr>
+                </thead>
+                <tbody id="toolRows">
+                    <tr id="0"><td><b>1.</b></td><td id="type0"></td><td id="tool0"></td></tr>
+                </tbody>
+            </table>
+            <div>
+                <button onclick="javascript: addNewRow();" type="button">Add More Tools</button><button onClick="javascript: removeLastRow();" type="button">Remove last tool</button>
+            </div>
+            <div>
+                <input type="submit" value="Calculate Total" hidden="hidden" id="submit"/>
+            </div>
+        </div>
+    </form>
 </div>
 
