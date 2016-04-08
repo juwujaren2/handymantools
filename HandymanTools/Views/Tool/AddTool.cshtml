@@ -57,9 +57,36 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ToolType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ToolType, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EnumDropDownListFor(model => model.ToolType, new { @class = "form-control" })
             </div>
         </div>
+        <div id="AccessoriesGroup" class="form-group hidden">
+            @Html.LabelFor(model => model.Accessories, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="AccessoriesList">
+                    @for (int i = 0; i < Model.Accessories.Count; i++)
+                    {
+                        <div class="input-group accessory-container" id="AccessoryContainer_@i">
+                            <input type="text" name="Accessories[@i]" class="form-control" id="Accessory_@i" placeholder="Enter Accessory" value="@Model.Accessories[i]">
+                            <div class="input-group-btn" style="width: auto;">
+                                <button id="btn_DeleteAccessory_@i" type="button" class="btn btn-danger" aria-label="Add">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control accessory-control" id="input_AddAccessory" placeholder="Enter Accessory">
+                    <div class="input-group-btn" style="width: auto;">
+                        <button id="btn_AddAccessory" type="button" class="btn btn-primary" aria-label="Add">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -74,4 +101,38 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        var counter = $('#AccessoriesList').children().length;
+        $('#btn_AddAccessory').on('click', function () {
+            var $accessoryInput = $('#input_AddAccessory');
+            var accessory = $accessoryInput.val();
+            if (accessory.length > 0) {
+                $('#AccessoriesList').append('<div class="input-group accessory-container" id="AccessoryContainer' + counter + '">'
+                    + '<input type="text" name="Accessories[' + counter + ']" class="form-control accessory-control" id="Accessory' + counter + '" placeholder="Enter Accessory" value="' + accessory +'">'
+                    + '<div class="input-group-btn" style="width: auto;">'
+                    + '<button id="btn_DeleteAccessory' + counter + '" type="button" class="btn btn-danger" aria-label="Add"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>'
+                    + '</button></div></div>');
+                counter++;
+                $accessoryInput.val('');
+            }
+        });
+        $('#AccessoriesList').on('click', '[id^="btn_DeleteAccessory"]', function () {
+            var $container = $(this).closest('[id^="AccessoryContainer"]');
+            if ($container.length > 0) {
+                $container.find('input[id^="Accessory"]').val('');
+                $container.hide();
+            }
+        });
+
+        $(function(){
+            $('#ToolType').change(function() {
+                if ( $("select option:selected").text() == 'Power') {
+                    $('#AccessoriesGroup').removeClass('hidden');
+                }
+                else {
+                    $('#AccessoriesGroup').addClass('hidden');
+                }
+            });
+        });
+    </script>
 }

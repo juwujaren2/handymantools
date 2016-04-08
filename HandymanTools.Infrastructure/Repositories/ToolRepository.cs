@@ -22,6 +22,7 @@ namespace HandymanTools.Infrastructure.Repositories
         public int AddTool(Tool tool)
         {
             int toolId = 0;
+            string accessories = string.Join(",", tool.Accessories.Where(a => !string.IsNullOrWhiteSpace(a)));
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand();
@@ -34,6 +35,7 @@ namespace HandymanTools.Infrastructure.Repositories
                 command.Parameters.Add("@PurchasePrice", SqlDbType.Decimal).Value = tool.PurchasePrice;
                 command.Parameters.Add("@DepositAmount", SqlDbType.Decimal).Value = tool.DepositAmount;
                 command.Parameters.Add("@ToolType", SqlDbType.VarChar).Value = tool.ToolType;
+                command.Parameters.Add("@AccessoryList", SqlDbType.VarChar).Value = accessories;
                 command.Parameters.Add("@ToolId", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                 //open, execute stored procedure, and close connection
@@ -48,36 +50,6 @@ namespace HandymanTools.Infrastructure.Repositories
         public int SellTool(int ToolId)
         {
             throw new NotImplementedException();
-        }
-
-        public int AddPowerToolAccessory(int toolId, string accessory)
-        {
-            PowerToolAccessory PowerToolAccessory = new PowerToolAccessory();
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            {
-                SqlCommand command = new SqlCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "usp_InsertNewPowerToolAccessory";
-                command.Connection = conn;
-                command.Parameters.Add("@ToolId", SqlDbType.Int).Value = toolId;
-                command.Parameters.Add("@Accessory", SqlDbType.VarChar).Value = accessory;
-
-                //open, execute stored procedure, and close connection
-                conn.Open();
-                try
-                {
-                    command.ExecuteNonQuery();
-                }
-                catch (SqlException e)
-                {
-                    return -1;
-                }
-                finally
-                {
-                    conn.Close();
-                }
-            }
-            return 0;
         }
     }
 }

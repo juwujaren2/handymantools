@@ -147,3 +147,17 @@ a {
   background-color: #025374;
   border-color: #023e56;
 }
+
+/* Add Tool View*/
+select {
+  max-width: 313px;
+  width: 313px;
+}
+.accessory-control {
+    max-width: 275px;
+    width: 275px !important;
+}
+#AccessoriesList, .accessory-container {
+    padding-bottom: 5px;
+}
+

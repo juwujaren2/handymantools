@@ -225,13 +225,14 @@
     <Content Include="Views\Shared\_SidebarPartial.cshtml" />
     <Content Include="Views\Customer\CreateProfile.cshtml" />
     <Content Include="Views\Customer\ViewProfile.cshtml" />
+    <Content Include="Views\Tool\AddAccessory.cshtml" />
     <Content Include="Views\Tool\AddTool.cshtml" />
+    <Content Include="Views\Reservation\PickUpReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Report\" />
-    <Folder Include="Views\Reservation\" />
     <Folder Include="Views\ServiceOrder\" />
   </ItemGroup>
   <ItemGroup>

@@ -11,8 +11,6 @@ namespace HandymanTools.Infrastructure.Repositories
     {
         int AddTool(Tool tool);
 
-        int AddPowerToolAccessory(int toolId, string accessory);
-
         int SellTool(int ToolId);
     }
 }

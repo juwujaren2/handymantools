@@ -9,5 +9,9 @@ namespace HandymanTools.Controllers
         {
             return View();
         }
+        public ActionResult PickUpReservation()
+        {
+            return View();
+        }
     }
 }
