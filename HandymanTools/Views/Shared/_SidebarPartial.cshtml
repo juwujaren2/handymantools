@@ -70,8 +70,8 @@ else if (loggedInUser.UserType == UserType.Clerk)
                         Service Order
                     </a>
                 </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AddTool" ? "active" : "")">
-                    <a href="/Tool/AddTool">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Add" ? "active" : "")">
+                    <a href="/Tool/Add">
                         <i class="glyphicon glyphicon-wrench"></i>
                         Add New Tool
                     </a>

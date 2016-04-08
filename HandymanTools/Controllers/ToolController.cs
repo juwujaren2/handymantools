@@ -42,7 +42,7 @@ namespace HandymanTools.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTool(ToolCreateViewModel vm)
+        public ActionResult Add(ToolCreateViewModel vm)
         {
             if (ModelState.IsValid)
             { 
