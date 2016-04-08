@@ -61,7 +61,7 @@ namespace HandymanTools.Controllers
 
                 var toolId = toolRepository.AddTool(tool);
 
-                return RedirectToAction("PickUpReservation", "Reservation");
+                return RedirectToAction("PickUp", "Reservation");
             }
             return View(vm);
         }

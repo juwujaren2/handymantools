@@ -43,7 +43,7 @@ namespace HandymanTools.Controllers
             ViewBag.totalDeposit = totalDeposit;
             return View(tools);
         }
-        public ActionResult PickUpReservation()
+        public ActionResult PickUp()
         {
             return View();
         }

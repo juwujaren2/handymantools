@@ -284,8 +284,8 @@
     <Content Include="Views\Reservation\Summary.cshtml" />
     <Content Include="Views\Reservation\Confirmation.cshtml" />
     <Content Include="Views\Tool\AddAccessory.cshtml" />
+    <Content Include="Views\Reservation\PickUp.cshtml" />
     <Content Include="Views\Tool\AddTool.cshtml" />
-    <Content Include="Views\Reservation\PickUpReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
