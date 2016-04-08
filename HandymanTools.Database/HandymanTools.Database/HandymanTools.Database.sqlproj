@@ -93,6 +93,7 @@
     <Build Include="StoredProcedures\usp_GetUserByUserName.sql" />
     <Build Include="Functions\fn_SplitStrings_String.sql" />
     <Build Include="StoredProcedures\usp_GetPowerToolAccessories.sql" />
+    <Build Include="StoredProcedures\usp_InsertClerkProfile.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.publish.xml" />
