@@ -1,22 +1,130 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HandymanTools.Common.Enums;
 using HandymanTools.Common.Models;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.Data;
 
 namespace HandymanTools.Infrastructure.Repositories
 {
     public class ToolRepository : IToolRepository
     {
-        private string _connectionString;
-
+        private readonly string _connectionString;
         public ToolRepository()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        }
+        public List<Tool> CheckToolAvailability(ToolType toolType, DateTime startDate, DateTime endDate)
+        {
+            var returnList = new List<Tool>();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "usp_GetToolAvailability",
+                    Connection = conn
+                };
+                command.Parameters.Add("@ToolType", SqlDbType.VarChar).Value = toolType.ToString();
+                command.Parameters.Add("@StartDate", SqlDbType.Date).Value = startDate;
+                command.Parameters.Add("@EndDate", SqlDbType.Date).Value = endDate;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                var reader = command.ExecuteReader();
+
+                while (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        returnList.Add(new Tool() {ToolId = reader.GetInt32(0), AbbrDescription = reader.GetString(1), DepositAmount = reader.GetDecimal(2), RentalPrice = reader.GetDecimal(3)});
+                    }
+                    break;
+                }
+                reader.Close();
+                conn.Close();
+            }
+            return returnList;
+        }
+
+        public Tool GetToolInfo(int toolId)
+        {
+            Tool returnTool = null;
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "usp_ViewToolDetails",
+                    Connection = conn
+                };
+                command.Parameters.Add("@ToolId", SqlDbType.Int).Value = toolId;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                var reader = command.ExecuteReader();
+                while (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                       returnTool = new Tool()
+                       {
+                           ToolId = reader.GetInt32(0),
+                           AbbrDescription = reader.GetString(1),
+                           FullDescription = reader.GetString(2),
+                           ToolType = (ToolType)Enum.Parse(typeof(ToolType), reader.GetString(3), false),
+                           DepositAmount = reader.GetDecimal(4),
+                           PurchasePrice = reader.GetDecimal(5),
+                           RentalPrice = reader.GetDecimal(6)
+                       };
+                        
+                    }
+                    break;
+                }
+
+                if (returnTool != null && returnTool.ToolType == ToolType.Power)
+                {
+                    returnTool.Accessories = GetPowerToolAccessories(returnTool);
+                }
+               
+                reader.Close();
+                conn.Close();
+                return returnTool;
+            }
+        }
+
+        public List<string> GetPowerToolAccessories(Tool tool)
+        {
+            string listItem;
+            var returnList = new List<string>();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "usp_GetPowerToolAccessories",
+                    Connection = conn
+                };
+                command.Parameters.Add("@ToolId", SqlDbType.Int).Value = tool.ToolId;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                var reader = command.ExecuteReader();
+                while (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        listItem = reader.GetString(0);
+                        returnList.Add(listItem);
+                    }
+                    break;
+                }
+            }
+            return returnList;
         }
 
         public int AddTool(Tool tool)
@@ -46,7 +154,7 @@ namespace HandymanTools.Infrastructure.Repositories
             }
             return toolId;
         }
-        
+
         public int SellTool(int ToolId)
         {
             throw new NotImplementedException();

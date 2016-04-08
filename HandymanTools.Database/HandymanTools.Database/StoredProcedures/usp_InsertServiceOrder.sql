@@ -10,7 +10,7 @@ AS
 	FROM Reservation
 	INNER JOIN ReservationTool ON ReservationTool.ReservationNumber = Reservation.ReservationNumber
 	INNER JOIN Tool ON ReservationTool.ToolID = Tool.ToolID
-	WHERE Tool.ToolID = @ToolId
+	WHERE Tool.ToolId = @ToolId
 	AND (@StartDate <= Reservation.EndDate) and (Reservation.StartDate <= @EndDate)
 
 	IF @ReservationCount = 0

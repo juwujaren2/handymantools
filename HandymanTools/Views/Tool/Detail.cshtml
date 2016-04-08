@@ -1,0 +1,78 @@
+﻿@using HandymanTools.Common.Enums
+@model HandymanTools.Models.ToolViewModel
+
+@{
+    ViewBag.Title = "Tool Detail";
+}
+
+<div class="jumbotron handyman-jumbotron">
+    <h2><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> @ViewBag.Title</h2>
+</div>
+
+<div>
+    <h4>@Model.ToolType.ToString() Tool #@Model.ToolId</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AbbreviatedDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AbbreviatedDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FullDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchasePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PurchasePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RentalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RentalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepositAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepositAmount)
+        </dd>
+        @if (Model.ToolType == ToolType.Power)
+        {
+            <dt>
+                @Html.DisplayNameFor(m => Model.Accessories)
+            </dt>
+            if (Model.Accessories.Count > 0)
+            {
+                <dd>
+                    <ul>
+                    @foreach (var PTA in Model.Accessories)
+                    {
+                        <li>@PTA.Accessory</li>
+                    }
+                        </ul>
+                </dd>
+            }
+            else
+            {
+                <dd>No accessories for this tool.</dd>
+            }
+        }
+
+    </dl>
+</div>

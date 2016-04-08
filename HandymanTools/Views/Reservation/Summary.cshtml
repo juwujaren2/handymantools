@@ -1,0 +1,24 @@
+﻿@model Dictionary<Int32, string>
+@{
+    ViewBag.Title = "Reservation Summary";
+}
+
+<div class="jumbotron handyman-jumbotron">
+    <h2><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> @ViewBag.Title</h2>
+</div>
+    <h3>Tools Desired</h3>
+<form>
+    <input type="hidden" name="customerId" value="@User.Identity.GetUser().UserName"/>
+    <ol>
+        @foreach (var tool in Model)
+        {
+            <li>@tool.Value<input type="hidden" name="toolSelection@(tool.Key)" value="@tool.Key"/></li>
+        }
+    </ol>
+    <p><b>Start Date</b> @ViewBag.StartDate</p><input type="hidden" name="startDate" value="@ViewBag.StartDate"/>
+    <p><b>End Date</b> @ViewBag.EndDate</p><input type="hidden" name="endDate" value="@ViewBag.EndDate"/>
+    <p><b>Total Rental Price</b> @string.Format("{0:C}", @ViewBag.TotalRental)</p>
+    <p><b>Total Deposit Required</b> @string.Format("{0:C}", @ViewBag.totalDeposit)</p>
+</form>
+
+
