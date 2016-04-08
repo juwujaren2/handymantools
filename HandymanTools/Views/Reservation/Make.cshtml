@@ -17,8 +17,15 @@
     var newRow = "<tr id='#'><td><b>&.</b></td><td id='type#'></td><td id='tool#'></td></tr>";
     var testData = [];
     $(function () {
-        $("#startDate").datepicker();
-        $("#endDate").datepicker();
+        $("#startDate").datepicker({
+            minDate: 0,
+            onClose: function (selectedDate) {
+                var parsedDate = new Date(selectedDate);
+                var minEnd = new Date(parsedDate.getFullYear(), parsedDate.getMonth(), parsedDate.getDate() + 1);
+                $("#endDate").datepicker("option", "minDate", minEnd);
+            }
+        });
+        $("#endDate").datepicker({minDate: 1});
         $("#startDate").change(function () {
             if ($("#endDate").val() !== "") {
                 $("#endDate").prop("disabled", true);
@@ -26,6 +33,7 @@
                 $("#changeDate").removeAttr("hidden");
                 $("#toolSelection").removeAttr("hidden");
                 $("#type0").append(ToolTypePicker);
+
                 //alert("You can start choosing tools now.");
             }
         });
