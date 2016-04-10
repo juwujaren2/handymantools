@@ -31,7 +31,6 @@ namespace HandymanTools.Controllers
                 RentalPrice = tool.RentalPrice,
                 ToolType = tool.ToolType
             };
-
             return View(toolView);
         }
 
@@ -66,9 +65,34 @@ namespace HandymanTools.Controllers
             return View(vm);
         }
 
-        public ActionResult AddAccessory()
+        public ActionResult Sell()
         {
-            return View();
+            ToolSellViewModel vm = new ToolSellViewModel();
+            return View(vm);
+        }
+        [HttpPost]
+        public ActionResult Sell(ToolSellViewModel vm)
+         {            
+            if (ModelState.IsValid)
+            {
+                int toolId = Convert.ToInt32(vm.ToolId);
+                //Update tool to tool that's now available for sale
+                toolRepository.UpdateToolToSoldTool(toolId);
+
+                //Calculate sales price for tool for sale
+                SaleTool saleTool = toolRepository.GetSalesPriceForSoldTool(toolId);
+
+                if (saleTool.ToolId == 0)
+                {
+                    ModelState.AddModelError("ToolId", "No tool with that Id exists or is available for sale. Please enter a valid Id.");
+                }
+
+                vm.ToolId = saleTool.ToolId.ToString();
+                vm.ToolName = saleTool.AbbreviatedDescription;
+                vm.SalesPrice = saleTool.SalesPrice;
+                vm.SalesDate = saleTool.SalesDate;            
+            }
+            return View(vm);
         }
 
         public ActionResult Availability()

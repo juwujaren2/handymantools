@@ -11,10 +11,15 @@ namespace HandymanTools.Infrastructure.Repositories
     public interface IToolRepository
     {
         List<Tool> CheckToolAvailability(ToolType toolType, DateTime startDate, DateTime endDate);
+
         Tool GetToolInfo(int toolId);
+
         List<string> GetPowerToolAccessories(Tool tool);
+
         int AddTool(Tool tool);
 
-        int SellTool(int ToolId);
+        int UpdateToolToSoldTool(int toolId);
+
+        SaleTool GetSalesPriceForSoldTool(int toolId);
     }
 }

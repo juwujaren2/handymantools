@@ -95,7 +95,7 @@
     <Build Include="Functions\fn_SplitStrings_String.sql" />
     <Build Include="StoredProcedures\usp_GetPowerToolAccessories.sql" />
     <Build Include="StoredProcedures\usp_InsertClerkProfile.sql" />
-    <Build Include="CannedData\HandymanData.sql" />
+    <None Include="CannedData\HandymanData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.publish.xml" />

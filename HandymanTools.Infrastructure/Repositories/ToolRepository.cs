@@ -155,9 +155,54 @@ namespace HandymanTools.Infrastructure.Repositories
             return toolId;
         }
 
-        public int SellTool(int ToolId)
+        public int UpdateToolToSoldTool(int toolId)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "usp_UpdateToolToSoldTool";
+                command.Connection = conn;
+                command.Parameters.Add("@ToolId", SqlDbType.Int).Value = toolId;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            return 0;
+        }
+
+        public SaleTool GetSalesPriceForSoldTool(int toolId)
+        {
+            SaleTool saleTool = new SaleTool();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "usp_GetSalesPriceForSoldTool";
+                command.Connection = conn;
+                command.Parameters.Add("@ToolId", SqlDbType.VarChar).Value = toolId;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        saleTool.ToolId = reader.GetInt32(0);
+                        saleTool.AbbreviatedDescription = reader.GetString(1);
+                        saleTool.SalesPrice = reader.GetDecimal(2);
+                        saleTool.SalesDate = reader.GetDateTime(3);
+                    }
+                    reader.NextResult();
+                }
+                reader.Close();
+                conn.Close();
+            }
+            return saleTool;
         }
     }
 }

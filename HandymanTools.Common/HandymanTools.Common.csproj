@@ -46,6 +46,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\ReservationTool.cs" />
+    <Compile Include="Models\SaleTool.cs" />
     <Compile Include="Models\ServiceOrder.cs" />
     <Compile Include="Models\Tool.cs" />
     <Compile Include="Models\User.cs" />

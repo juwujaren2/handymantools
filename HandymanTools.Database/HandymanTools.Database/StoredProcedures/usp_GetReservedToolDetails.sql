@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[usp_GetReservedToolDetails]
 	@ReservationNumber int
 AS
-	SELECT Tool.ToolId, Tool.AbbrDescription, Tool.RentalPrice, Tool.DepositAmt
+	SELECT Tool.ToolId, Tool.AbbrDescription, Tool.RentalPrice, Tool.DepositAmt, Tool.ToolType
 	FROM ReservationTool
 		INNER JOIN Tool 
 			ON Tool.ToolId = ReservationTool.ToolId

@@ -58,8 +58,8 @@ else if (loggedInUser.UserType == UserType.Clerk)
                         Pick-Up Reservation
                     </a>
                 </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "DropOffReservation" ? "active" : "")">
-                    <a href="#">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "DropOff" ? "active" : "")">
+                    <a href="/Reservation/Dropoff">
                         <i class="glyphicon glyphicon-calendar"></i>
                         Drop-Off Reservation
                     </a>
@@ -76,8 +76,8 @@ else if (loggedInUser.UserType == UserType.Clerk)
                         Add New Tool
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Sell" ? "active" : "")">
+                    <a href="/Tool/Sell">
                         <i class="glyphicon glyphicon-wrench"></i>
                         Sell Tool
                     </a>
@@ -86,12 +86,6 @@ else if (loggedInUser.UserType == UserType.Clerk)
                     <a href="#">
                         <i class="glyphicon glyphicon-folder-open"></i>
                         Generate Reports
-                    </a>
-                </li>
-                <li>
-                    <a href="/User/Logout">
-                        <i class="glyphicon glyphicon-log-out"></i>
-                        Logout
                     </a>
                 </li>
             </ul>
