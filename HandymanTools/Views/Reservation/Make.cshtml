@@ -8,7 +8,7 @@
 @Styles.Render("~/Content/themes/base/theme.css")
 @Styles.Render("~/Content/themes/base/datepicker.css")
 <script>
-    var ToolTypePicker = "<select onchange='javasript:changeToolType(this)'>" +
+    var ToolTypePicker = "<select onchange='javasript:changeToolType(this)' class='form-control'>" +
         "<option value='-1'>Select Tool Type</option>" +
         "<option value='@((int)ToolType.Construction)' name=''>@ToolType.Construction.ToString()</option>" +
         "<option value='@((int)ToolType.Hand)'>@ToolType.Hand.ToString()</option>" +
@@ -78,7 +78,7 @@
 
                 if (availableToolList.length > 0) {
                     var newSelect = document.createElement("select");
-                    newSelect.setAttribute("class", "toolSelection");
+                    newSelect.setAttribute("class", "toolSelection form-control");
                     newSelect.setAttribute("name", "toolSelection" + callingId);
                     newSelect.setAttribute("onchange", "javascript:checkSubmit()")
                     var defaultOption = document.createElement("option");
@@ -145,19 +145,21 @@
     <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> @ViewBag.Title</h2>
 </div>
 <div>
-    <form action="Summary" method="post" id="reserveForm">
-        <div>
-            <label>Starting Date</label> <input type="text" id="startDate" name="startDate"/>
-            <input type="hidden" id="hiddenStartDate" name="startDate"/>
+    <form action="@Url.Action("Summary")" method="post" id="reserveForm">
+        <div class="form-group">
+            <div class="col-md-2">
+                <label class="control-label">Starting Date</label> <input type="text" id="startDate" name="startDate" class="form-control" />
+                <input type="hidden" id="hiddenStartDate" name="startDate" />
+            </div>
+            <div class="col-md-2">
+                <label class="control-label">Ending Date</label> <input type="text" id="endDate" name="endDate" class="form-control" />
+                <input type="hidden" id="hiddenEndDate" name="endDate" />
+            </div>
         </div>
-        <div>
-            <label>Ending Date</label> <input type="text" id="endDate" name="endDate"/>
-            <input type="hidden" id="hiddenEndDate" name="endDate" />
+        <div id="changeDate" hidden="hidden" class="form-group">
+            <button name="Change Date" onclick="javascript:location.reload();" type="button" class="btn btn-default btn-sm form-control">Change Date</button>
         </div>
-        <div>
-            <button name="Change Date" hidden="hidden" id="changeDate" onclick="javascript:location.reload();" type="button">Change Date</button>
-        </div>
-        <div hidden="hidden" id="toolSelection">
+        <div hidden="hidden" id="toolSelection" class="form-group">
             <table>
                 <thead>
                     <tr><th></th><th>Type of Tool</th><th>Tool</th></tr>
@@ -166,11 +168,11 @@
                     <tr id="0"><td><b>1.</b></td><td id="type0"></td><td id="tool0"></td></tr>
                 </tbody>
             </table>
-            <div>
-                <button onclick="javascript: addNewRow();" type="button">Add More Tools</button><button onClick="javascript: removeLastRow();" type="button">Remove last tool</button>
+            <div class="form-group">
+                <button onclick="javascript: addNewRow();" type="button" class="btn form-control">Add More Tools</button><button onClick="javascript: removeLastRow();" type="button" class="btn form-control">Remove Last Tool</button>
             </div>
-            <div>
-                <input type="submit" value="Calculate Total" hidden="hidden" id="submit"/>
+            <div id="submit" hidden="hidden" class="form-group">
+                <input type="submit" value="Calculate Total" class="btn btn-primary form-control" />
             </div>
         </div>
     </form>

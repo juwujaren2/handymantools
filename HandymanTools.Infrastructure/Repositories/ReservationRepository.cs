@@ -19,6 +19,29 @@ namespace HandymanTools.Infrastructure.Repositories
             _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
+        public int MakeReservation(string customerId, DateTime startDate, DateTime endDate, List<int> toolIds )
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "usp_InsertNewCustomerReservation",
+                    Connection = conn
+                };
+                command.Parameters.Add("@CustomerId", SqlDbType.VarChar).Value = customerId;
+                command.Parameters.Add("@StartDate", SqlDbType.Date).Value = startDate;
+                command.Parameters.Add("@EndDate", SqlDbType.Date).Value = endDate;
+                command.Parameters.Add("@ToolList", SqlDbType.VarChar).Value = string.Join(",", toolIds);
+                command.Parameters.Add(new SqlParameter("@ReservationNumber", SqlDbType.Int) { Direction = ParameterDirection.Output});
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                command.ExecuteNonQuery();
+                var reservationId = int.Parse(command.Parameters["@ReservationNumber"].Value.ToString());
+                return reservationId;
+            }
+        }
+
         public List<ReservationTool> GetReservationsByCustomer(string userName)
         {
             List<ReservationTool> reservations = new List<ReservationTool>();

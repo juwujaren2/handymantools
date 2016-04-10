@@ -1,7 +1,33 @@
-﻿
+﻿@model List<string>
 @{
     ViewBag.Title = "Reservation Confirmation";
 }
 
-<h2>Confirmation</h2>
-
+<div class="jumbotron handyman-jumbotron">
+    <h2><span class="glyphicon glyphicon-check" aria-hidden="true"></span> @ViewBag.Title</h2>
+</div>
+<div>
+    <h3>Your Reservation Number is</h3>
+    @ViewBag.resNumber
+</div>
+<div>
+    <h3>Tools Rented</h3>
+    <ol>
+        @foreach (var toolName in Model)
+        {
+            <li>@toolName</li>
+        }
+    </ol>
+</div>
+<div>
+    <b>Start Date: </b> @ViewBag.StartDate
+</div>
+<div>
+    <b>End Date: </b> @ViewBag.EndDate
+</div>
+<div>
+    <b>Total Rental Price: </b>@string.Format("{0:C}", ViewBag.TotalRental)
+</div>
+<div>
+    <b>Total Deposit Required: </b> @string.Format("{0:C}", ViewBag.TotalDeposit)
+</div>
