@@ -1,0 +1,116 @@
+﻿@model HandymanTools.Models.ReservationViewModel
+@{ 
+    var reservationType = Model.IsPickup ? "Pickup Reservation Details" : "Dropoff Reservation Details";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="jumbotron handyman-jumbotron" style="margin-bottom:20px;">
+        <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> @reservationType</h2>
+    </div>
+
+    if (Model.IsPickup)
+    {
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-2">
+                        <dl class="dl-horizontal">
+                            <dt>Reservation Number:</dt>
+                            <dd>#@Html.DisplayFor(model => model.ReservationNumber)</dd>
+
+                            <dt>Deposit Required:</dt>
+                            <dd>@Html.DisplayFor(model => model.DepositRequired)</dd>
+
+                            <dt>Estimated Cost:</dt>
+                            <dd>@Html.DisplayFor(model => model.EstimatedCost)</dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-10" style="padding-left: 5px;">
+                        <div class="well well-sm">
+                            <h5>Reserved Tools</h5>
+                            <ol>
+                                @foreach (var rt in Model.ReservedTools)
+                                {
+                                    <li>@rt.ToolId - @rt.AbbrDescription</li>
+                                }
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreditCardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CreditCardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CreditCardNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ExpirationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ExpirationDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExpirationDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Complete Pickup" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-horizontal">
+            <h4>ReservationViewModel</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <dl class="dl-horizontal">
+                <dt>Reservation Number:</dt>
+                <dd>@Html.DisplayFor(model => model.ToolId) - @Html.DisplayFor(model => model.ReservationNumber)</dd>
+            </dl>
+            <ol>
+                @foreach (var rt in Model.ReservedTools)
+                {
+                    <li>@rt.ToolId - @rt.AbbrDescription</li>
+                }
+            </ol>
+            <dl class="dl-horizontal">
+                <dt>Deposit Required:</dt>
+                <dd>@Html.DisplayFor(model => model.DepositRequired)</dd>
+
+                <dt>Estimated Cost:</dt>
+                <dd>@Html.DisplayFor(model => model.EstimatedCost)</dd>
+            </dl>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CreditCardNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CreditCardNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CreditCardNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ExpirationDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ExpirationDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExpirationDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Cancel Pickup", "Pickup")
+    </div>
+}

@@ -13,7 +13,8 @@ namespace HandymanTools.Models
     {
         public ToolCreateViewModel()
         {
-            List<PowerToolAccessory> Accessories = new List<PowerToolAccessory>();
+            //List<PowerToolAccessory> Accessories = new List<PowerToolAccessory>();
+            Accessories = new List<string>();
         }
         [Required]
         [Display(Name = "Abbreviated Description")]
@@ -24,8 +25,10 @@ namespace HandymanTools.Models
         [Display(Name = "Full Description")]
         [DataType(DataType.MultilineText)]
         public string FullDescription { get; set; }
-        
 
+        [Required]
+        [Display(Name = "Purchase Price")]
+        [DataType(DataType.Currency)]
         public decimal PurchasePrice { get; set; }
 
         [Required]
@@ -40,6 +43,6 @@ namespace HandymanTools.Models
         
         public ToolType ToolType { get; set; }
 
-        public List<PowerToolAccessory> Accessories { get; set; }
+        public List<string> Accessories { get; set; }
     }
 }

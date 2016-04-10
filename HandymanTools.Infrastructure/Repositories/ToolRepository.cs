@@ -97,9 +97,10 @@ namespace HandymanTools.Infrastructure.Repositories
             }
         }
 
-        public List<PowerToolAccessory> GetPowerToolAccessories(Tool tool)
+        public List<string> GetPowerToolAccessories(Tool tool)
         {
-            var returnList = new List<PowerToolAccessory>();
+            string listItem;
+            var returnList = new List<string>();
             using (var conn = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand
@@ -117,12 +118,8 @@ namespace HandymanTools.Infrastructure.Repositories
                 {
                     while (reader.Read())
                     {
-                        returnList.Add(new PowerToolAccessory()
-                        {
-                            Tool = tool,
-                            ToolId = tool.ToolId,
-                            Accessory = reader.GetString(0)
-                        });
+                        listItem = reader.GetString(0);
+                        returnList.Add(listItem);
                     }
                     break;
                 }
@@ -133,6 +130,7 @@ namespace HandymanTools.Infrastructure.Repositories
         public int AddTool(Tool tool)
         {
             int toolId = 0;
+            string accessories = string.Join(",", tool.Accessories.Where(a => !string.IsNullOrWhiteSpace(a)));
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand();
@@ -145,6 +143,7 @@ namespace HandymanTools.Infrastructure.Repositories
                 command.Parameters.Add("@PurchasePrice", SqlDbType.Decimal).Value = tool.PurchasePrice;
                 command.Parameters.Add("@DepositAmount", SqlDbType.Decimal).Value = tool.DepositAmount;
                 command.Parameters.Add("@ToolType", SqlDbType.VarChar).Value = tool.ToolType;
+                command.Parameters.Add("@AccessoryList", SqlDbType.VarChar).Value = accessories;
                 command.Parameters.Add("@ToolId", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                 //open, execute stored procedure, and close connection
@@ -156,39 +155,54 @@ namespace HandymanTools.Infrastructure.Repositories
             return toolId;
         }
 
-        public int SellTool(int ToolId)
+        public int UpdateToolToSoldTool(int toolId)
         {
-            throw new NotImplementedException();
-        }
-
-        public int AddPowerToolAccessory(int toolId, string accessory)
-        {
-            PowerToolAccessory PowerToolAccessory = new PowerToolAccessory();
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 SqlCommand command = new SqlCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "usp_InsertNewPowerToolAccessory";
+                command.CommandText = "usp_UpdateToolToSoldTool";
                 command.Connection = conn;
                 command.Parameters.Add("@ToolId", SqlDbType.Int).Value = toolId;
-                command.Parameters.Add("@Accessory", SqlDbType.VarChar).Value = accessory;
 
                 //open, execute stored procedure, and close connection
                 conn.Open();
-                try
-                {
-                    command.ExecuteNonQuery();
-                }
-                catch (SqlException e)
-                {
-                    return -1;
-                }
-                finally
-                {
-                    conn.Close();
-                }
+                command.ExecuteNonQuery();
+                conn.Close();
             }
             return 0;
+        }
+
+        public SaleTool GetSalesPriceForSoldTool(int toolId)
+        {
+            SaleTool saleTool = new SaleTool();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "usp_GetSalesPriceForSoldTool";
+                command.Connection = conn;
+                command.Parameters.Add("@ToolId", SqlDbType.VarChar).Value = toolId;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        saleTool.ToolId = reader.GetInt32(0);
+                        saleTool.AbbreviatedDescription = reader.GetString(1);
+                        saleTool.SalesPrice = reader.GetDecimal(2);
+                        saleTool.SalesDate = reader.GetDateTime(3);
+                    }
+                    reader.NextResult();
+                }
+                reader.Close();
+                conn.Close();
+            }
+            return saleTool;
         }
     }
 }

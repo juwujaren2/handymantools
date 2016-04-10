@@ -76,11 +76,11 @@ namespace HandymanTools.Infrastructure.Repositories
                     {
                         firstName = reader.GetString(1);
                         lastName = reader.GetString(2);
-                        customerAddress = reader.GetString(3);
-                        homeAreaCode = reader.GetString(4);
-                        homePhone = reader.GetString(5);
-                        workAreaCode = reader.GetString(6);
-                        workPhone = reader.GetString(7);
+                        customerAddress = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                        homeAreaCode = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
+                        homePhone = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
+                        workAreaCode = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
+                        workPhone = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
                     }
                     break;
                 }

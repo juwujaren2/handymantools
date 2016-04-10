@@ -8,7 +8,7 @@ namespace HandymanTools.Common.Models
     {
         public Tool()
         {
-            List<PowerToolAccessory> Accessories = new List<PowerToolAccessory>();
+            Accessories = new List<string>();
         }
         public int ToolId { get; set; }
 
@@ -26,6 +26,6 @@ namespace HandymanTools.Common.Models
 
         public DateTime? SaleDate { get; set; }
 
-        public List<PowerToolAccessory> Accessories { get; set; }
+        public List<string> Accessories { get; set; }
     }
 }

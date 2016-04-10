@@ -13,7 +13,7 @@ namespace HandymanTools.Models
     {
         public ToolViewModel()
         {
-            List<PowerToolAccessory> Accessories = new List<PowerToolAccessory>();
+            List<string> Accessories = new List<string>();
         }
         [Required]
         [Display(Name = "Abbreviated Description")]
@@ -47,6 +47,6 @@ namespace HandymanTools.Models
         [Key]
         public int ToolId { get; set; }
 
-        public List<PowerToolAccessory> Accessories { get; set; }
+        public List<string> Accessories { get; set; }
     }
 }

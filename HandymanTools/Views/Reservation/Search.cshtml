@@ -1,0 +1,26 @@
+﻿@model HandymanTools.Models.ReservationViewModel
+@{
+    var reservationType = Model.IsPickup ? "Pickup Reservation Search" : "Dropoff Reservation Search";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="jumbotron handyman-jumbotron">
+        <h2><span class="glyphicon glyphicon-search" aria-hidden="true"></span> @reservationType</h2>
+    </div>
+    <br />
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="input-group">
+            <input type="text" class="form-control accessory-control text-box single-line" id="ReservationNumber" name="ReservationNumber" placeholder="Search for reservation...">
+            <span class="input-group-btn" style="width: auto;">
+                <button class="btn btn-primary" type="submit">Go!</button>
+            </span>
+        </div>
+        @Html.ValidationMessageFor(model => model.ReservationNumber, "", new { @class = "text-danger" })
+    </div>
+}
+
+
+

@@ -1,0 +1,16 @@
+﻿@model HandymanTools.Models.ToolSellViewModel
+
+<div>
+    <h4>The following tool is up for sale</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Tool:</dt>
+        <dd>@Html.DisplayFor(model => model.ToolId) - @Html.DisplayFor(model => model.ToolName)</dd>
+
+        <dt>Sales Price:</dt>
+        <dd>@Html.DisplayFor(model => model.SalesPrice)</dd>
+
+        <dt>Sales Date:</dt>
+        <dd>@Html.DisplayFor(model => model.SalesDate)</dd>
+    </dl>
+</div>

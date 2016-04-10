@@ -17,20 +17,20 @@
         </div>
         <div class="user-options">
             <ul class="nav">
-                <li class="active">
-                    <a href="@Url.Action("ViewProfile","Customer")">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ViewProfile" ? "active" : "")">
+                    <a href="/Customer/ViewProfile">
                         <i class="glyphicon glyphicon-user"></i>
                         Profile
                     </a>
                 </li>
-                <li>
-                    <a href="@Url.Action("Availability", "Tool")">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Availability" ? "active" : "")">
+                    <a href="/Tool/Availability">
                         <i class="glyphicon glyphicon-wrench"></i>
                         Tool Availability
                     </a>
                 </li>
-                <li>
-                    <a href="@Url.Action("Make","Reservation")">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Make" ? "active" : "")">
+                    <a href="/Reservation/Make">
                         <i class="glyphicon glyphicon-calendar"></i>
                         Make Reservation
                     </a>
@@ -52,14 +52,14 @@ else if (loggedInUser.UserType == UserType.Clerk)
         </div>
         <div class="user-options">
             <ul class="nav">
-                <li class="active">
-                    <a href="#">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Pickup" ? "active" : "")">
+                    <a href="/Reservation/Pickup">
                         <i class="glyphicon glyphicon-calendar"></i>
                         Pick-Up Reservation
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Dropoff" ? "active" : "")">
+                    <a href="/Reservation/Dropoff">
                         <i class="glyphicon glyphicon-calendar"></i>
                         Drop-Off Reservation
                     </a>
@@ -70,14 +70,14 @@ else if (loggedInUser.UserType == UserType.Clerk)
                         Service Order
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Add" ? "active" : "")">
+                    <a href="/Tool/Add">
                         <i class="glyphicon glyphicon-wrench"></i>
                         Add New Tool
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Sell" ? "active" : "")">
+                    <a href="/Tool/Sell">
                         <i class="glyphicon glyphicon-wrench"></i>
                         Sell Tool
                     </a>
@@ -86,12 +86,6 @@ else if (loggedInUser.UserType == UserType.Clerk)
                     <a href="#">
                         <i class="glyphicon glyphicon-folder-open"></i>
                         Generate Reports
-                    </a>
-                </li>
-                <li>
-                    <a href="/User/Logout">
-                        <i class="glyphicon glyphicon-log-out"></i>
-                        Logout
                     </a>
                 </li>
             </ul>

@@ -44,6 +44,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentValidation, Version=6.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.2.1.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -189,6 +201,8 @@
     <Compile Include="Models\CustomerCreateProfileViewModel.cs" />
     <Compile Include="Models\CustomerProfileViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ReservationViewModel.cs" />
+    <Compile Include="Models\ToolSellViewModel.cs" />
     <Compile Include="Models\ToolViewModel.cs" />
     <Compile Include="Models\ToolCreateViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -279,10 +293,14 @@
     <Content Include="Views\Tool\AvailabilityDetail.cshtml" />
     <Content Include="Views\Tool\Detail.cshtml" />
     <Content Include="Views\Customer\ViewProfile.cshtml" />
-    <Content Include="Views\Tool\Add.cshtml" />
     <Content Include="Views\Reservation\Make.cshtml" />
     <Content Include="Views\Reservation\Summary.cshtml" />
     <Content Include="Views\Reservation\Confirmation.cshtml" />
+    <Content Include="Views\Reservation\Details.cshtml" />
+    <Content Include="Views\Tool\Add.cshtml" />
+    <Content Include="Views\Tool\Sell.cshtml" />
+    <Content Include="Views\Tool\SellDetails.cshtml" />
+    <Content Include="Views\Reservation\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -294,7 +312,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>

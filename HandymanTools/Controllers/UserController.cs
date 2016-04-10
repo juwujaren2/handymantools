@@ -34,10 +34,9 @@ namespace HandymanTools.Controllers
                 }
                 else
                 {
-                    //return to Clerk Index
+                    return RedirectToAction("Pickup", "Reservation");
                 }
             }
-            return View();
         }
         
         public ActionResult Login()
@@ -50,12 +49,13 @@ namespace HandymanTools.Controllers
         {
             string passwdHash = "";
 
-            // grab password that was stored into the database.
-            var password = _userRepo.GetPasswordByUserName(vm.Email, out passwdHash);
+            // grab password that was stored into the database.  
+            string password = _userRepo.GetPasswordByUserName(vm.UserName, out passwdHash);
             User user = new User();
 
             if (vm.UserType == UserType.Customer)
-            {               
+            {             
+
                 if (String.IsNullOrEmpty(password))
                 {
                     return RedirectToAction("CreateProfile", "Customer");
@@ -69,7 +69,7 @@ namespace HandymanTools.Controllers
                     var hashedpassword = vm.Password.ToSHA256(passwdHash);
                     if (hashedpassword == password)
                     {
-                        user = _userRepo.GetUserByUserName(vm.Email);
+                        user = _userRepo.GetUserByUserName(vm.UserName);
                         user.UserType = UserType.Customer;
                         FormsAuthentication.SetAuthCookie(user.UserName, false);
                         return RedirectToAction("ViewProfile", "Customer", user);
@@ -90,10 +90,10 @@ namespace HandymanTools.Controllers
                 var hashedpassword = vm.Password.ToSHA256(passwdHash);
                 if (hashedpassword == password)
                 {
-                    user = _userRepo.GetUserByUserName(vm.UserName);
+                    //user = _userRepo.GetUserByUserName(vm.UserName);
                     user.UserType = UserType.Clerk;
-                    FormsAuthentication.SetAuthCookie(user.UserName, false);
-                    return RedirectToAction("MainMenu", "Clerk");
+                    FormsAuthentication.SetAuthCookie(vm.UserName, false);
+                    return RedirectToAction("Pickup", "Reservation");
                 }
                 return View();
             }
@@ -101,7 +101,6 @@ namespace HandymanTools.Controllers
         public ActionResult Logoff()
         {
             FormsAuthentication.SignOut();
-
             return RedirectToAction("Index");
         }
     }
