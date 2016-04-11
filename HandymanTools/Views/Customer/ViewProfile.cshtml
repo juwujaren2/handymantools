@@ -46,10 +46,10 @@
                 <tr>
                     <th scope="row">@reservation.ReservationNumber</th>
                     <td>@reservation.Tool.AbbrDescription</td>
-                    <td>@reservation.Reservation.StartDate</td>
-                    <td>@reservation.Reservation.EndDate</td>
-                    <td>@reservation.Tool.RentalPrice</td>
-                    <td>@reservation.Tool.DepositAmount</td>
+                    <td>@reservation.Reservation.StartDate.ToString("MM/dd/yyyy")</td>
+                    <td>@reservation.Reservation.EndDate.ToString("MM/dd/yyyy")</td>
+                    <td>@reservation.Tool.RentalPrice.ToString("C")</td>
+                    <td>@reservation.Tool.DepositAmount.ToString("C")</td>
                     <td>@reservation.Reservation.PickupClerk.FirstName</td>
                     <td>@reservation.Reservation.DropOffClerk.FirstName</td>
                 </tr>
