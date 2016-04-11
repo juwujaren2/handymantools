@@ -201,6 +201,7 @@
     <Compile Include="Models\CustomerCreateProfileViewModel.cs" />
     <Compile Include="Models\CustomerProfileViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\ReservationViewModel.cs" />
     <Compile Include="Models\ToolSellViewModel.cs" />
     <Compile Include="Models\ToolViewModel.cs" />
@@ -301,11 +302,11 @@
     <Content Include="Views\Tool\Sell.cshtml" />
     <Content Include="Views\Tool\SellDetails.cshtml" />
     <Content Include="Views\Reservation\Search.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Report\" />
     <Folder Include="Views\ServiceOrder\" />
   </ItemGroup>
   <ItemGroup>
