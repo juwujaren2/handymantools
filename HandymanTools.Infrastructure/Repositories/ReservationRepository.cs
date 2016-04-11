@@ -83,7 +83,7 @@ namespace HandymanTools.Infrastructure.Repositories
         public List<ReservationTool> GetReservationsByCustomer(string userName)
         {
             List<ReservationTool> reservations = new List<ReservationTool>();
-            ReservationTool reservation = new ReservationTool();
+           
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -101,15 +101,15 @@ namespace HandymanTools.Infrastructure.Repositories
                 {
                     while (reader.Read())
                     {
-                        ReservationTool reservation = new ReservationTool();
+                        ReservationTool reservation = new ReservationTool();                       
                         reservation.ReservationNumber = reader.GetInt32(0);
                         reservation.Tool.AbbrDescription = reader.GetString(1);
                         reservation.Reservation.StartDate = reader.GetDateTime(2);
                         reservation.Reservation.EndDate = reader.GetDateTime(3);
                         reservation.Tool.RentalPrice = reader.GetDecimal(4);
                         reservation.Tool.DepositAmount = reader.GetDecimal(5);
-                        reservation.Reservation.PickupClerk.FirstName = reader.GetString(6);
-                        reservation.Reservation.DropOffClerk.FirstName = reader.GetString(7);
+                        reservation.Reservation.PickupClerk.FirstName = reader.IsDBNull(6) ? "" : reader.GetString(6);
+                        reservation.Reservation.DropOffClerk.FirstName = reader.IsDBNull(7) ? "" : reader.GetString(7);
                         reservations.Add(reservation);
                     }
                     reader.NextResult();

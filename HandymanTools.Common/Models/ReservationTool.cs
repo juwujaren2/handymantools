@@ -5,6 +5,11 @@ namespace HandymanTools.Common.Models
 {
     public class ReservationTool
     {
+        public ReservationTool()
+        {
+            this.Tool = new Tool();
+            this.Reservation = new Reservation();
+        }
         public int ReservationNumber { get; set; }
         public Reservation Reservation { get; set; }
 
