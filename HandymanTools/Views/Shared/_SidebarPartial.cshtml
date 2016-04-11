@@ -52,13 +52,13 @@ else if (loggedInUser.UserType == UserType.Clerk)
         </div>
         <div class="user-options">
             <ul class="nav">
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PickUp" ? "active" : "")">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Pickup" ? "active" : "")">
                     <a href="/Reservation/Pickup">
                         <i class="glyphicon glyphicon-calendar"></i>
                         Pick-Up Reservation
                     </a>
                 </li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "DropOff" ? "active" : "")">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Dropoff" ? "active" : "")">
                     <a href="/Reservation/Dropoff">
                         <i class="glyphicon glyphicon-calendar"></i>
                         Drop-Off Reservation

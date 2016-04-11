@@ -57,9 +57,33 @@ namespace HandymanTools.Infrastructure.Repositories
 
         }
 
+        public int MakeReservation(string customerId, DateTime startDate, DateTime endDate, List<int> toolIds )
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var command = new SqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "usp_InsertNewCustomerReservation",
+                    Connection = conn
+                };
+                command.Parameters.Add("@CustomerId", SqlDbType.VarChar).Value = customerId;
+                command.Parameters.Add("@StartDate", SqlDbType.Date).Value = startDate;
+                command.Parameters.Add("@EndDate", SqlDbType.Date).Value = endDate;
+                command.Parameters.Add("@ToolList", SqlDbType.VarChar).Value = string.Join(",", toolIds);
+                command.Parameters.Add(new SqlParameter("@ReservationNumber", SqlDbType.Int) { Direction = ParameterDirection.Output});
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                command.ExecuteNonQuery();
+                var reservationId = int.Parse(command.Parameters["@ReservationNumber"].Value.ToString());
+                return reservationId;
+            }
+        }
+
         public List<ReservationTool> GetReservationsByCustomer(string userName)
         {
             List<ReservationTool> reservations = new List<ReservationTool>();
+           
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -77,15 +101,15 @@ namespace HandymanTools.Infrastructure.Repositories
                 {
                     while (reader.Read())
                     {
-                        ReservationTool reservation = new ReservationTool();
+                        ReservationTool reservation = new ReservationTool();                       
                         reservation.ReservationNumber = reader.GetInt32(0);
                         reservation.Tool.AbbrDescription = reader.GetString(1);
                         reservation.Reservation.StartDate = reader.GetDateTime(2);
                         reservation.Reservation.EndDate = reader.GetDateTime(3);
                         reservation.Tool.RentalPrice = reader.GetDecimal(4);
                         reservation.Tool.DepositAmount = reader.GetDecimal(5);
-                        reservation.Reservation.PickupClerk.FirstName = reader.GetString(6);
-                        reservation.Reservation.DropOffClerk.FirstName = reader.GetString(7);
+                        reservation.Reservation.PickupClerk.FirstName = reader.IsDBNull(6) ? "" : reader.GetString(6);
+                        reservation.Reservation.DropOffClerk.FirstName = reader.IsDBNull(7) ? "" : reader.GetString(7);
                         reservations.Add(reservation);
                     }
                     reader.NextResult();
