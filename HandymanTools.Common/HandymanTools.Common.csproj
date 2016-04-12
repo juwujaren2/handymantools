@@ -44,6 +44,7 @@
     <Compile Include="Enums\UserType.cs" />
     <Compile Include="Models\Clerk.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\ReservationTool.cs" />
     <Compile Include="Models\SaleTool.cs" />

@@ -82,9 +82,9 @@ else if (loggedInUser.UserType == UserType.Clerk)
                         Sell Tool
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="glyphicon glyphicon-folder-open"></i>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Reports" ? "active" : "")">
+                    <a href="/Report">
+                        <i class="glyphicon glyphicon-stats"></i>
                         Generate Reports
                     </a>
                 </li>
