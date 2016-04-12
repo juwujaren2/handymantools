@@ -2,13 +2,15 @@
 @{ 
     var reservationType = Model.IsPickup ? "Pickup Reservation Details" : "Dropoff Reservation Details";
 }
-@using (Html.BeginForm())
+@using (Html.BeginForm("Details", "Reservation"))
 {
     @Html.AntiForgeryToken()
     <div class="jumbotron handyman-jumbotron" style="margin-bottom:20px;">
         <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> @reservationType</h2>
     </div>
 
+    @Html.HiddenFor(x => x.IsPickup)
+    @Html.HiddenFor(x => x.ReservationNumber)
     if (Model.IsPickup)
     {
         <div class="form-horizontal">
@@ -33,7 +35,7 @@
                             <ol>
                                 @foreach (var rt in Model.ReservedTools)
                                 {
-                                    <li>@rt.ToolId - @rt.AbbrDescription</li>
+                                    <li>@rt.ToolId - @rt.Tool.AbbrDescription @Html.ActionLink("Tool Details", "Detail", "Tool", new { rt.ToolId }, null)</li>
                                 }
                             </ol>
                         </div>
@@ -76,7 +78,7 @@
             <ol>
                 @foreach (var rt in Model.ReservedTools)
                 {
-                    <li>@rt.ToolId - @rt.AbbrDescription</li>
+                    <li>@rt.ToolId - @rt.Tool.AbbrDescription</li>
                 }
             </ol>
             <dl class="dl-horizontal">

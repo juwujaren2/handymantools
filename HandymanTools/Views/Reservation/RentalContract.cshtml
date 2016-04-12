@@ -1,0 +1,57 @@
+﻿@model HandymanTools.Models.RentalContractViewModel
+
+<div>
+    <h4>Handyman Tools Rental Contract</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <dl class="dl-horizontal">
+                <dt>Reservation Number:</dt>
+                <dd>@Html.DisplayFor(model => model.ReservationNumber)</dd>
+
+                <dt>Customer Name:</dt>
+                <dd>@Html.DisplayFor(model => model.CustomerName)</dd>
+
+                <dt>Start Date:</dt>
+                <dd>@Html.DisplayFor(model => model.StartDate)</dd>
+            </dl>
+        </div>
+        <div class="col-md-3">
+            <dl class="dl-horizontal">
+                <dt>Clerk on Duty:</dt>
+                <dd>@Html.DisplayFor(model => model.ClerkOnDuty)</dd>
+
+                <dt>Credit Card #:</dt>
+                <dd>@Html.DisplayFor(model => model.CreditCardNumber)</dd>
+
+                <dt>End Date:</dt>
+                <dd>@Html.DisplayFor(model => model.EndDate)</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <dl>
+                <dt>Tools Rented:</dt>
+                @foreach (var rt in Model.ReservedTools)
+            {
+                    <dd>@rt.ToolId @rt.Tool.AbbrDescription</dd>
+                }
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <dl class="dl-horizontal">
+                <dt>Deposit Held:</dt>
+                <dd>@Html.DisplayFor(model => model.DepositHeld)</dd>
+
+                <dt>Estimated Rental:</dt>
+                <dd>@Html.DisplayFor(model => model.EstimatedRental)</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to Main", "Index")
+</p>

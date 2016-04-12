@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using HandymanTools.Common.Enums;
+using System.Globalization;
 
 namespace HandymanTools.Infrastructure.Repositories
 {
@@ -20,9 +21,14 @@ namespace HandymanTools.Infrastructure.Repositories
             _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
-        public List<Tool> GetReservedToolDetails(int reservationNumber)
+        /// <summary>
+        /// Calls stored procedure that retrieves reserved tools for a reservation
+        /// </summary>
+        /// <param name="reservationNumber"></param>
+        /// <returns></returns>
+        public List<ReservationTool> GetReservedToolDetails(int reservationNumber)
         {
-            List<Tool> tools = new List<Tool>();     
+            List<ReservationTool> tools = new List<ReservationTool>();     
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -40,12 +46,12 @@ namespace HandymanTools.Infrastructure.Repositories
                 {
                     while (reader.Read())
                     {
-                        Tool tool = new Tool();
+                        ReservationTool tool = new ReservationTool();
                         tool.ToolId = reader.GetInt32(0);
-                        tool.AbbrDescription = reader.GetString(1);
-                        tool.RentalPrice = reader.GetDecimal(2);
-                        tool.DepositAmount = reader.GetDecimal(3);
-                        tool.ToolType = (ToolType)Enum.Parse(typeof(ToolType), reader.GetString(4));
+                        tool.Tool.AbbrDescription = reader.GetString(1);
+                        tool.Tool.RentalPrice = reader.GetDecimal(2);
+                        tool.Tool.DepositAmount = reader.GetDecimal(3);
+                        tool.Tool.ToolType = (ToolType)Enum.Parse(typeof(ToolType), reader.GetString(4));
                         tools.Add(tool);
                     }
                     reader.NextResult();
@@ -57,6 +63,14 @@ namespace HandymanTools.Infrastructure.Repositories
 
         }
 
+        /// <summary>
+        /// Calls stored procedure that stores a new reservation
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="toolIds"></param>
+        /// <returns></returns>
         public int MakeReservation(string customerId, DateTime startDate, DateTime endDate, List<int> toolIds )
         {
             using (var conn = new SqlConnection(_connectionString))
@@ -118,6 +132,77 @@ namespace HandymanTools.Infrastructure.Repositories
                 conn.Close();
             }
             return reservations;
+        }
+        
+        /// <summary>
+        /// Calls stored procedure that returns details for a single reservation
+        /// </summary>
+        /// <param name="reservationNumber"></param>
+        /// <returns>Reservation</returns>
+        public Reservation GetReservationDetails(int reservationNumber)
+        {
+            Reservation reservation = new Reservation();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "usp_GetReservationDetails";
+                command.Connection = conn;
+                command.Parameters.Add("@ReservationNumber", SqlDbType.Int).Value = reservationNumber;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        reservation.ReservationNumber = reservationNumber;
+                        reservation.StartDate = reader.GetDateTime(0);
+                        reservation.EndDate = reader.GetDateTime(1);
+                        reservation.CreditCardNumber = reader.GetString(2);
+                        reservation.Customer.FirstName = reader.GetString(3);
+                        reservation.Customer.LastName = reader.GetString(4);
+                        reservation.PickupClerk.FirstName = reader.GetString(5);
+                        reservation.DropOffClerk.FirstName = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
+                    }
+                    reader.NextResult();
+                }
+                reader.Close();
+                conn.Close();
+            }
+            return reservation;
+        }
+
+        /// <summary>
+        /// Calls stored procedure that updates reservation with credit card and pickup clerk information
+        /// </summary>
+        /// <param name="reservationNumber"></param>
+        /// <param name="creditCard"></param>
+        /// <param name="expirationDate"></param>
+        /// <param name="clerkId"></param>
+        /// <returns></returns>
+        public int UpdateReservationWithCreditCard(int reservationNumber, string creditCard, string expirationDate, string clerkId)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "usp_UpdateReservationWithCreditCard";
+                command.Connection = conn;
+                command.Parameters.Add("@ReservationNumber", SqlDbType.Int).Value = reservationNumber;
+                command.Parameters.Add("@ClerkId", SqlDbType.VarChar).Value = clerkId;
+                command.Parameters.Add("@CreditCardNum", SqlDbType.VarChar).Value = creditCard;
+                command.Parameters.Add("@CreditCardExpDate", SqlDbType.Date).Value = DateTime.ParseExact(expirationDate, "MM-dd-yyyy", CultureInfo.InvariantCulture);
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            return 0;
         }
     }
 }

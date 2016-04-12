@@ -50,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FullDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FullDescription, new { htmlAttributes = new { @class = "form-control tool-control" } })
+                @Html.EditorFor(model => model.FullDescription, new { htmlAttributes = new { @class = "form-control tool-control", @rows = 4 } })
                 @Html.ValidationMessageFor(model => model.FullDescription, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -84,11 +84,12 @@
                         </button>
                     </div>
                 </div>
+                @Html.ValidationMessageFor(model => model.Accessories, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-2 col-md-10">                
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
@@ -124,8 +125,11 @@
             }
         });
 
-        $(function(){
-            $('#ToolType').change(function() {
+        $(function () {
+            if ($("select[name=ToolType] option:selected").text() == 'Power') {
+                $('#AccessoriesGroup').removeClass('hidden');
+            }
+            $('#ToolType').change(function () {
                 if ( $("select option:selected").text() == 'Power') {
                     $('#AccessoriesGroup').removeClass('hidden');
                 }

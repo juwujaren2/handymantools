@@ -34,12 +34,21 @@ namespace HandymanTools.Controllers
             return View(toolView);
         }
 
+        /// <summary>
+        /// Get method to load form to add new tool
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Add()
         {
             ToolCreateViewModel vm = new ToolCreateViewModel();         
             return View(vm);
         }
 
+        /// <summary>
+        /// Post method to save new tool added
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Add(ToolCreateViewModel vm)
         {
@@ -49,27 +58,44 @@ namespace HandymanTools.Controllers
                 {
                     vm.Accessories.Clear();
                 }
-                Tool tool = new Tool();
-                tool.AbbrDescription = vm.AbbreviatedDescription;
-                tool.Accessories = vm.Accessories.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
-                tool.DepositAmount = vm.DepositAmount;
-                tool.FullDescription = vm.FullDescription;
-                tool.PurchasePrice = vm.PurchasePrice;
-                tool.RentalPrice = vm.RentalPrice;
-                tool.ToolType = vm.ToolType;
+                if (vm.ToolType == ToolType.Power && vm.Accessories.Count == 0)
+                {
+                    ModelState.AddModelError("Accessories", "At least one accessory is required when a power tool type is selected.");
+                }
+                else
+                { 
+                    Tool tool = new Tool();
+                    tool.AbbrDescription = vm.AbbreviatedDescription;
+                    tool.Accessories = vm.Accessories.Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                    tool.DepositAmount = vm.DepositAmount;
+                    tool.FullDescription = vm.FullDescription;
+                    tool.PurchasePrice = vm.PurchasePrice;
+                    tool.RentalPrice = vm.RentalPrice;
+                    tool.ToolType = vm.ToolType;
 
-                var toolId = toolRepository.AddTool(tool);
+                    vm.ToolId = toolRepository.AddTool(tool);
 
-                return RedirectToAction("PickUp", "Reservation");
+                    return RedirectToAction("AddConfirmation", vm);
+                }
             }
             return View(vm);
         }
 
+        /// <summary>
+        /// Get method to Sell Tool
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Sell()
         {
             ToolSellViewModel vm = new ToolSellViewModel();
             return View(vm);
         }
+
+        /// <summary>
+        /// Post method to update tool to sold tool and return sales price
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Sell(ToolSellViewModel vm)
          {            
@@ -121,6 +147,15 @@ namespace HandymanTools.Controllers
 
             return View("AvailabilityDetail");
         }
-     
+
+        /// <summary>
+        /// Get method to confirm tool add
+        /// </summary>
+        /// <param name="vm"></param>
+        /// <returns></returns>
+        public ActionResult AddConfirmation(ToolCreateViewModel vm)
+        {
+            return View(vm);
+        }
     }
 }
