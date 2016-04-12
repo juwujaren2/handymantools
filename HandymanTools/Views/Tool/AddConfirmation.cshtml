@@ -1,0 +1,16 @@
+﻿@model HandymanTools.Models.ToolCreateViewModel
+<div class="row">
+    <div class="col-md-6" style="text-align:center;">
+        <h2>Add Tool Complete!</h2>
+        <br />
+        <span class="circle-check fa-stack fa-lg">
+            <i class="fa fa-circle-thin fa-stack-2x"></i>
+            <i class="fa fa-check fa-stack-1x"></i>
+        </span>
+        <div class="alert alert-success" role="alert"> <strong>Well done!</strong> Tool #@Model.ToolId for a @Model.AbbreviatedDescription has been successfully added. </div>
+        <hr />
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Return to Main", "Pickup", "Reservation") 
+</p>

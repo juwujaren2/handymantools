@@ -10,11 +10,12 @@ namespace HandymanTools.Common.Models
             this.ReservedTools = new List<ReservationTool>();
             this.PickupClerk = new Clerk();
             this.DropOffClerk = new Clerk();
+            this.Customer = new Customer();
         }
         public int ReservationNumber { get; set; }
 
         public int CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
+        public Customer Customer { get; set; }
 
         public int PickupClerkId { get; set; }
         public Clerk PickupClerk { get; set; }
