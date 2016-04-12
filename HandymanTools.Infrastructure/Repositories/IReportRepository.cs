@@ -10,5 +10,9 @@ namespace HandymanTools.Infrastructure.Repositories
     public interface IReportRepository
     {
         List<InventoryItem> GenerateInventoryReport();
+
+        List<ClerkProgressItem> GenerateClerkProgressReport();
+
+        List<CustomerRentalSummary> GenerateCustomerRentalSummary();
     }
 }
