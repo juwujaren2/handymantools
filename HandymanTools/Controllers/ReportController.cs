@@ -17,9 +17,12 @@ namespace HandymanTools.Controllers
         public ActionResult Index()
         {
             var inventoryItems = reportRepo.GenerateInventoryReport();
-
+            var clerkProgressItems = reportRepo.GenerateClerkProgressReport();
+            var customerRentalSummaries = reportRepo.GenerateCustomerRentalSummary();
             ReportViewModel viewModel = new ReportViewModel {
-                Inventory = inventoryItems
+                Inventory = inventoryItems,
+                ClerkProgress = clerkProgressItems,
+                CustomerRental = customerRentalSummaries
             };
 
             return View(viewModel);
