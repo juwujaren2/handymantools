@@ -118,7 +118,7 @@ namespace HandymanTools.Infrastructure.Repositories
                         customerRental.Customer.FirstName = reader.GetString(0);
                         customerRental.Customer.LastName = reader.GetString(1);
                         customerRental.Customer.UserName = reader.GetString(2);
-                        customerRental.NumberOfRentals = reader.GetInt32(4);
+                        customerRental.NumberOfRentals = reader.GetInt32(3);
                         result.Add(customerRental);
                     }
                     reader.NextResult();
