@@ -185,10 +185,6 @@ namespace HandymanTools.Controllers
 
                 int reservationNumber = Convert.ToInt32(vm.ReservationNumber);
 
-                //get reservation and reservation tools information
-                Reservation reservation = reservationRepository.GetReservationDetails(reservationNumber);
-                reservation.ReservedTools = reservationRepository.GetReservedToolDetails(reservationNumber);
-
                 if (vm.IsPickup)
                 {
                     //set pickup clerk
@@ -196,7 +192,11 @@ namespace HandymanTools.Controllers
 
                     //update credit card and pickup clerk
                     reservationRepository.UpdateReservationWithCreditCard(reservationNumber, vm.CreditCardNumber, vm.ExpirationDate.Date, pickupClerk.UserName);
-                    
+
+                    //get reservation and reservation tools information
+                    Reservation reservation = reservationRepository.GetReservationDetails(reservationNumber);
+                    reservation.ReservedTools = reservationRepository.GetReservedToolDetails(reservationNumber);
+
                     //project reservation to pass correct model type to Rental Contract view
                     RentalContractViewModel rc = new RentalContractViewModel
                     {
@@ -220,6 +220,10 @@ namespace HandymanTools.Controllers
 
                     //update dropoff clerk
                     reservationRepository.UpdateReservationWithDropoffClerk(reservationNumber, dropoffClerk.UserName);
+
+                    //get reservation and reservation tools information
+                    Reservation reservation = reservationRepository.GetReservationDetails(reservationNumber);
+                    reservation.ReservedTools = reservationRepository.GetReservedToolDetails(reservationNumber);
 
                     //project reservation to pass correct model type to Tools Receipt view
                     ToolsReceiptViewModel tr = new ToolsReceiptViewModel
