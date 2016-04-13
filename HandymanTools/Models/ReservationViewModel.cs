@@ -16,7 +16,7 @@ namespace HandymanTools.Models
         public bool IsPickup { get; set; }
 
         [ReadOnly(true)]
-        public List<Tool> ReservedTools { get; set; }
+        public List<ReservationTool> ReservedTools { get; set; }
 
         public string CustomerId { get; set; }
 
@@ -30,12 +30,13 @@ namespace HandymanTools.Models
 
         [RegularExpression("^[0-9]*$", ErrorMessage = "Search value must be a valid integer greater than 0")]
         public string ToolId { get; set; }
-
+        
         [Display(Name = "Credit Card Number")]
         [DataType(DataType.CreditCard)]
         public string CreditCardNumber { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Expiration Date")]
-        public string ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
     }
 }

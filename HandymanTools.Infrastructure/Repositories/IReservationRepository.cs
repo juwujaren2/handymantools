@@ -9,7 +9,14 @@ namespace HandymanTools.Infrastructure.Repositories
 {
     public interface IReservationRepository
     {
-        List<Tool> GetReservedToolDetails(int reservationNumber);
+        List<ReservationTool> GetReservedToolDetails(int reservationNumber);
+
         List<ReservationTool> GetReservationsByCustomer(string userName);
+
+        Reservation GetReservationDetails(int reservationNumber);
+
+        int UpdateReservationWithCreditCard(int reservationNumber, string creditCard, DateTime expirationDate, string clerkId);
+
+        int UpdateReservationWithDropoffClerk(int reservationNumber, string clerkId);
     }
 }

@@ -55,5 +55,77 @@ namespace HandymanTools.Infrastructure.Repositories
 
                 return result;
         }
+
+        public List<ClerkProgressItem> GenerateClerkProgressReport()
+        {
+            var result = new List<ClerkProgressItem>();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                var sqlCommand = new SqlCommand {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "usp_Report_ClerkProgress",
+                    Connection = conn
+                };
+
+                sqlCommand.Parameters.Add("@Year", SqlDbType.Int).Value = DateTime.Now.Year;
+                sqlCommand.Parameters.Add("@Month", SqlDbType.Int).Value = DateTime.Now.Month - 1;
+
+                var reader = sqlCommand.ExecuteReader();
+
+                while(reader.HasRows)
+                {
+                    while(reader.Read())
+                    {
+                        var item = new ClerkProgressItem();
+                        item.Clerk = new Clerk();
+                        item.Clerk.FirstName = reader.GetString(0);
+                        item.Clerk.LastName = reader.GetString(1);
+                        item.Pickups = reader.GetInt32(2);
+                        item.Dropoffs = reader.GetInt32(3);
+                        item.TotalPickupsDropoffs = reader.GetInt32(4);
+                        result.Add(item);
+                    }
+                    reader.NextResult();
+                }
+                conn.Close();
+            }
+            return result;
+        }
+
+        public List<CustomerRentalSummary> GenerateCustomerRentalSummary()
+        {
+            var result = new List<CustomerRentalSummary>();
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                var sqlCommand = new SqlCommand {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = "usp_Report_CustomerRentals",
+                    Connection = conn
+                };
+
+                sqlCommand.Parameters.Add("@Year", SqlDbType.Int).Value = DateTime.Now.Year;
+                sqlCommand.Parameters.Add("@Month", SqlDbType.Int).Value = DateTime.Now.Month - 1;
+                
+                var reader = sqlCommand.ExecuteReader();
+                while(reader.HasRows)
+                {
+                    while(reader.Read())
+                    {
+                        var customerRental = new CustomerRentalSummary();
+                        customerRental.Customer = new Customer();
+                        customerRental.Customer.FirstName = reader.GetString(0);
+                        customerRental.Customer.LastName = reader.GetString(1);
+                        customerRental.Customer.UserName = reader.GetString(2);
+                        customerRental.NumberOfRentals = reader.GetInt32(4);
+                        result.Add(customerRental);
+                    }
+                    reader.NextResult();
+                }
+                conn.Close();
+            }
+            return result;
+        }
     }
 }

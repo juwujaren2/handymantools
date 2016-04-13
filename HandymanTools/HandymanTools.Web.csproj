@@ -202,8 +202,10 @@
     <Compile Include="Models\CustomerProfileViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ReportViewModel.cs" />
+    <Compile Include="Models\RentalContractViewModel.cs" />
     <Compile Include="Models\ReservationViewModel.cs" />
     <Compile Include="Models\ToolSellViewModel.cs" />
+    <Compile Include="Models\ToolsReceiptViewModel.cs" />
     <Compile Include="Models\ToolViewModel.cs" />
     <Compile Include="Models\ToolCreateViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -245,7 +247,10 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -254,6 +259,11 @@
     <Content Include="Images\toolbox.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Properties\PublishProfiles\HandymanTools - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HandymanTools - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\HandymanTools.pubxml" />
@@ -303,6 +313,8 @@
     <Content Include="Views\Tool\SellDetails.cshtml" />
     <Content Include="Views\Reservation\Search.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Reservation\RentalContract.cshtml" />
+    <Content Include="Views\Reservation\RentalReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

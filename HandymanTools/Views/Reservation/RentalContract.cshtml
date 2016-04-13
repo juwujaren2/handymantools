@@ -1,0 +1,65 @@
+﻿@model HandymanTools.Models.RentalContractViewModel
+
+<div>
+    <h4>Handyman Tools Rental Contract</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <dl class="dl-horizontal">
+                <dt class="horizontal-left">Reservation Number:</dt>
+                <dd class="horizontal-left">@Html.DisplayFor(model => model.ReservationNumber)</dd>
+
+                <dt class="horizontal-left">Customer Name:</dt>
+                <dd class="horizontal-left">@Html.DisplayFor(model => model.CustomerName)</dd>
+
+                <dt class="horizontal-left">Start Date:</dt>
+                <dd class="horizontal-left">@Html.DisplayFor(model => model.StartDate)</dd>
+            </dl>
+        </div>
+        <div class="col-md-3">
+            <dl class="dl-horizontal">
+                <dt class="horizontal-left">Clerk on Duty:</dt>
+                <dd class="horizontal-left">@Html.DisplayFor(model => model.ClerkOnDuty)</dd>
+
+                <dt class="horizontal-left">Credit Card #:</dt>
+                <dd class="horizontal-left">@Html.DisplayFor(model => model.CreditCardNumber)</dd>
+
+                <dt class="horizontal-left">End Date:</dt>
+                <dd class="horizontal-left">@Html.DisplayFor(model => model.EndDate)</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <dl>
+                <dt class="horizontal-left">Tools Rented:</dt>
+                @foreach (var rt in Model.ReservedTools)
+            {
+                    <dd class="horizontal-left">@rt.ToolId @rt.Tool.AbbrDescription</dd>
+                }
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <dl class="dl-horizontal">
+                <dt class="horizontal-left">Deposit Held:</dt>
+                <dd class="horizontal-left">@Html.DisplayFor(model => model.DepositHeld)</dd>
+
+                <dt class="horizontal-left">Estimated Rental:</dt>
+                <dd class="horizontal-left">@Html.DisplayFor(model => model.EstimatedRental)</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row signature">
+        <div class="col-md-3">
+            <dl class="dl-horizontal">
+                <dt>Signature: </dt>
+                <dd class="horizontal-left signature-line"></dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to Main", "Pickup")
+</p>

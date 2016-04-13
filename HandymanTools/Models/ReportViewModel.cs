@@ -10,8 +10,8 @@ namespace HandymanTools.Models
     {
         public List<InventoryItem> Inventory { get; set; }
 
-        //public List<ClerkProgressItem> ClerkProgress { get; set; }
+        public List<ClerkProgressItem> ClerkProgress { get; set; }
         
-        //public List<CustomerRentalItem> CustomerRental { get; set; }
+        public List<CustomerRentalSummary> CustomerRental { get; set; }
     }
 }

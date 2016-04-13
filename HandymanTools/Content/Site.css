@@ -30,6 +30,15 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+/* Rental Contract and Rental Receipt Views */
+.horizontal-left {
+    text-align: left !important;
+    margin-bottom: 10px;
+}
+.signature-line {
+    width: 280px;
+    border-bottom: 1px solid #f0f4f7; 
+}
 .alert {
     padding: 5px;
 }
@@ -38,7 +47,12 @@
     background-color: #dceff7;
     border-color: #a1c3d1;
 }
-
+.alert-success {
+    background-color: #c9efc9;
+    border-color: darkseagreen;
+    margin-top: 30px;
+    padding: 20px;
+}
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
@@ -47,6 +61,9 @@ textarea {
 }
 a {
     color: #025374;
+}
+hr {
+    margin-bottom: 0;
 }
 
 /* Add Tool Page*/
@@ -130,7 +147,6 @@ a {
   border-left: 2px solid #025374;
   margin-left: -2px;
 }
-
 .user-profile {
   text-align: center;
   margin-top: 20px;
@@ -164,3 +180,9 @@ select {
     padding-bottom: 5px;
 }
 
+/* Font Awesome icon customizations */
+.circle-check {
+    color: #09bc09;
+    font-size: 75px;
+    font-weight: lighter;
+}

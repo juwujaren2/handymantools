@@ -13,9 +13,11 @@ namespace HandymanTools.Models
     {
         public ToolCreateViewModel()
         {
-            //List<PowerToolAccessory> Accessories = new List<PowerToolAccessory>();
             Accessories = new List<string>();
         }
+
+        public int ToolId { get; set; }
+
         [Required]
         [Display(Name = "Abbreviated Description")]
         [DataType(DataType.Text)]
