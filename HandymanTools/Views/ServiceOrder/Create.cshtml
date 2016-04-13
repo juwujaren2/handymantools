@@ -1,0 +1,59 @@
+﻿@model HandymanTools.Models.ServiceOrderCreateViewModel
+
+<div class="jumbotron handyman-jumbotron">
+    <h2><i class="fa fa-flag" aria-hidden="true"></i> Request new service order</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br />
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ToolId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 input-group">
+                <div class="input-group-addon" id="tool-number">#</div>
+                @Html.EditorFor(model => Model.ToolId, new { htmlAttributes = new { @class = "form-control repair-control" } })
+                @Html.ValidationMessageFor(model => model.ToolId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartingDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StartingDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StartingDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndingDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EndingDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EndingDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EstimatedCostOfRepair, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 input-group">
+                <div class="input-group-addon" id="estimated-cost">$</div>
+                @Html.EditorFor(model => Model.EstimatedCostOfRepair, new { htmlAttributes = new { @class = "form-control repair-control" } })
+                @Html.ValidationMessageFor(model => model.EstimatedCostOfRepair, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
