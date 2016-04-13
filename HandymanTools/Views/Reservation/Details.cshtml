@@ -9,7 +9,7 @@
     @Html.AntiForgeryToken()
     <div class="jumbotron handyman-jumbotron" style="margin-bottom:20px;">
         <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> @reservationType</h2>
-    </div>
+    </div>    
 
     @Html.HiddenFor(x => x.IsPickup)
     @Html.HiddenFor(x => x.ReservationNumber)
@@ -38,7 +38,7 @@
                                 @foreach (var rt in Model.ReservedTools)
                                 {
                                     var toolDesc = string.Format("{0} - {1}", rt.ToolId, rt.Tool.AbbrDescription);
-                                    <li>@Html.ActionLink(toolDesc, "Detail", "Tool", new { rt.ToolId }, null)</li>                                    
+                                    <li>@Html.ActionLink(toolDesc, "ReservedToolsDetails", "Reservation", new { toolId = rt.ToolId }, new { data_toggle = "modal", data_target = "#toolModal_" + @rt.ToolId })</li>                                   
                                 }
                             </ol>                            
                         </div>
@@ -92,8 +92,7 @@
                             <ol>
                                 @foreach (var rt in Model.ReservedTools)
                                 {
-                                    var toolDesc = string.Format("{0} - {1}", rt.ToolId, rt.Tool.AbbrDescription);
-                                    <li>@Html.ActionLink(toolDesc, "Detail", "Tool", new { rt.ToolId }, null)</li>
+                                    @Html.Partial("ReservedToolsDetails", rt)
                                 }
                             </ol>
                         </div>
@@ -116,7 +115,16 @@
             </div>
         </div>
     }
+    <hr />
     <div>
         @Html.ActionLink(linkTest, action)
     </div>
 }
+@foreach (var rt in Model.ReservedTools)
+{
+    <!-- Modal -->
+    <div class="modal fade" id="toolModal_@rt.ToolId" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
+}
+
+
+

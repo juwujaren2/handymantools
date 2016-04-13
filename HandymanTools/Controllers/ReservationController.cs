@@ -12,10 +12,12 @@ namespace HandymanTools.Controllers
     public class ReservationController : Controller
     {
         private IReservationRepository reservationRepository;
+        private IToolRepository toolRepository;
 
         public ReservationController()
         {
             reservationRepository = new ReservationRepository();
+            toolRepository = new ToolRepository();
         }
         // GET: Reservation
         public ActionResult Make()
@@ -245,6 +247,13 @@ namespace HandymanTools.Controllers
                 }
             }
             return View(vm);
+        }
+        public ActionResult ReservedToolsDetails(int toolId)
+        {
+            //get tool details
+            Tool tool = toolRepository.GetToolInfo(toolId);
+
+            return View(tool);
         }
     }
 }

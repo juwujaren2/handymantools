@@ -39,22 +39,36 @@
                     <th>Pick-Up Clerk</th>
                     <th>Drop-Off Clerk</th>   
                 </tr> 
-            </thead> 
-            <tbody>  
-            @foreach (var reservation in Model.Reservations)
-            {
-                <tr>
+            </thead>
+            <tbody>
+    @{
+
+        var currentId = 0;
+        foreach (var reservation in Model.Reservations)
+        {
+
+            <tr>
+                @if (currentId == reservation.ReservationNumber)
+                {
+                    <th scope="row">&nbsp;</th>
+                }
+                else
+                {
                     <th scope="row">@reservation.ReservationNumber</th>
-                    <td>@reservation.Tool.AbbrDescription</td>
-                    <td>@reservation.Reservation.StartDate.ToString("MM/dd/yyyy")</td>
-                    <td>@reservation.Reservation.EndDate.ToString("MM/dd/yyyy")</td>
-                    <td>@reservation.Tool.RentalPrice.ToString("C")</td>
-                    <td>@reservation.Tool.DepositAmount.ToString("C")</td>
-                    <td>@reservation.Reservation.PickupClerk.FirstName</td>
-                    <td>@reservation.Reservation.DropOffClerk.FirstName</td>
-                </tr>
-            }
-            </tbody> 
+                }
+                
+                <td>@reservation.Tool.AbbrDescription</td>
+                <td>@reservation.Reservation.StartDate.ToString("MM/dd/yyyy")</td>
+                <td>@reservation.Reservation.EndDate.ToString("MM/dd/yyyy")</td>
+                <td>@reservation.Tool.RentalPrice.ToString("C")</td>
+                <td>@reservation.Tool.DepositAmount.ToString("C")</td>
+                <td>@reservation.Reservation.PickupClerk.FirstName</td>
+                <td>@reservation.Reservation.DropOffClerk.FirstName</td>
+            </tr>
+            currentId = reservation.ReservationNumber;
+        }
+    }
+        </tbody>
         </table>
     }
     else

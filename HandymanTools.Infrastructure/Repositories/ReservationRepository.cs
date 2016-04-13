@@ -49,9 +49,12 @@ namespace HandymanTools.Infrastructure.Repositories
                         ReservationTool tool = new ReservationTool();
                         tool.ToolId = reader.GetInt32(0);
                         tool.Tool.AbbrDescription = reader.GetString(1);
-                        tool.Tool.RentalPrice = reader.GetDecimal(2);
-                        tool.Tool.DepositAmount = reader.GetDecimal(3);
-                        tool.Tool.ToolType = (ToolType)Enum.Parse(typeof(ToolType), reader.GetString(4));
+                        tool.Tool.FullDescription = reader.GetString(2);
+                        tool.Tool.PurchasePrice = reader.GetDecimal(3);
+                        tool.Tool.RentalPrice = reader.GetDecimal(4);
+                        tool.Tool.DepositAmount = reader.GetDecimal(5);
+                        tool.Tool.SaleDate = reader.IsDBNull(6) ? DateTime.MinValue : reader.GetDateTime(6);
+                        tool.Tool.ToolType = (ToolType)Enum.Parse(typeof(ToolType), reader.GetString(7));
                         tools.Add(tool);
                     }
                     reader.NextResult();

@@ -319,6 +319,7 @@
     <Content Include="Views\ServiceOrder\Create.cshtml" />
     <Content Include="Views\ServiceOrder\CreateConfirmation.cshtml" />
     <Content Include="Views\Tool\AddConfirmation.cshtml" />
+    <Content Include="Views\Reservation\ReservedToolsDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
