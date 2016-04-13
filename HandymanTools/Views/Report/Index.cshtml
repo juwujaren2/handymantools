@@ -9,7 +9,7 @@
     </ul>
     <div class="tab-content">
         <div id="inventory" class="tab-pane fade in active">
-            <table class="table">
+            <table class="table header-fixed">
                 <thead>
                     <tr>
                         <th>Tool ID</th>
@@ -34,7 +34,7 @@
             </table>
         </div>
         <div id="customerRental" class="tab-pane fade">
-            <table class="table">
+            <table class="table header-fixed">
                 <thead>
                     <tr>
                         <th>Customer Name</th>
@@ -43,12 +43,19 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @foreach(var m in Model.CustomerRental)
+                    {
+                        <tr>
+                            <td>@m.Customer.FullName</td>
+                            <td>@m.Customer.UserName</td>
+                            <td>@m.NumberOfRentals</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
         <div id="clerkProgress" class="tab-pane fade">
-            <table class="table">
+            <table class="table header-fixed">
                 <thead>
                     <tr>
                         <th>Clerk Name</th>
@@ -58,7 +65,15 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    @foreach (var m in Model.ClerkProgress)
+                    {
+                        <tr>
+                            <td>@m.Clerk.FullName</td>
+                            <td>@m.Pickups</td>
+                            <td>@m.Dropoffs</td>
+                            <td>@m.TotalPickupsDropoffs</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

@@ -312,6 +312,7 @@
     <Content Include="Views\Tool\Sell.cshtml" />
     <Content Include="Views\Tool\SellDetails.cshtml" />
     <Content Include="Views\Reservation\Search.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Reservation\RentalContract.cshtml" />
     <Content Include="Views\Reservation\RentalReceipt.cshtml" />
   </ItemGroup>
