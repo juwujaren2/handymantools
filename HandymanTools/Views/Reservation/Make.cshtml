@@ -7,6 +7,17 @@
 @Styles.Render("~/Content/themes/base/core.css")
 @Styles.Render("~/Content/themes/base/theme.css")
 @Styles.Render("~/Content/themes/base/datepicker.css")
+<style type="text/css">
+    .noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE/Edge */
+  user-select: none;           /* non-prefixed version, currently
+                                  not supported by any browser */
+}
+</style>
 <script>
     var ToolTypePicker = "<select onchange='javasript:changeToolType(this)' class='form-control'>" +
         "<option value='-1'>Select Tool Type</option>" +
@@ -14,9 +25,9 @@
         "<option value='@((int)ToolType.Hand)'>@ToolType.Hand.ToString()</option>" +
         "<option value='@((int)ToolType.Power)'>@ToolType.Power.ToString()</option>" +
         "</select>";
-    var newRow = "<tr id='#'><td><b>&.</b></td><td id='type#'></td><td id='tool#'></td></tr>";
+    var newRow = "<tr id='#'><td style='font-size:x-large'><b>&.</b></td><td id='type#'></td><td id='tool#'></td></tr>";
     var testData = [];
-    $(function () {
+    $(function () {        
         $("#startDate").datepicker({
             minDate: 0,
             onClose: function (selectedDate) {
@@ -33,7 +44,7 @@
                 $("#changeDate").removeAttr("hidden");
                 $("#toolSelection").removeAttr("hidden");
                 $("#type0").append(ToolTypePicker);
-
+                $("#rowControl").removeAttr("hidden");
                 //alert("You can start choosing tools now.");
             }
         });
@@ -43,6 +54,7 @@
                 $("#startDate").prop("disabled", true);
                 $("#changeDate").removeAttr("hidden");
                 $("#toolSelection").removeAttr("hidden");
+                $("#rowControl").removeAttr("hidden");
                 $("#type0").append(ToolTypePicker);
                 //alert("You can start choosing tools now.");
             }
@@ -54,8 +66,10 @@
     });
 
     function changeToolType(select) {
-        if (select.value !== -1) {
-            var callingId = select.parentElement.id.replace("type", "");
+        var callingId = select.parentElement.id.replace("type", "");
+        if (select.value !== "-1") {
+            $("#toolHeader").removeAttr("hidden");
+            
         //alert(callingId);
             //$("#tool" + callingId).text(select.value);
             $("#tool" + callingId).empty();
@@ -99,6 +113,11 @@
             //testData = toolList;
             //alert(select.value);
 
+        } else {
+            $("#tool" + callingId).empty();
+            if (callingId === "0") {
+                $("#toolHeader").attr("hidden", "hidden");
+            }
         }
 
 
@@ -145,35 +164,44 @@
     <h2><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> @ViewBag.Title</h2>
 </div>
 <div>
-    <form action="@Url.Action("Summary")" method="post" id="reserveForm">
-        <div class="form-group">
+    <form action="@Url.Action("Summary")" method="post" id="reserveForm" class="form-horizontal">
+        <div class="form-group col-md-10">
             <div class="col-md-2">
-                <label class="control-label">Starting Date</label> <input type="text" id="startDate" name="startDate" class="form-control" />
-                <input type="hidden" id="hiddenStartDate" name="startDate" />
+                <label class="control-label">Starting Date</label> <input type="text" id="startDate" name="startDate" class="form-control" style="text-align: right"/>
+                <input type="hidden" id="hiddenStartDate" name="startDate"/>
             </div>
             <div class="col-md-2">
-                <label class="control-label">Ending Date</label> <input type="text" id="endDate" name="endDate" class="form-control" />
-                <input type="hidden" id="hiddenEndDate" name="endDate" />
+                <label class="control-label">Ending Date</label> <input type="text" id="endDate" name="endDate" class="form-control" style="text-align: right"/>
+                <input type="hidden" id="hiddenEndDate" name="endDate"/>
             </div>
+            <div class="col-md-2">
+                <div id="changeDate" hidden="hidden">
+                    <div>
+                        <label style="color:transparent" class="noselect">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+                        <button name="Change Date" onclick="javascript:location.reload();" type="button" class="btn" id="btnChangeDate">Change Date</button>
+                    </div>
+            </div>
+ 
+            </div>
+
         </div>
-        <div id="changeDate" hidden="hidden" class="form-group">
-            <button name="Change Date" onclick="javascript:location.reload();" type="button" class="btn btn-default btn-sm form-control">Change Date</button>
-        </div>
-        <div hidden="hidden" id="toolSelection" class="form-group">
-            <table>
+
+        <div hidden="hidden" id="toolSelection" class="form-group col-md-10">
+            <table class="table table-striped table-condensed">
                 <thead>
-                    <tr><th></th><th>Type of Tool</th><th>Tool</th></tr>
+                    <tr><th></th><th>Type of Tool</th><th hidden="hidden" id="toolHeader">Tool</th></tr>
                 </thead>
                 <tbody id="toolRows">
-                    <tr id="0"><td><b>1.</b></td><td id="type0"></td><td id="tool0"></td></tr>
+                    <tr id="0"><td style="font-size: x-large"><b>1.</b></td><td id="type0"></td><td id="tool0"></td></tr>
                 </tbody>
             </table>
-            <div class="form-group">
-                <button onclick="javascript: addNewRow();" type="button" class="btn form-control">Add More Tools</button><button onClick="javascript: removeLastRow();" type="button" class="btn form-control">Remove Last Tool</button>
+        </div>
+            <div class="col-md-10 form-group" hidden="hidden" id="rowControl">
+                <button onclick="javascript: addNewRow();" type="button" class="btn">Add More Tools</button> <button onClick="javascript: removeLastRow();" type="button" class="btn">Remove Last Tool</button>
             </div>
-            <div id="submit" hidden="hidden" class="form-group">
-                <input type="submit" value="Calculate Total" class="btn btn-primary form-control" />
-            </div>
+        
+        <div id="submit" hidden="hidden" class="form-group col-md-10">
+            <input type="submit" value="Calculate Total" class="btn btn-primary" />
         </div>
     </form>
 </div>

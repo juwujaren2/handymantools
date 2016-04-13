@@ -15,11 +15,11 @@ namespace HandymanTools.Models
         [Display(Name = "Abbreviated Description")]
         public string AbbreviatedDescription { get; set; }
 
-        [Display(Name = "Deposit ($)")]
+        [Display(Name = "Deposit")]
         [DataType(DataType.Currency)]
         public decimal Deposit { get; set; }
 
-        [Display(Name = "Price/Day ($)")]
+        [Display(Name = "Price/Day")]
         [DataType(DataType.Currency)]
         public decimal RentalPrice { get; set; }
 
