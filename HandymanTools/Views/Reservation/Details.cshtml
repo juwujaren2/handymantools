@@ -31,15 +31,16 @@
                             <dd>@Html.DisplayFor(model => model.EstimatedCost)</dd>
                         </dl>
                     </div>
-                    <div class="col-md-10" style="padding-left: 5px;">
-                        <div class="well well-sm">
-                            <h5>Reserved Tools</h5>
+                    <div class="col-md-10" style="padding-left: 5px; padding-right: 0px;">
+                        <div class="well well-sm tool-well">
+                            <h5>Reserved Tools <small><em>(Click tool to view details!)</em></small></h5>
                             <ol>
                                 @foreach (var rt in Model.ReservedTools)
                                 {
-                                    <li>@rt.ToolId - @rt.Tool.AbbrDescription @Html.ActionLink("Tool Details", "Detail", "Tool", new { rt.ToolId }, null)</li>
+                                    var toolDesc = string.Format("{0} - {1}", rt.ToolId, rt.Tool.AbbrDescription);
+                                    <li>@Html.ActionLink(toolDesc, "Detail", "Tool", new { rt.ToolId }, null)</li>                                    
                                 }
-                            </ol>
+                            </ol>                            
                         </div>
                     </div>
                 </div>
@@ -85,13 +86,14 @@
                             <dd>@Html.DisplayFor(model => model.EstimatedCost)</dd>
                         </dl>
                     </div>
-                    <div class="col-md-10" style="padding-left: 5px;">
-                        <div class="well well-sm">
-                            <h5>Reserved Tools</h5>
+                    <div class="col-md-10" style="padding-left: 5px; padding-right: 0px;">
+                        <div class="well well-sm tool-well">
+                            <h5>Reserved Tools <small><em>(Click tool to view details!)</em></small></h5>
                             <ol>
                                 @foreach (var rt in Model.ReservedTools)
                                 {
-                                    <li>@rt.ToolId - @rt.Tool.AbbrDescription @Html.ActionLink("Tool Details", "Detail", "Tool", new { rt.ToolId }, null)</li>
+                                    var toolDesc = string.Format("{0} - {1}", rt.ToolId, rt.Tool.AbbrDescription);
+                                    <li>@Html.ActionLink(toolDesc, "Detail", "Tool", new { rt.ToolId }, null)</li>
                                 }
                             </ol>
                         </div>
