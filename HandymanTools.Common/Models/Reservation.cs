@@ -27,7 +27,7 @@ namespace HandymanTools.Common.Models
         public DateTime EndDate { get; set; }
 
         public string CreditCardNumber { get; set; }
-        public string CreditCardExpirationDate { get; set; }
+        public DateTime CreditCardExpirationDate { get; set; }
 
         public List<ReservationTool> ReservedTools { get; set; }
     }

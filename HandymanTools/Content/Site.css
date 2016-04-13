@@ -30,6 +30,15 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+/* Rental Contract and Rental Receipt Views */
+.horizontal-left {
+    text-align: left !important;
+    margin-bottom: 10px;
+}
+.signature-line {
+    width: 280px;
+    border-bottom: 1px solid #f0f4f7; 
+}
 .alert {
     padding: 5px;
 }

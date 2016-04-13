@@ -163,10 +163,11 @@ namespace HandymanTools.Infrastructure.Repositories
                         reservation.StartDate = reader.GetDateTime(0);
                         reservation.EndDate = reader.GetDateTime(1);
                         reservation.CreditCardNumber = reader.GetString(2);
-                        reservation.Customer.FirstName = reader.GetString(3);
-                        reservation.Customer.LastName = reader.GetString(4);
-                        reservation.PickupClerk.FirstName = reader.GetString(5);
-                        reservation.DropOffClerk.FirstName = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
+                        reservation.CreditCardExpirationDate = reader.GetDateTime(3);
+                        reservation.Customer.FirstName = reader.GetString(4);
+                        reservation.Customer.LastName = reader.GetString(5);
+                        reservation.PickupClerk.FirstName = reader.GetString(6);
+                        reservation.DropOffClerk.FirstName = reader.IsDBNull(7) ? string.Empty : reader.GetString(6);
                     }
                     reader.NextResult();
                 }
@@ -184,7 +185,7 @@ namespace HandymanTools.Infrastructure.Repositories
         /// <param name="expirationDate"></param>
         /// <param name="clerkId"></param>
         /// <returns></returns>
-        public int UpdateReservationWithCreditCard(int reservationNumber, string creditCard, string expirationDate, string clerkId)
+        public int UpdateReservationWithCreditCard(int reservationNumber, string creditCard, DateTime expirationDate, string clerkId)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -195,7 +196,26 @@ namespace HandymanTools.Infrastructure.Repositories
                 command.Parameters.Add("@ReservationNumber", SqlDbType.Int).Value = reservationNumber;
                 command.Parameters.Add("@ClerkId", SqlDbType.VarChar).Value = clerkId;
                 command.Parameters.Add("@CreditCardNum", SqlDbType.VarChar).Value = creditCard;
-                command.Parameters.Add("@CreditCardExpDate", SqlDbType.Date).Value = DateTime.ParseExact(expirationDate, "MM-dd-yyyy", CultureInfo.InvariantCulture);
+                command.Parameters.Add("@CreditCardExpDate", SqlDbType.Date).Value = expirationDate;
+
+                //open, execute stored procedure, and close connection
+                conn.Open();
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            return 0;
+        }
+        
+        public int UpdateReservationWithDropoffClerk(int reservationNumber, string clerkId)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = "usp_UpdateReservationWithDropoffClerk";
+                command.Connection = conn;
+                command.Parameters.Add("@ReservationNumber", SqlDbType.Int).Value = reservationNumber;
+                command.Parameters.Add("@ClerkId", SqlDbType.VarChar).Value = clerkId;
 
                 //open, execute stored procedure, and close connection
                 conn.Open();

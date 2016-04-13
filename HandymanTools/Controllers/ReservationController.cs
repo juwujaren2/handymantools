@@ -92,7 +92,6 @@ namespace HandymanTools.Controllers
         [HttpPost]
         public ActionResult Pickup(ReservationViewModel vm)
         {
-
             if (ModelState.IsValid)
             {
                 vm.IsPickup = true;
@@ -137,18 +136,31 @@ namespace HandymanTools.Controllers
         [HttpPost]
         public ActionResult Dropoff(ReservationViewModel vm)
         {
-            vm.IsPickup = false;
-            int reservationNumber = Convert.ToInt32(vm.ReservationNumber);
-            vm.ReservedTools = reservationRepository.GetReservedToolDetails(reservationNumber);
-
-            decimal totalDeposit = 0;
-            decimal totalCost = 0;
-            foreach (var item in vm.ReservedTools)
+            if (ModelState.IsValid)
             {
-                totalDeposit += item.Tool.DepositAmount;
-                totalCost += item.Tool.RentalPrice;
-            }
+                vm.IsPickup = false;
+                int reservationNumber = Convert.ToInt32(vm.ReservationNumber);
 
+                Reservation reservation = reservationRepository.GetReservationDetails(reservationNumber);
+                vm.ReservedTools = reservationRepository.GetReservedToolDetails(reservationNumber);
+                vm.CreditCardNumber = reservation.CreditCardNumber;
+                vm.ExpirationDate = reservation.CreditCardExpirationDate;
+
+                if (vm.ReservedTools.Count == 0)
+                {
+                    ModelState.AddModelError("ReservationNumber", "No reservation with that number exists. Please enter a valid number.");
+                    return View("Search", vm);
+                }
+                decimal totalDeposit = 0;
+                decimal totalCost = 0;
+                foreach (var item in vm.ReservedTools)
+                {
+                    totalDeposit += item.Tool.DepositAmount;
+                    totalCost += item.Tool.RentalPrice;
+                }
+                vm.EstimatedCost = totalCost;
+                vm.DepositRequired = totalDeposit;
+            }
             return View("Details", vm);
         }
 
@@ -169,21 +181,22 @@ namespace HandymanTools.Controllers
         [HttpPost]
         public ActionResult Details(ReservationViewModel vm)
         {
-            if (ModelState.IsValid) { 
+            if (ModelState.IsValid) {
+
+                int reservationNumber = Convert.ToInt32(vm.ReservationNumber);
+
+                //get reservation and reservation tools information
+                Reservation reservation = reservationRepository.GetReservationDetails(reservationNumber);
+                reservation.ReservedTools = reservationRepository.GetReservedToolDetails(reservationNumber);
+
                 if (vm.IsPickup)
                 {
-                    int reservationNumber = Convert.ToInt32(vm.ReservationNumber);
-
                     //set pickup clerk
                     Clerk pickupClerk = User.Identity.GetUser() as Clerk;
 
                     //update credit card and pickup clerk
-                    reservationRepository.UpdateReservationWithCreditCard(reservationNumber, vm.CreditCardNumber, vm.ExpirationDate.Date.ToString("MM/dd/yyyy"), pickupClerk.UserName);
-
-                    //get reservation and reservation tools information
-                    Reservation reservation = reservationRepository.GetReservationDetails(reservationNumber);
-                    reservation.ReservedTools = reservationRepository.GetReservedToolDetails(reservationNumber);
-
+                    reservationRepository.UpdateReservationWithCreditCard(reservationNumber, vm.CreditCardNumber, vm.ExpirationDate.Date, pickupClerk.UserName);
+                    
                     //project reservation to pass correct model type to Rental Contract view
                     RentalContractViewModel rc = new RentalContractViewModel
                     {
@@ -202,12 +215,32 @@ namespace HandymanTools.Controllers
                 }
                 else
                 {
+                    //set pickup clerk
+                    Clerk dropoffClerk = User.Identity.GetUser() as Clerk;
+
                     //update dropoff clerk
-                
+                    reservationRepository.UpdateReservationWithDropoffClerk(reservationNumber, dropoffClerk.UserName);
+
+                    //project reservation to pass correct model type to Tools Receipt view
+                    ToolsReceiptViewModel tr = new ToolsReceiptViewModel
+                    {
+                        ClerkOnDuty = reservation.DropOffClerk.FirstName,
+                        CreditCardNumber = reservation.CreditCardNumber,
+                        CustomerName = reservation.Customer.FullName,
+                        DepositHeld = reservation.ReservedTools.Sum(x => x.Tool.DepositAmount),
+                        RentalPrice = reservation.ReservedTools.Sum(x => x.Tool.RentalPrice),
+                        EndDate = reservation.EndDate,
+                        ReservationNumber = reservation.ReservationNumber,
+                        ReservedTools = reservation.ReservedTools,
+                        StartDate = reservation.StartDate
+                    };
+                    tr.Total = tr.RentalPrice - tr.DepositHeld;
+
                     //return rental receipt
+                    return View("RentalReceipt", tr);
                 }
             }
-            return null;
+            return View(vm);
         }
     }
 }

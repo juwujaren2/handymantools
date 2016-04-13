@@ -15,6 +15,8 @@ namespace HandymanTools.Infrastructure.Repositories
 
         Reservation GetReservationDetails(int reservationNumber);
 
-        int UpdateReservationWithCreditCard(int reservationNumber, string creditCard, string expirationDate, string clerkId);
+        int UpdateReservationWithCreditCard(int reservationNumber, string creditCard, DateTime expirationDate, string clerkId);
+
+        int UpdateReservationWithDropoffClerk(int reservationNumber, string clerkId);
     }
 }
