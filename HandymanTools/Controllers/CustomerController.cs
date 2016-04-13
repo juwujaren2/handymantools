@@ -19,11 +19,6 @@ namespace HandymanTools.Controllers
             _reservationRepo = new ReservationRepository();
         }
 
-        // GET: Customer
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         /// <summary>
         /// Loads the Create customer profile form
