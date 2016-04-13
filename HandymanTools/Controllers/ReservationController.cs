@@ -46,7 +46,7 @@ namespace HandymanTools.Controllers
             var toolNames = tools.Values.ToList();
             var reservationRespository = new ReservationRepository();
             var resNumber = reservationRespository.MakeReservation(customerId, startDate, endDate, toolIds);
-            ViewBag.resNumber = resNumber;
+            ViewBag.resNumber = resNumber.ToString("D7");
             return View(toolNames);
         }
 

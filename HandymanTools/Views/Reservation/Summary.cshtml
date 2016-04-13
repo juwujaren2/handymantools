@@ -4,7 +4,7 @@
 }
 
 <div class="jumbotron handyman-jumbotron">
-    <h2><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> @ViewBag.Title</h2>
+    <h2><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> @ViewBag.Title</h2>
 </div>
     <h3>Tools Desired</h3>
 <form action="@Url.Action("Confirmation")" method="post">
@@ -12,14 +12,20 @@
     <ol>
         @foreach (var tool in Model)
         {
-            <li>@tool.Value<input type="hidden" name="toolKey@(tool.Key)" value="@tool.Key" /><input type="hidden" name="toolName@(tool.Key)" value="@tool.Value" /></li>
+            <li>@tool.Value<input type="hidden" name="toolKey@(tool.Key)" value="@tool.Key"/><input type="hidden" name="toolName@(tool.Key)" value="@tool.Value"/></li>
         }
     </ol>
-    <p><b>Start Date</b> @ViewBag.StartDate</p><input type="hidden" name="startDate" value="@ViewBag.StartDate" />
-    <p><b>End Date</b> @ViewBag.EndDate</p><input type="hidden" name="endDate" value="@ViewBag.EndDate" />
-    <p><b>Total Rental Price</b> @string.Format("{0:C}", @ViewBag.TotalRental)<input type="hidden" name="totalRental" value="@ViewBag.TotalRental" /></p>
-    <p><b>Total Deposit Required</b> @string.Format("{0:C}", @ViewBag.totalDeposit)<input type="hidden" name="totalDeposit" value="@ViewBag.TotalDeposit" /></p>
-<input type="submit" value="Submit"/> <input type="reset" onclick="javascript: window.location('@Url.Action("Make")');"/>
+    <dl class="dl-horizontal">
+        <dt style="text-align:left">Start Date</dt>
+        <dd>@ViewBag.StartDate<input type="hidden" name="startDate" value="@ViewBag.StartDate" /></dd>
+        <dt style="text-align:left">End Date</dt>
+        <dd>@ViewBag.EndDate<input type="hidden" name="endDate" value="@ViewBag.EndDate" /></dd>
+        <dt style="text-align:left">Total Rental Price</dt>
+        <dd>@string.Format("{0:C}", @ViewBag.TotalRental)<input type="hidden" name="totalRental" value="@ViewBag.TotalRental" /></dd>
+        <dt style="text-align:left">Total Deposit Required</dt>
+        <dd>@string.Format("{0:C}", @ViewBag.totalDeposit)<input type="hidden" name="totalDeposit" value="@ViewBag.TotalDeposit" /></dd>
+    </dl>
+<input type="submit" value="Submit" class="btn btn-primary"/> <input type="reset" onclick="javascript: window.location('@Url.Action("Make")');" class="btn btn-default"/>
 </form>
 
 

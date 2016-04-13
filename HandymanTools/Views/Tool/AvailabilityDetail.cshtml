@@ -9,24 +9,28 @@
     <h2><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> @ViewBag.Title</h2>
 </div>
 <hr/>
-<p>Tool Type: @ViewBag.toolType</p>
-<p>Start Date: @ViewBag.startDate</p>
-<p>End Date: @ViewBag.endDate</p>
+<dl class="dl-horizontal">
+<dt style="text-align:left">Tool Type</dt>
+<dd>@ViewBag.toolType</dd>
+<dt style="text-align:left">Start Date</dt>
+<dd>@ViewBag.StartDate</dd>
+<dt style="text-align:left">End Date</dt>
+<dd>@ViewBag.EndDate</dd>
+</dl>
 
 @if (availableTools.Count > 0)
 {
-    <table class="table-bordered">
+    <table class="table">
         <thead>
         <tr><th>@Html.LabelFor(m => Model.ToolID)</th><th>@Html.LabelFor(m => Model.AbbreviatedDescription)</th><th>@Html.LabelFor(m => Model.Deposit)</th><th>@Html.LabelFor(m => Model.RentalPrice)</th></tr>
         </thead>
         @foreach (var tool in availableTools)
         {
             <tr><td>
-                @Html.ActionLink(Html.DisplayFor(m => tool.ToolID).ToHtmlString(), "Detail", new {tool.ToolID})
+                @Html.ActionLink(Html.DisplayFor(m => tool.ToolID).ToHtmlString(), "Detail", new {tool.ToolID}, htmlAttributes: new {@style = "text-decoration: none", @class="btn-sm btn-default active", @title="View tool info"})
             </td><td>@Html.DisplayFor(m => tool.AbbreviatedDescription)</td><td>@Html.DisplayFor(m => tool.Deposit)</td><td>@Html.DisplayFor(m => tool.RentalPrice)</td></tr>
         }
     </table>
-    <p>Click a tool's ID to view its details.</p>
 }
 else
 {

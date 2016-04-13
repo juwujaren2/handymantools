@@ -8,7 +8,7 @@
 </div>
 <div>
     <h3>Your Reservation Number is</h3>
-    @ViewBag.resNumber
+    <span style="font-size:x-large">@ViewBag.resNumber</span>
 </div>
 <div>
     <h3>Tools Rented</h3>
@@ -18,16 +18,15 @@
             <li>@toolName</li>
         }
     </ol>
+    <dl class="dl-horizontal">
+        <dt style="text-align:left">Start Date</dt>
+        <dd>@ViewBag.StartDate</dd>
+        <dt style="text-align:left">End Date</dt>
+        <dd>@ViewBag.EndDate</dd>
+        <dt style="text-align:left">Total Rental Price</dt>
+        <dd>@string.Format("{0:C}", @ViewBag.TotalRental)</dd>
+        <dt style="text-align:left">Total Deposit Required</dt>
+        <dd>@string.Format("{0:C}", @ViewBag.totalDeposit)</dd>
+    </dl>
 </div>
-<div>
-    <b>Start Date: </b> @ViewBag.StartDate
-</div>
-<div>
-    <b>End Date: </b> @ViewBag.EndDate
-</div>
-<div>
-    <b>Total Rental Price: </b>@string.Format("{0:C}", ViewBag.TotalRental)
-</div>
-<div>
-    <b>Total Deposit Required: </b> @string.Format("{0:C}", ViewBag.TotalDeposit)
-</div>
+
