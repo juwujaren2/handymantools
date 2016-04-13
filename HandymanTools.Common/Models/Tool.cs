@@ -1,6 +1,9 @@
 ﻿using HandymanTools.Common.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace HandymanTools.Common.Models
 {
@@ -16,10 +19,13 @@ namespace HandymanTools.Common.Models
 
         public string FullDescription { get; set; }
 
+        [DataType(DataType.Currency)]
         public decimal RentalPrice { get; set; }
 
+        [DataType(DataType.Currency)]
         public decimal PurchasePrice { get; set; }
 
+        [DataType(DataType.Currency)]
         public decimal DepositAmount { get; set; }
 
         public ToolType ToolType { get; set; }
