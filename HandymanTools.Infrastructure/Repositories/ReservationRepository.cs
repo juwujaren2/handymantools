@@ -162,12 +162,12 @@ namespace HandymanTools.Infrastructure.Repositories
                         reservation.ReservationNumber = reservationNumber;
                         reservation.StartDate = reader.GetDateTime(0);
                         reservation.EndDate = reader.GetDateTime(1);
-                        reservation.CreditCardNumber = reader.GetString(2);
-                        reservation.CreditCardExpirationDate = reader.GetDateTime(3);
-                        reservation.Customer.FirstName = reader.GetString(4);
-                        reservation.Customer.LastName = reader.GetString(5);
-                        reservation.PickupClerk.FirstName = reader.GetString(6);
-                        reservation.DropOffClerk.FirstName = reader.IsDBNull(7) ? string.Empty : reader.GetString(6);
+                        reservation.CreditCardNumber = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                        reservation.CreditCardExpirationDate = reader.IsDBNull(3) ? DateTime.MinValue : reader.GetDateTime(3);
+                        reservation.Customer.FirstName = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
+                        reservation.Customer.LastName = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
+                        reservation.PickupClerk.FirstName = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
+                        reservation.DropOffClerk.FirstName = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
                     }
                     reader.NextResult();
                 }
