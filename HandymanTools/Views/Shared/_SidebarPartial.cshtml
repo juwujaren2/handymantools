@@ -64,8 +64,8 @@ else if (loggedInUser.UserType == UserType.Clerk)
                         Drop-Off Reservation
                     </a>
                 </li>
-                <li>
-                    <a href="#">
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Create" ? "active" : "")">
+                    <a href="/ServiceOrder/Create">
                         <i class="glyphicon glyphicon-flag"></i>
                         Service Order
                     </a>

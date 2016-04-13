@@ -46,10 +46,12 @@
     <Compile Include="Repositories\ICustomerRepository.cs" />
     <Compile Include="Repositories\IReportRepository.cs" />
     <Compile Include="Repositories\IReservationRepository.cs" />
+    <Compile Include="Repositories\IServiceOrderRepository.cs" />
     <Compile Include="Repositories\IToolRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\ReportRepository.cs" />
     <Compile Include="Repositories\ReservationRepository.cs" />
+    <Compile Include="Repositories\ServiceOrderRepository.cs" />
     <Compile Include="Repositories\ToolRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>

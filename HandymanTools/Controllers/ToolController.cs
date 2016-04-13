@@ -62,6 +62,10 @@ namespace HandymanTools.Controllers
                 {
                     ModelState.AddModelError("Accessories", "At least one accessory is required when a power tool type is selected.");
                 }
+                if (vm.FullDescription.Length < vm.AbbreviatedDescription.Length)
+                {
+                    ModelState.AddModelError("FullDescription", "The full description must be longer than the abbreviated description");
+                }
                 else
                 { 
                     Tool tool = new Tool();
@@ -132,7 +136,7 @@ namespace HandymanTools.Controllers
             ViewBag.startDate = startDate.ToShortDateString();
             ViewBag.endDate = endDate.ToShortDateString();
             var viewModelList = new Models.AvailableToolsViewModel();            
-            foreach (var tool in new ToolRepository().CheckToolAvailability(chosenToolType, startDate, endDate))
+            foreach (var tool in toolRepository.CheckToolAvailability(chosenToolType, startDate, endDate))
             {
                 viewModelList.Add(new Models.AvailableToolViewModel()
                 {

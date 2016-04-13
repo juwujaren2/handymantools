@@ -1,0 +1,17 @@
+﻿@model HandymanTools.Models.ServiceOrderCreateViewModel
+<div class="row">
+    <div class="col-md-6" style="text-align:center;">
+        <h2>Service Order Created!</h2>
+        <br />
+        <span class="circle-check fa-stack fa-lg">
+            <i class="fa fa-circle-thin fa-stack-2x"></i>
+            <i class="fa fa-check fa-stack-1x"></i>
+        </span>
+        <div class="alert alert-success" role="alert"> <strong>Well done!</strong> Service Order for Tool #@Model.ToolId (@Model.ToolName) has been successfully created.</div>
+        <hr />
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Return to Main", "Pickup", "Reservation")
+</p>
+

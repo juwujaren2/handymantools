@@ -5,6 +5,10 @@ namespace HandymanTools.Common.Models
 {
     public class ServiceOrder
     {
+        public ServiceOrder()
+        {
+            Tool = new Tool();
+        }
         public int ToolId { get; set; }
         public Tool Tool { get; set; }
 

@@ -204,6 +204,7 @@
     <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\RentalContractViewModel.cs" />
     <Compile Include="Models\ReservationViewModel.cs" />
+    <Compile Include="Models\ServiceOrderCreateViewModel.cs" />
     <Compile Include="Models\ToolSellViewModel.cs" />
     <Compile Include="Models\ToolsReceiptViewModel.cs" />
     <Compile Include="Models\ToolViewModel.cs" />
@@ -315,11 +316,13 @@
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Reservation\RentalContract.cshtml" />
     <Content Include="Views\Reservation\RentalReceipt.cshtml" />
+    <Content Include="Views\ServiceOrder\Create.cshtml" />
+    <Content Include="Views\ServiceOrder\CreateConfirmation.cshtml" />
+    <Content Include="Views\Tool\AddConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\ServiceOrder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
