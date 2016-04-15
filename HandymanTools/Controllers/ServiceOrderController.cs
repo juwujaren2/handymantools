@@ -16,11 +16,7 @@ namespace HandymanTools.Controllers
             serviceOrderRepository = new ServiceOrderRepository();
             toolRepository = new ToolRepository();
         }
-        // GET: ServiceOrder
-        public ActionResult Index()
-        {
-            return View();
-        }
+
 
         public ActionResult Create()
         {
