@@ -69,7 +69,7 @@ namespace HandymanTools.Infrastructure.Repositories
                 };
 
                 sqlCommand.Parameters.Add("@Year", SqlDbType.Int).Value = DateTime.Now.Year;
-                sqlCommand.Parameters.Add("@Month", SqlDbType.Int).Value = DateTime.Now.Month - 1;
+                sqlCommand.Parameters.Add("@Month", SqlDbType.Int).Value = DateTime.Now.Month;
 
                 var reader = sqlCommand.ExecuteReader();
 
