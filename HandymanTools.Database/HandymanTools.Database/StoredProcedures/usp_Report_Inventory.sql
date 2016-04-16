@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[usp_Report_Inventory]
 AS
 	SELECT Tool.ToolId, Tool.AbbrDescription, ISNULL(RentalProfit, 0) AS RentalProfit, ISNULL(CostOfRepairs, 0) AS CostOfRepairs, 
-	ISNULL((RentalProfit - CostOfRepairs), 0) AS TotalProfit FROM Tool
+	(ISNULL(RentalProfit, 0) - ISNULL(CostOfRepairs, 0)) AS TotalProfit FROM Tool
 	LEFT OUTER JOIN (
 		SELECT Tool.ToolID, SUM(RentalPrice * DATEDIFF(dd, Reservation.StartDate, Reservation.EndDate)) AS RentalProfit FROM Tool 
 		INNER JOIN ReservationTool ON ReservationTool.ToolID = Tool.ToolID 
