@@ -1,12 +1,14 @@
 ﻿@model HandymanTools.Models.CustomerCreateProfileViewModel
-
+@{
+    ViewBag.Title = "Create new profile";
+}
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <div class="jumbotron handyman-jumbotron">
-            <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Create new profile</h2>
+            <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> @ViewBag.Title</h2>
         </div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <br />

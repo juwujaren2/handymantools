@@ -1,7 +1,9 @@
 ﻿@model HandymanTools.Models.ServiceOrderCreateViewModel
-
+@{
+    ViewBag.Title = "Request new service order";
+}
 <div class="jumbotron handyman-jumbotron">
-    <h2><i class="fa fa-flag" aria-hidden="true"></i> Request new service order</h2>
+    <h2><i class="fa fa-flag" aria-hidden="true"></i> @ViewBag.Title</h2>
 </div>
 
 @using (Html.BeginForm())
