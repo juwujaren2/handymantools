@@ -97,6 +97,7 @@
     <Build Include="StoredProcedures\usp_InsertClerkProfile.sql" />
     <None Include="CannedData\HandymanData.sql" />
     <Build Include="StoredProcedures\usp_UpdateReservationWithDropoffClerk.sql" />
+    <None Include="CannedData\CannedDataTakeTwo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.publish.xml" />
