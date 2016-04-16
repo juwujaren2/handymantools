@@ -3,7 +3,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <div class="jumbotron handyman-jumbotron">
             <h2><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Create new profile</h2>
@@ -13,7 +13,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @if (Session["newUser"] != null)
+                {
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @Value = Session["newUser"].ToString() } })
+                    Session.Remove("newUser");
+                }
+                else
+                {
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                }
+
                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -21,7 +30,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @if (Session["newPassword"] != null)
+                {
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @Value = Session["newPassword"].ToString() } })
+                    Session.Remove("newPassword");
+                }
+                else
+                {
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                }
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>

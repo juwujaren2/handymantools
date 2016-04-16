@@ -58,6 +58,8 @@ namespace HandymanTools.Controllers
 
                 if (String.IsNullOrEmpty(password))
                 {
+                    Session.Add("newUser", vm.UserName);
+                    Session.Add("newPassword", vm.Password);
                     return RedirectToAction("CreateProfile", "Customer");
                 }
                 else

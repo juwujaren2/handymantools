@@ -69,13 +69,13 @@ INSERT [dbo].[Customer] ([UserName], [Address], [HomeAreaCode], [HomePhone], [Wo
 INSERT [dbo].[Clerk] ([UserName]) VALUES (N'000'),(N'001'),(N'002'),(N'003'),(N'004'),(N'005'),(N'006'),(N'007'),(N'008'),(N'009')
 SET IDENTITY_INSERT dbo.Reservation ON
 INSERT dbo.Reservation (ReservationNumber, CustomerId, PickupClerkId, DropOffClerkId, StartDate, EndDate, CreditCardNum, CreditCardExpDate)VALUES 
-(1, 'user.3@gt.edu', '008','004','2016-04-02','2016-04-10', '1234567890123456', '2017-12-31'),
+(1, 'user.3@gt.edu', '008','004','2016-03-29','2016-03-30', '1234567890123456', '2017-12-31'),
 (2, 'user.2@gt.edu', NULL, NULL, '2016-05-10','2016-05-12', NULL, NULL),
 (3, 'user.4@gt.edu', '000', NULL, '2016-04-15', '2016-04-24', '1234123412341234', '2020-04-30'),
 (4, 'user.0@gt.edu', '001', '005', '2016-03-10', '2016-03-23', '5678567856785678','2019-02-28'),
-(5, 'user.3@gt.edu', '006','003', '2016-02-14', '2016-02-29', '3456345634563456', '2025-06-30'),
+(5, 'user.3@gt.edu', '006','003', '2016-03-02', '2016-03-07', '3456345634563456', '2025-06-30'),
 (6, 'user.2@gt.edu', NULL, NULL, '2016-07-27', '2016-08-12', NULL, NULL),
-(7, 'user.1@gt.edu', '007', '002', '2016-01-25', '2016-01-28', '7890789078907890', '2016-12-31'),
+(7, 'user.1@gt.edu', '007', '002', '2016-03-25', '2016-03-28', '7890789078907890', '2016-12-31'),
 (8, 'user.4@gt.edu', NULL, NULL, '2016-05-10', '2016-05-11', NULL, NULL),
 (9, 'user.2@gt.edu', '003', NULL, '2016-04-10', '2016-04-30', '2345234523452345', '2030-08-31')
 SET IDENTITY_INSERT dbo.Reservation OFF
@@ -88,4 +88,4 @@ INSERT dbo.ReservationTool VALUES (1, 61), (1, 72), (1,115),
 (7, 61), (7, 119),
 (8, 82),(8,69),(8,73),(8,102),
 (9, 61),(9,120)
-INSERT dbo.ServiceOrder VALUES (61, '2016-03-25', '2016-03-30', 25.00), (119, '2016-03-01', '2016-05-25', 350.00)
+INSERT dbo.ServiceOrder VALUES (61, '2016-02-01', '2016-02-15', 25.00), (119, '2016-03-01', '2016-05-25', 350.00)
