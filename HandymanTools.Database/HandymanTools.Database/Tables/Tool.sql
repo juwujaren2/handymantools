@@ -1,6 +1,6 @@
 ﻿CREATE TABLE Tool
 (
-	ToolId int IDENTITY(1,1) NOT NULL,  -- autoincrement surrogate
+	ToolId int IDENTITY(121,1) NOT NULL,  -- autoincrement surrogate
 	AbbrDescription varchar(50) NOT NULL,
 	FullDescription varchar (255) NOT NULL,
 	RentalPrice decimal (13,4) NOT NULL,
