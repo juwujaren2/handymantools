@@ -3,6 +3,7 @@
     var reservationType = Model.IsPickup ? "Pickup Reservation Details" : "Dropoff Reservation Details";
     var linkTest = Model.IsPickup ? "Cancel Pickup" : "Cancel Dropoff";
     var action = Model.IsPickup ? "Pickup" : "Dropoff";
+    ViewBag.Title = reservationType;
 }
 @using (Html.BeginForm("Details", "Reservation"))
 {

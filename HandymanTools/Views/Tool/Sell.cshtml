@@ -1,11 +1,12 @@
 ﻿@model HandymanTools.Models.ToolSellViewModel
+@{ ViewBag.Title = "Sell tool"; }
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
 
     <div class="jumbotron handyman-jumbotron">
-        <h2><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Sell tool</h2>
+        <h2><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> @ViewBag.Title</h2>
     </div>
     <br />
     if (string.IsNullOrEmpty(Model.ToolName))

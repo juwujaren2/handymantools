@@ -1,6 +1,7 @@
 ﻿@model HandymanTools.Models.ReservationViewModel
 @{
     var reservationType = Model.IsPickup ? "Pickup Reservation Search" : "Dropoff Reservation Search";
+    ViewBag.Title = reservationType;
 }
 @using (Html.BeginForm())
 {

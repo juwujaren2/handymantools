@@ -1,7 +1,8 @@
 ﻿@model HandymanTools.Models.ToolCreateViewModel
+@{ ViewBag.Title = "Add new tool"; }
 
 <div class="jumbotron handyman-jumbotron">
-    <h2><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Add new tool</h2>
+    <h2><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> @ViewBag.Title</h2>
 </div>
 @using (Html.BeginForm())
 {
