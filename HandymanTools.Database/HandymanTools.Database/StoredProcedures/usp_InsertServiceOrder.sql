@@ -18,7 +18,7 @@ AS
 	INNER JOIN ReservationTool ON ReservationTool.ReservationNumber = Reservation.ReservationNumber
 	INNER JOIN Tool ON ReservationTool.ToolId = Tool.ToolId
 	WHERE Tool.ToolId = @ToolId
-	AND (@StartDate <= Reservation.EndDate) and (Reservation.StartDate <= @EndDate)
+	AND (@StartDate <= (DATEADD(DD, -1, Reservation.EndDate))) and (Reservation.StartDate <= @EndDate)
 
 	--if reservation does not exist and tool exists, then create new service order
 	IF @ReservationCount = 0 AND @ToolCount > 0
