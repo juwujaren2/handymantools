@@ -101,7 +101,7 @@ namespace HandymanTools.Controllers
                     Regex clerkUsernameRegex = new Regex(@"^[a-zA-Z0-9]+$", RegexOptions.IgnoreCase);
                     if (vm.UserType == UserType.Clerk && !clerkUsernameRegex.IsMatch(vm.UserName))
                     {
-                        ModelState.AddModelError("Username", "Only alphanumeric characters allowed for clerk username. Please use only letters and numbers only or select Customer user type below.");
+                        ModelState.AddModelError("Username", "Only alphanumeric characters allowed for clerk username. Please use letters and numbers only.");
                     }
                     else
                     {
