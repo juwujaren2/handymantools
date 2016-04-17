@@ -27,12 +27,21 @@
                     <dt>Deposit Amount:</dt>
                     <dd>@Html.DisplayFor(model => model.DepositAmount)</dd>
 
-                    <dt>Sale Date:</dt>
-                    <dd>@Html.DisplayFor(model => model.SaleDate)</dd>
-
                     <dt>Tool Type:</dt>
                     <dd>@Html.DisplayFor(model => model.ToolType)</dd>
+                    @if (Model.Accessories.Count > 0)
+                    {
+                        <dt>Accessories</dt>
+                        <dd>
+                            @foreach (var accessory in Model.Accessories)
+                        {
+                            @accessory<br/>
+                        }
+                            
+                    </dd>
+                    }
                 </dl>
+
             </div>
         </div>
     </div>
