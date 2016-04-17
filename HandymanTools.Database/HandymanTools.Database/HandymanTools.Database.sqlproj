@@ -98,7 +98,7 @@
     <None Include="CannedData\HandymanData.sql" />
     <Build Include="StoredProcedures\usp_UpdateReservationWithDropoffClerk.sql" />
     <None Include="CannedData\CannedDataTakeTwo.sql" />
-    <Build Include="CannedData\CannedDataTakeThree.sql" />
+    <None Include="CannedData\CannedDataTakeThree.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.publish.publish.xml" />

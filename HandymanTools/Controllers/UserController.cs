@@ -8,6 +8,7 @@ using HandymanTools.Common.Enums;
 namespace HandymanTools.Controllers
 {
     using HandymanTools.Security;
+    using System.Text.RegularExpressions;
     using System.Web.Security;
 
     public class UserController : Controller
@@ -41,64 +42,85 @@ namespace HandymanTools.Controllers
         
         public ActionResult Login()
         {
-            return View();
+            LoginViewModel vm = new LoginViewModel();
+            vm.UserType = UserType.Customer;
+
+            return View(vm);
         }
 
         [HttpPost]
         public ActionResult Login(LoginViewModel vm)
         {
-            string passwdHash = "";
+            if (ModelState.IsValid)
+            {
+                string passwdHash = "";
+                string password = "";
+                User user = new User();
 
-            // grab password that was stored into the database.  
-            string password = _userRepo.GetPasswordByUserName(vm.UserName, out passwdHash);
-            User user = new User();
-
-            if (vm.UserType == UserType.Customer)
-            {             
-
-                if (String.IsNullOrEmpty(password))
+                if (vm.UserType == UserType.Customer)
                 {
-                    Session.Add("newUser", vm.UserName);
-                    Session.Add("newPassword", vm.Password);
-                    return RedirectToAction("CreateProfile", "Customer");
-                }
-                else
-                {
-                    // TODO: need to refactor do passwords match to remove duplicate code in the clerk section
-
-                    // compute the hashed password for the password inserted by the user on the login screen
-                    // using the salt for the given user.
-                    var hashedpassword = vm.Password.ToSHA256(passwdHash);
-                    if (hashedpassword == password)
+                    //set regex for email validation
+                    Regex customerEmailRegex = new Regex(@"^([0-9a-zA-Z]+[-._+&])*[0-9a-zA-Z]+@([-0-9a-zA-Z]+[.])+[a-zA-Z]{2,6}$", RegexOptions.IgnoreCase);
+                    if (!customerEmailRegex.IsMatch(vm.UserName))
                     {
-                        user = _userRepo.GetUserByUserName(vm.UserName);
-                        user.UserType = UserType.Customer;
-                        FormsAuthentication.SetAuthCookie(user.UserName, false);
-                        return RedirectToAction("ViewProfile", "Customer", user);
+                        ModelState.AddModelError("Username", "Please enter a valid email address for customer username. It must be in the format: username@domain.com");
                     }
                     else
                     {
-                        // TODO: Need to figure out how to deal with errors here. 
-                        return RedirectToAction("Login");
+                        password = _userRepo.GetPasswordByUserName(vm.UserName, out passwdHash);
+                        if (String.IsNullOrEmpty(password))
+                        {
+                            Session.Add("newUser", vm.UserName);
+                            Session.Add("newPassword", vm.Password);
+                            return RedirectToAction("CreateProfile", "Customer");
+                        }
+                        else
+                        {
+                            // compute the hashed password for the password inserted by the user on the login screen
+                            // using the salt for the given user.
+
+                            password = _userRepo.GetPasswordByUserName(vm.UserName, out passwdHash);
+                            var hashedpassword = vm.Password.ToSHA256(passwdHash);
+                            if (hashedpassword == password)
+                            {
+                                user = _userRepo.GetUserByUserName(vm.UserName);
+                                user.UserType = UserType.Customer;
+                                FormsAuthentication.SetAuthCookie(user.UserName, false);
+                                return RedirectToAction("ViewProfile", "Customer", user);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //set regex for alphanumeric validation
+                    Regex clerkUsernameRegex = new Regex(@"^[a-zA-Z0-9]+$", RegexOptions.IgnoreCase);
+                    if (vm.UserType == UserType.Clerk && !clerkUsernameRegex.IsMatch(vm.UserName))
+                    {
+                        ModelState.AddModelError("Username", "Only alphanumeric characters allowed for clerk username. Please use only letters and numbers only or select Customer user type below.");
+                    }
+                    else
+                    {
+                        // compute the hashed password for the password inserted by the user on the login screen
+                        // using the salt for the given user.
+                        password = _userRepo.GetPasswordByUserName(vm.UserName, out passwdHash);
+                        var hashedpassword = vm.Password.ToSHA256(passwdHash);
+                        if (hashedpassword == password)
+                        {
+                            //user = _userRepo.GetUserByUserName(vm.UserName);
+                            user.UserType = UserType.Clerk;
+                            FormsAuthentication.SetAuthCookie(vm.UserName, false);
+                            return RedirectToAction("Pickup", "Reservation");
+                        }
+                        return View();
                     }
                 }
             }
-            else
-            {
-                // TODO: need to refactor do passwords match to remove duplicate code in the clerk section
-
-                // compute the hashed password for the password inserted by the user on the login screen
-                // using the salt for the given user.
-                var hashedpassword = vm.Password.ToSHA256(passwdHash);
-                if (hashedpassword == password)
-                {
-                    //user = _userRepo.GetUserByUserName(vm.UserName);
-                    user.UserType = UserType.Clerk;
-                    FormsAuthentication.SetAuthCookie(vm.UserName, false);
-                    return RedirectToAction("Pickup", "Reservation");
-                }
-                return View();
-            }
+            return View();
         }
         public ActionResult Logoff()
         {

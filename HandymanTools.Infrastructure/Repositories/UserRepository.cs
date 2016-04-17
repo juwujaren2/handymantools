@@ -21,29 +21,38 @@ namespace HandymanTools.Infrastructure.Repositories
         {
             string password = string.Empty;
             passwdHash = string.Empty;
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+
+
+            try
             {
-                SqlCommand command = new SqlCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "usp_GetPasswordByUserName";
-                command.Connection = conn;
-                command.Parameters.Add("@UserName", SqlDbType.VarChar).Value = userName;
-
-                //open, execute stored procedure, and close connection
-                conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.HasRows)
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    while (reader.Read())
+                    SqlCommand command = new SqlCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "usp_GetPasswordByUserName";
+                    command.Connection = conn;
+                    command.Parameters.Add("@UserName", SqlDbType.VarChar).Value = userName;
+
+                    //open, execute stored procedure, and close connection
+                    conn.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.HasRows)
                     {
-                        password = reader.GetString(0);
-                        passwdHash = reader.GetString(1);
+                        while (reader.Read())
+                        {
+                            password = reader.GetString(0);
+                            passwdHash = reader.GetString(1);
+                        }
+                        reader.NextResult();
                     }
-                    reader.NextResult();
+                    reader.Close();
+                    conn.Close();
                 }
-                reader.Close();
-                conn.Close();
+            }
+            catch (Exception)
+            {
+                throw;
             }
             return password;
         }
