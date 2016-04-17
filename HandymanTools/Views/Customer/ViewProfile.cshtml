@@ -44,34 +44,47 @@
                 </tr> 
             </thead>
             <tbody>
-    @{
+                @{
+                    var reservationDetails = new Dictionary<int, ProfileReservationsViewModel>();
+                    foreach (var reservation in Model.Reservations)
+                    {
+                        if (!reservationDetails.ContainsKey(reservation.ReservationNumber))
+                        {
+                            reservationDetails.Add(reservation.ReservationNumber, new ProfileReservationsViewModel()
+                            {
+                                Tools = reservation.Tool.AbbrDescription,
+                                StartDate = reservation.Reservation.StartDate,
+                                EndDate = reservation.Reservation.EndDate,
+                                PickupClerk = reservation.Reservation.PickupClerk.FirstName,
+                                DropoffClerk = reservation.Reservation.DropOffClerk.FirstName,
+                                TotalRental = reservation.Tool.RentalPrice,
+                                TotalDeposit = reservation.Tool.DepositAmount
+                            });
+                        }
+                        else
+                        {
+                            reservationDetails[reservation.ReservationNumber].Tools += ", " + reservation.Tool.AbbrDescription;
+                            reservationDetails[reservation.ReservationNumber].TotalRental += reservation.Tool.RentalPrice;
+                            reservationDetails[reservation.ReservationNumber].TotalDeposit += reservation.Tool.DepositAmount;
+                        }
+                    }
 
-        var currentId = 0;
-        foreach (var reservation in Model.Reservations)
-        {
-
-            <tr>
-                @if (currentId == reservation.ReservationNumber)
-                {
-                    <th scope="row">&nbsp;</th>
+                    foreach (var detail in reservationDetails)
+                    {
+                        <tr>
+                            <th scope="row">@detail.Key</th>
+                            <td>@detail.Value.Tools</td>
+                            <td>@detail.Value.StartDate.ToString("MM/dd/yyyy")</td>
+                            <td>@detail.Value.EndDate.ToString("MM/dd/yyyy")</td>
+                            <td>@detail.Value.TotalRental.ToString("C")</td>
+                            <td>@detail.Value.TotalDeposit.ToString("C")</td>
+                            <td>@detail.Value.PickupClerk</td>
+                            <td>@detail.Value.DropoffClerk</td>
+                        </tr>
+                    }
                 }
-                else
-                {
-                    <th scope="row">@reservation.ReservationNumber</th>
-                }
-                
-                <td>@reservation.Tool.AbbrDescription</td>
-                <td>@reservation.Reservation.StartDate.ToString("MM/dd/yyyy")</td>
-                <td>@reservation.Reservation.EndDate.ToString("MM/dd/yyyy")</td>
-                <td>@reservation.Tool.RentalPrice.ToString("C")</td>
-                <td>@reservation.Tool.DepositAmount.ToString("C")</td>
-                <td>@reservation.Reservation.PickupClerk.FirstName</td>
-                <td>@reservation.Reservation.DropOffClerk.FirstName</td>
-            </tr>
-            currentId = reservation.ReservationNumber;
-        }
-    }
-        </tbody>
+              
+            </tbody>
         </table>
     }
     else
