@@ -31,15 +31,7 @@
 .dl-horizontal dt {
     white-space: normal;
 }
-/* Rental Contract and Rental Receipt Views */
-.horizontal-left {
-    text-align: left !important;
-    margin-bottom: 10px;
-}
-.signature-line {
-    width: 280px;
-    border-bottom: 1px solid #f0f4f7; 
-}
+
 .alert {
     padding: 5px;
 }
@@ -87,6 +79,7 @@ hr {
 }
 
 /* User menu */
+/* Based on bootsnipp.com/snippets/featured/user-profile-sidebar */
 .user {
   margin: 20px 0;
 }
@@ -191,4 +184,14 @@ select {
     color: #09bc09;
     font-size: 75px;
     font-weight: lighter;
+}
+
+/* Rental Contract and Rental Receipt Views */
+.horizontal-left {
+    text-align: left !important;
+    margin-bottom: 10px;
+}
+.signature-line {
+    width: 280px;
+    border-bottom: 1px solid #f0f4f7; 
 }
