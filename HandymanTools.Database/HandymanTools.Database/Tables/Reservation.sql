@@ -1,6 +1,6 @@
 ﻿CREATE TABLE Reservation
 (
-	ReservationNumber int IDENTITY(10,1) NOT NULL, --autoincrement surrogate
+	ReservationNumber int IDENTITY(30,1) NOT NULL, --autoincrement surrogate
 	CustomerId varchar(36) NOT NULL,
 	PickupClerkId varchar(36) NULL,
 	DropOffClerkId varchar(36) NULL,

@@ -36,10 +36,14 @@
         <div class="col-md-3">
             <dl>
                 <dt class="horizontal-left">Tools Rented:</dt>
-                @foreach (var rt in Model.ReservedTools)
-            {
-                    <dd class="horizontal-left">@rt.ToolId @rt.Tool.AbbrDescription</dd>
-                }
+                <dd class="horizontal-left">
+                    <ol>
+                        @foreach (var rt in Model.ReservedTools)
+                        {
+                            <li>@rt.Tool.AbbrDescription</li>
+                        }
+                    </ol>
+                </dd>
             </dl>
         </div>
     </div>
