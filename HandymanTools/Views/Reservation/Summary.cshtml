@@ -1,6 +1,7 @@
 ﻿@model Dictionary<int, string>
 @{
     ViewBag.Title = "Reservation Summary";
+    Dictionary<int, List<string>> accessories = ViewBag.accessories;
 }
 
 <div class="jumbotron handyman-jumbotron">
@@ -12,7 +13,24 @@
     <ol>
         @foreach (var tool in Model)
         {
-            <li>@tool.Value<input type="hidden" name="toolKey@(tool.Key)" value="@tool.Key"/><input type="hidden" name="toolName@(tool.Key)" value="@tool.Value"/></li>
+            <li>
+                @tool.Value<input type="hidden" name="toolKey@(tool.Key)" value="@tool.Key" /><input type="hidden" name="toolName@(tool.Key)" value="@tool.Value" />
+                @if (accessories.ContainsKey(tool.Key))
+                {
+                    <ul style="list-style-type:none">
+                        <li>Accessories:</li>
+                        <li>
+                            <ul>
+                                @foreach (var accessory in accessories[tool.Key])
+                                {
+                                    <li>@accessory</li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                }
+            </li>
         }
     </ol>
     <dl class="dl-horizontal">
@@ -25,7 +43,7 @@
         <dt style="text-align:left">Total Deposit Required</dt>
         <dd>@string.Format("{0:C}", @ViewBag.totalDeposit)<input type="hidden" name="totalDeposit" value="@ViewBag.TotalDeposit" /></dd>
     </dl>
-<input type="submit" value="Submit" class="btn btn-primary"/> <input type="reset" onclick="javascript: window.location('@Url.Action("Make")');" class="btn btn-default"/>
+<input type="submit" value="Submit" class="btn btn-primary"/> <input type="reset" onclick="javascript: window.location.href = '@Url.Action("Make")';" class="btn btn-default"/>
 </form>
 
 

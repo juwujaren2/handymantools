@@ -1,6 +1,7 @@
-﻿@model List<string>
+﻿@model Dictionary<int, string>
 @{
     ViewBag.Title = "Reservation Confirmation";
+    Dictionary<int, List<string>> accessories = ViewBag.accessories;
 }
 
 <div class="jumbotron handyman-jumbotron">
@@ -13,9 +14,25 @@
 <div>
     <h3>Tools Rented</h3>
     <ol>
-        @foreach (var toolName in Model)
+        @foreach (var tool in Model)
         {
-            <li>@toolName</li>
+            <li>
+                @tool.Value
+                @if (accessories.ContainsKey(tool.Key))
+                {
+                    <ul style="list-style-type:none">
+                        <li>Accessories:</li>
+                        <li>
+                            <ul>
+                                @foreach (var accessory in accessories[tool.Key])
+                                {
+                                    <li>@accessory</li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                }
+        </li>
         }
     </ol>
     <dl class="dl-horizontal">

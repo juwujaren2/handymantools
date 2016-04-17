@@ -37,6 +37,7 @@ namespace HandymanTools.Controllers
             ViewBag.TotalDeposit = totalDeposit;
             var customerId = User.Identity.GetUser().UserName;
             var tools = new Dictionary<int, string>();
+            var accessories = new Dictionary<int, List<string>>();
             for (var i = 0; i < formData.AllKeys.Length; i++)
             {
                 if (formData.AllKeys[i].Contains("toolKey"))
@@ -49,7 +50,17 @@ namespace HandymanTools.Controllers
             var reservationRespository = new ReservationRepository();
             var resNumber = reservationRespository.MakeReservation(customerId, startDate, endDate, toolIds);
             ViewBag.resNumber = resNumber.ToString("D7");
-            return View(toolNames);
+            var toolRepository = new ToolRepository();
+            foreach (var toolId in toolIds)
+            {
+                var tool = toolRepository.GetToolInfo(toolId);
+                if (tool.Accessories.Count > 0)
+                {
+                    accessories.Add(tool.ToolId, tool.Accessories);
+                }
+            }
+            ViewBag.Accessories = accessories;
+            return View(tools);
         }
 
         public ActionResult Summary(FormCollection formData)
@@ -59,19 +70,26 @@ namespace HandymanTools.Controllers
             ViewBag.StartDate = startDate.ToShortDateString();
             ViewBag.EndDate = endDate.ToShortDateString();
             var tools = new Dictionary<int, string>();
+            var accessories = new Dictionary<int, List<string>>();
             decimal totalRental = 0;
             decimal totalDeposit = 0;
             var toolRepository = new ToolRepository();
             for (var i = 0; i < formData.AllKeys.Length; i++)
             {
+                
                 if (!formData.AllKeys[i].Contains("toolSelection")) continue;
                 var tool = toolRepository.GetToolInfo(int.Parse(formData[i]));
+                if (tool.Accessories.Count > 0)
+                {
+                    accessories.Add(tool.ToolId, tool.Accessories);
+                }
                 tools.Add(tool.ToolId, tool.AbbrDescription);
                 totalRental += tool.RentalPrice;
                 totalDeposit += tool.DepositAmount;
             }
             ViewBag.TotalRental = totalRental;
             ViewBag.totalDeposit = totalDeposit;
+            ViewBag.accessories = accessories;
             return View(tools);
         }
 
