@@ -67,7 +67,7 @@
                 <div id="AccessoriesList">
                     @for (int i = 0; i < Model.Accessories.Count; i++)
                     {
-                        <div class="input-group wiseacre accessory-container" id="AccessoryContainer_@i">
+                        <div class="input-group accessory-container" id="AccessoryContainer_@i">
                             <input type="text" name="Accessories[@i]" class="form-control accessory-control" id="Accessory_@i" placeholder="Enter Accessory" value="@Model.Accessories[i]">
                             <div class="input-group-btn" style="width: auto;">
                                 <button id="btn_DeleteAccessory_@i" type="button" class="btn btn-danger" aria-label="Add">
